@@ -1,0 +1,147 @@
+{
+    "name": "Kira",
+    "description": "White mage, excelent asistant unit that protects and cure allies",
+    "hp": 100,
+    "mp": 100,
+    "agi": 80,
+    "vel": 50,
+    "str": 20,
+    "def": 0,
+    "atkrange": 1,
+    "bonus": [],
+    "skills": [{ 
+      "name": "Tepatiliz",
+      "description": "Big great cure for a single allie 50%",
+      "range": 4,
+      "area": 1,
+      "mp": 35,
+      "lineEfect": false,
+      "pasive": false,
+      "afects": "allies",
+      "harmfull": false,
+      "efect": [{
+        "turn": 0,
+        "atribute": "hp",
+        "bonus": 50,
+        "sprites": "Schema.Types.ObjectId",
+        "special": ""
+      }]
+    }, {
+      "name": "Pahtia",
+      "description": "Restore 20% HP instantly and 60% HP over 3 turns to a sigle allie, taking damag interrupts this efect",
+      "range": 4,
+      "area": 1,
+      "mp": 25,
+      "lineEfect": false,
+      "pasive": false,
+      "afects": "allies",
+      "harmfull": false,
+      "efect": [{
+        "turn": 0,
+        "atribute": "hp",
+        "bonus": 20,
+        "sprites": "Schema.Types.ObjectId",
+        "special": "lostOnDamage"
+      }, {
+        "turn": 1,
+        "atribute": "hp",
+        "bonus": 20,
+        "sprites": "Schema.Types.ObjectId",
+        "special": "lostOnDamage"
+      }, {
+        "turn": 2,
+        "atribute": "hp",
+        "bonus": 20,
+        "sprites": "Schema.Types.ObjectId",
+        "special": "lostOnDamage"
+      }, {
+        "turn": 3,
+        "atribute": "hp",
+        "bonus": 20,
+        "sprites": "Schema.Types.ObjectId",
+        "special": "lostOnDamage"
+      }]
+    }, {
+        "name": "Tennan",
+        "description": "Rise the defense of allies by 20%",
+        "range": 4,
+        "area": 2,
+        "mp": 20,
+        "lineEfect": false,
+        "pasive": false,
+        "afects": "allies",
+        "harmfull": false,
+        "efect": [{
+          "turn": 0,
+          "atribute": "def",
+          "bonus": 20,
+          "sprites": "Schema.Types.ObjectId",
+          "special": ""
+        }, {
+          "turn": 1,
+          "atribute": "def",
+          "bonus": 20,
+          "sprites": "Schema.Types.ObjectId",
+          "special": ""
+        }]
+    }, {
+        "name": "Nemosiuil",
+        "description": "Rise the velocity of an allie by 20% for 2 turns",
+        "range": 4,
+        "area": 1,
+        "mp": 20,
+        "lineEfect": false,
+        "pasive": false,
+        "afects": "allies",
+        "harmfull": false,
+        "efect": [{
+          "turn": 0,
+          "atribute": "vel",
+          "bonus": 20,
+          "sprites": "Schema.Types.ObjectId",
+          "special": ""
+        }, {
+          "turn": 1,
+          "atribute": "vel",
+          "bonus": 20,
+          "sprites": "Schema.Types.ObjectId",
+          "special": ""
+        }]
+    }, {
+        "name": "",
+        "description": "Restore harmfull status and a small cure for a group of allies",
+        "range": 4,
+        "area": 2,
+        "mp": 30,
+        "lineEfect": false,
+        "pasive": false,
+        "afects": "allies",
+        "harmfull": false,
+        "efect": [{
+          "turn": 0,
+          "atribute": "hp",
+          "bonus": 10,
+          "sprites": "Schema.Types.ObjectId",
+          "special": "removeHarmfull"
+        }]
+    }, {
+        "name": "Tetonalli",
+        "description": "Pasive effect that restore 10% MP at the beggining of each turn",
+        "range": 0,
+        "area": 1,
+        "mp": 0,
+        "lineEfect": false,
+        "pasive": true,
+        "afects": "allies",
+        "harmfull": false,
+        "efect": [{
+          "turn": 0,
+          "atribute": "mp",
+          "bonus": 10, 
+          "sprites": "Schema.Types.ObjectId",
+          "special": ""
+        }]
+    }],
+    "sprites": "Schema.Types.ObjectId",
+    "status": []
+}
