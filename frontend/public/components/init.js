@@ -6,11 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
 var init = {
     initGame: function() {
         console.log("Game INI");
-        //var rect = new Rectangle(10,10,100,100);
-        var dimention = new Dimention(20,21);
+        var dimention = new Dimention(10,11);
         dimention.init();
         init.redrawTiles(dimention);
-        //mainLoop.iteration();
+        keyboard.init();
+        mainLoop.iteration();
     },
     redrawTiles: function(dimention) {
         document.getElementById("wtGame").innerHTML="";
