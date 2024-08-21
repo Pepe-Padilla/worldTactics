@@ -1,13 +1,7 @@
-FROM node
+FROM httpd:latest
 
-WORKDIR /app
+WORKDIR /usr/local/apache2/htdocs
 
-COPY package.json .
+COPY ./public .
 
-RUN npm install
-
-COPY . .
-
-EXPOSE 3000
-
-CMD [ "npm", "start" ]
+EXPOSE 80
