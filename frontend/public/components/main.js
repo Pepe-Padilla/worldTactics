@@ -33,6 +33,7 @@ var mainLoop = {
 
         // game logic
         keyboard.reset();
+        gamepad.update();
     },
     draw: function(currentMS) {
         //mainLoop.fps++; // FPS reading

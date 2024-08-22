@@ -10,6 +10,7 @@ var init = {
         dimention.init();
         init.redrawTiles(dimention);
         keyboard.init();
+        gamepad.init();
         mainLoop.iteration();
     },
     redrawTiles: function(dimention) {
