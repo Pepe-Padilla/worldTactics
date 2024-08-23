@@ -27,6 +27,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/kira', async(req, res) => {
+  console.log('Kironga Monononga');
+  const kira = require('./chars/kira.json');
+  console.log(kira);
+  res.status(200).json(kira);
+}); 
+
 app.get('/maps', async (req, res) => {
   console.log('TRYING TO FETCH MAPS');
   try {
@@ -86,8 +93,10 @@ app.get('/maps/:id', async (req, res) => {
   }
 });
 
+var usr = process.env.MONGODB_USERNAME;
+var pwd = process.env.MONGODB_PASSWORD;
 mongoose.connect(
-  'mongodb://usrmongo:secret@mongodb:27017/course-goals?authSource=admin',
+  `mongodb://${usr}:${pwd}@mongodb:27017/course-goals?authSource=admin`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

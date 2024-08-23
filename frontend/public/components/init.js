@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 var init = {
     initGame: function() {
         console.log("Game INI");
+        ajax.ajaxRequest("http://localhost/kira");
         var dimention = new Dimention(10,11);
         dimention.init();
         init.redrawTiles(dimention);

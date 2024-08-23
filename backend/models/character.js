@@ -13,7 +13,7 @@ const characterSchema = new Schema({
   def: { type: Number, default: 0, require: true },
   atkrange: { type: Number, default: 1, require: true },
   bonus: [{
-    characterId: ObjectId, 
+    characterId: Schema.Types.ObjectId, 
     atribute: [{
       atriName: { type: String, enum: [ "str", "def" ] },
       bonus: Number

@@ -17,12 +17,12 @@ const mapSchema = new Schema({
     status: [{ 
       name: String,
       description: String,
-      icon: ObjectId,
+      icon: Schema.Types.ObjectId,
       efect: [{
         turn: Number,
         atribute: { type: String, enum: [ "hp", "mp", "agi", "vel", "str", "def" ] },
         bonus: Number,
-        sprites: ObjectId,
+        sprites: Schema.Types.ObjectId,
         special: String
       }]
     }],
