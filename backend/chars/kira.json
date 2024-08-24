@@ -3,7 +3,7 @@
     "description": "White mage, excelent asistant unit that protects and cure allies",
     "hp": 100,
     "mp": 100,
-    "agi": 80,
+    "agi": 60,
     "vel": 50,
     "str": 20,
     "def": 0,

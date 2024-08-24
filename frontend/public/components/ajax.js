@@ -1,5 +1,5 @@
 var ajax = {
-    ajaxRequest: function(path) {
+    ajaxRequest: function(path,okFunction,koFunction) {
         var request = new XMLHttpRequest();
         request.open("GET", path, true);
         request.send();
@@ -14,9 +14,11 @@ var ajax = {
             **/
             if(request.readyState==XMLHttpRequest.DONE) {
                 if(request.status == 200) {
-                    console.log(JSON.parse(request.responseText));
+                    var result=JSON.parse(request.responseText)
+                    if(okFunction)okFunction(result);
                 } else {
                     console.log("Error [%d]: %s",request.status,request.responseText);
+                    if(koFunction)koFunction(request);
                 }
             }
         };

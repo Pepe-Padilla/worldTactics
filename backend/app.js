@@ -27,9 +27,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/kira', async(req, res) => {
-  console.log('Kironga Monononga');
-  const kira = require('./chars/kira.json');
+app.get('/maps/1', async(req, res) => {
+  const kira = require('./maps/StepOn1v1.json');
   console.log(kira);
   res.status(200).json(kira);
 }); 
