@@ -46,6 +46,6 @@ var gamepad = {
         if(typeof(button) == "object") {
             return button.pressed;
         }
-        return button == 1.0; //sería mejor un > 0.3?
+        return button > 0.3 || button < -0.3; //sería mejor un > 0.3?
     }
 }

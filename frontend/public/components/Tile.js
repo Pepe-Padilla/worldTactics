@@ -32,21 +32,55 @@ class Tile {
     }
 
     static createCursor(cursor,color) {
+        var idCursor = "theCursor";
+        var div = '<div id="'+idCursor+'"></div>'
+        var wtGame = document.getElementById("wtGame").innerHTML;
+        document.getElementById("wtGame").innerHTML = wtGame + div;
+        
+        // tile info
         var idTile = "x"+cursor.x+"y"+cursor.y;
         var theTile = document.getElementById(idTile);
-        theTile.style.zIndex = 2;
-        theTile.style.border = "3px solid "+color;
+        var rect=theTile.getBoundingClientRect();
+
+        var theCursor = document.getElementById(idCursor);
+        theCursor.style.zIndex = 3;
+        theCursor.style.position = "absolute";
+        theCursor.style.border = "4px solid "+color;
+        theCursor.style.left = (rect.x-4) + "px";
+        theCursor.style.top = (rect.y-4) + "px";
+        theCursor.style.width = rect.width + "px";
+        theCursor.style.height = rect.height + "px";
+
     }
 
-    static updateCursor(lastX,lastY,cursor,color) {
+    static takeBulding(x,y,color,isNeutral) {
+        var idTile = "x"+x+"y"+y;
+        var theTile = document.getElementById(idTile);
+        var rect=theTile.getBoundingClientRect();
+        theTile.style.zIndex = 2;
+        theTile.style.border = "3px dashed "+color;
+        if(isNeutral) {
+            theTile.style.left = (rect.x) + "px";
+            theTile.style.top = (rect.y) + "px";
+            theTile.style.width = (rect.width-6) + "px";
+            theTile.style.height = (rect.height-6) + "px";
+        }
+    }
+
+    static updateCursor(cursor,color) {
+        var idCursor = "theCursor";
+        
+        // tile info
         var idTile = "x"+cursor.x+"y"+cursor.y;
         var theTile = document.getElementById(idTile);
-        theTile.style.zIndex = 2;
-        theTile.style.border = "3px solid "+color;
-
-        var lastIdTile = "x"+lastX+"y"+lastY;
-        var lastTile = document.getElementById(lastIdTile);
-        lastTile.style.zIndex = 1;
-        lastTile.style.border = "none";
+        var rect=theTile.getBoundingClientRect();
+        
+        var theCursor = document.getElementById(idCursor);
+        if(color) theTile.style.border = "4px solid "+color;
+        theCursor.style.zIndex = 3;
+        theCursor.style.left = (rect.x-4) + "px";
+        theCursor.style.top = (rect.y-4) + "px";
+        theCursor.style.width = rect.width + "px";
+        theCursor.style.height = rect.height + "px";
     }
 }

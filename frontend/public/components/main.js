@@ -39,5 +39,6 @@ var mainLoop = {
         //mainLoop.fps++; // FPS reading
         
         // draw functions
+
     }
 };

@@ -28,6 +28,7 @@ var mapController = {
 
         gameState=1;
         createPlayers(map);
+        gameController.initGame();
     },
     redrawTiles: function(dimention) {
         for(var i=0; i<dimention.mapMaxX; i++) {
@@ -35,6 +36,7 @@ var mapController = {
                 Tile.updateDom(i,j,dimention);
             }
         }
+        Tile.updateCursor(cursor);
     }
 };
 
@@ -48,8 +50,10 @@ var createPlayers= function(map) {
                 players[index] = {
                     playerName:"Player "+ (index+1),
                     color: colors[index],
-                    buildings: [{x:i,y:j,terrain:map.arrayTerrain[j].row[i].terrain}]
+                    buildings: [{x:i,y:j,terrain:map.arrayTerrain[j].row[i].terrain}],
+                    units:new Array()
                 };
+                Tile.takeBulding(i,j,colors[index],true);
             }
         }
     }

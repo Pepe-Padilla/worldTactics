@@ -5,7 +5,8 @@ var keyboard = {
     },
     readKey: function(e) {
         keyboard.keys.push(e.key);
-        console.log(e.key);
+        //console.log(e.key);
+        gameController.readAction(e.key);
     },
     isKeyDown: function(key) {
         return keyboard.keys.indexOf(key) !== -1;
