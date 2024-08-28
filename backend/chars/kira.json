@@ -1,6 +1,8 @@
 {
     "name": "Kira",
     "description": "White mage, excelent asistant unit that protects and cure allies",
+    "x": 0,
+    "y": 0,
     "hp": 100,
     "mp": 100,
     "agi": 60,
@@ -36,7 +38,7 @@
       "pasive": false,
       "afects": "allies",
       "harmfull": false,
-      "efect": [{
+      "efects": [{
         "turn": 0,
         "atribute": "hp",
         "bonus": 20,
@@ -71,7 +73,7 @@
         "pasive": false,
         "afects": "allies",
         "harmfull": false,
-        "efect": [{
+        "efects": [{
           "turn": 0,
           "atribute": "def",
           "bonus": 20,
@@ -94,7 +96,7 @@
         "pasive": false,
         "afects": "allies",
         "harmfull": false,
-        "efect": [{
+        "efects": [{
           "turn": 0,
           "atribute": "vel",
           "bonus": 20,
@@ -117,7 +119,7 @@
         "pasive": false,
         "afects": "allies",
         "harmfull": false,
-        "efect": [{
+        "efects": [{
           "turn": 0,
           "atribute": "hp",
           "bonus": 10,
@@ -134,7 +136,7 @@
         "pasive": true,
         "afects": "allies",
         "harmfull": false,
-        "efect": [{
+        "efects": [{
           "turn": 0,
           "atribute": "mp",
           "bonus": 10, 
