@@ -55,6 +55,7 @@ var gameController = {
             if(gameState == 4) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
+                this.state4CursorMoved();
             }
         }
     },
@@ -63,6 +64,7 @@ var gameController = {
             if(cursor.y < theMap.xSize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
+                this.state4CursorMoved();
             }
         }
     },
@@ -71,6 +73,7 @@ var gameController = {
             if(cursor.x < theMap.ySize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
+                this.state4CursorMoved();
             }
         }
     },
@@ -79,6 +82,7 @@ var gameController = {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
+                this.state4CursorMoved();
             }
         }
     },
@@ -147,6 +151,37 @@ var gameController = {
     },
     state4turnActive: function() {
         gameState=4;
-        splash.createS4Splash();
+        cursor.x = players[currentPlayer].buildings[0].x;
+        cursor.y = players[currentPlayer].buildings[0].y;
+        Tile.updateCursor(cursor,players[currentPlayer].color);
+        this.state4CursorMoved();
+    },
+    state4CursorMoved: function() {
+        var terrain = theMap.arrayTerrain[cursor.y].row[cursor.x].terrain;
+        var unit = null;
+        for(var u=0;u<players[currentPlayer].units.length;u++) {
+            var aUnit = players[currentPlayer].units[u];
+            if(aUnit.x == cursor.x && aUnit.y == cursor.y) {
+                unit = aUnit;
+            }
+        }
+        
+        var bonus = {agi:0,vel:0,str:0,def:0};
+        // bonus from user effects
+        if(unit) {
+            for(var u=0;u<unit.status.length;u++) {
+                for(var e=0;e<unit.status[u].effects.length;e++) {
+                    var anEffect = unit.status[u].effects[e];
+                    if(anEffect.turn == 0) {
+                        bonus[anEffect.atribute] += anEffect.bonus;
+                    }
+                }
+            }
+        }
+
+        // bonus form terrain
+        bonus.def+=terrain.defBonus;
+
+        splash.showS4Splash(terrain,unit,bonus);
     }
 }

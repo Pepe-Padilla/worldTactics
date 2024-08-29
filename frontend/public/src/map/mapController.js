@@ -37,6 +37,7 @@ var mapController = {
             }
         }
         Tile.updateCursor(cursor);
+        gameController.state4CursorMoved();
     }
 };
 
@@ -51,7 +52,7 @@ var createPlayers= function(map) {
                     playerName:"Player "+ (index+1),
                     color: colors[index],
                     buildings: [{x:i,y:j,terrain:map.arrayTerrain[j].row[i].terrain}],
-                    units:new Array()
+                    units:[]
                 };
                 Tile.takeBulding(i,j,colors[index],true);
             }

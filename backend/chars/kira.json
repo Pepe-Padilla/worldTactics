@@ -21,7 +21,7 @@
       "pasive": false,
       "afects": "allies",
       "harmfull": false,
-      "efect": [{
+      "effects": [{
         "turn": 0,
         "atribute": "hp",
         "bonus": 50,
@@ -30,7 +30,7 @@
       }]
     }, {
       "name": "Pahtia",
-      "description": "Restore 20% HP instantly and 60% HP over 3 turns to a sigle allie, taking damag interrupts this efect",
+      "description": "Restore 20% HP instantly and 60% HP over 3 turns to a sigle allie, taking damag interrupts this effect",
       "range": 4,
       "area": 1,
       "mp": 25,
@@ -38,29 +38,30 @@
       "pasive": false,
       "afects": "allies",
       "harmfull": false,
-      "efects": [{
+      "icon": "pahtia",
+      "effects": [{
         "turn": 0,
         "atribute": "hp",
         "bonus": 20,
-        "sprites": "Schema.Types.ObjectId",
+        "sprite": "Schema.Types.ObjectId",
         "special": "lostOnDamage"
       }, {
         "turn": 1,
         "atribute": "hp",
         "bonus": 20,
-        "sprites": "Schema.Types.ObjectId",
+        "sprite": "Schema.Types.ObjectId",
         "special": "lostOnDamage"
       }, {
         "turn": 2,
         "atribute": "hp",
         "bonus": 20,
-        "sprites": "Schema.Types.ObjectId",
+        "sprite": "Schema.Types.ObjectId",
         "special": "lostOnDamage"
       }, {
         "turn": 3,
         "atribute": "hp",
         "bonus": 20,
-        "sprites": "Schema.Types.ObjectId",
+        "sprite": "Schema.Types.ObjectId",
         "special": "lostOnDamage"
       }]
     }, {
@@ -73,7 +74,7 @@
         "pasive": false,
         "afects": "allies",
         "harmfull": false,
-        "efects": [{
+        "effects": [{
           "turn": 0,
           "atribute": "def",
           "bonus": 20,
@@ -96,7 +97,7 @@
         "pasive": false,
         "afects": "allies",
         "harmfull": false,
-        "efects": [{
+        "effects": [{
           "turn": 0,
           "atribute": "vel",
           "bonus": 20,
@@ -119,7 +120,7 @@
         "pasive": false,
         "afects": "allies",
         "harmfull": false,
-        "efects": [{
+        "effects": [{
           "turn": 0,
           "atribute": "hp",
           "bonus": 10,
@@ -136,7 +137,7 @@
         "pasive": true,
         "afects": "allies",
         "harmfull": false,
-        "efects": [{
+        "effects": [{
           "turn": 0,
           "atribute": "mp",
           "bonus": 10, 
@@ -144,6 +145,6 @@
           "special": ""
         }]
     }],
-    "sprites": "Schema.Types.ObjectId",
+    "sprite": "Schema.Types.ObjectId",
     "status": []
 }
