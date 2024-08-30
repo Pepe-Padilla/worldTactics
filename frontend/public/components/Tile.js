@@ -83,4 +83,31 @@ class Tile {
         theCursor.style.width = rect.width + "px";
         theCursor.style.height = rect.height + "px";
     }
+
+    static upsertCharacter(unit) {
+        var idUnit = "unit"+unit._id;
+        var IMAGE_CHA_PATH = "../img/characters/";
+        var IMAGE_EXTENTION = ".png";
+        
+        var theUnit = document.getElementById(idUnit);
+        if(!theUnit) {
+            theUnit = document.createElement("div");
+            document.body.appendChild(theUnit);
+            theUnit.id = idUnit;
+            theUnit.style.zIndex = 10;
+            theUnit.style.background = "url("+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+")";
+            theUnit.style.backgroundSize="100% 100%";
+        }
+
+        // tile info
+        var idTile = "x"+unit.x+"y"+unit.y;
+        var theTile = document.getElementById(idTile);
+        var rect=theTile.getBoundingClientRect();
+        
+        theUnit.style.position = "absolute";
+        theUnit.style.left = (rect.x)+"px";
+        theUnit.style.top = (rect.y)+"px";
+        theUnit.style.width = (rect.width) + "px";
+        theUnit.style.height = (rect.height) + "px";
+    }
 }

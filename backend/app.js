@@ -33,6 +33,12 @@ app.get('/maps/1', async(req, res) => {
   res.status(200).json(kira);
 }); 
 
+app.get('/kira', async(req, res) => {
+  const kira = require('./chars/kira.json');
+  console.log(kira);
+  res.status(200).json(kira);
+}); 
+
 app.get('/maps', async (req, res) => {
   console.log('TRYING TO FETCH MAPS');
   try {

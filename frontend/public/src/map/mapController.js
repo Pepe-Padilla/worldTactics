@@ -1,8 +1,4 @@
 // Globals used (on gameController):
-//var theMap=null;
-//var players=[];
-//var cursor={x:0,y:0};
-
 var mapController = {
     createTiles: function(map) {
         console.log(map);

@@ -84,13 +84,13 @@ var splash = {
             splashS4.style.left = Math.floor(rect.left+rect.width)+"px";
             splashS4.style.top = Math.floor(rect.top+rect.height)+"px";
             splashS4.style.width = Math.floor(rect.width*(midx-1))+"px";
-            splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
+            //splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
         } else {
             // splashS4 en la derecha
             splashS4.style.left = Math.floor(rect.left+(rect.width*(midx+1)))+"px";
             splashS4.style.top = Math.floor(rect.top+rect.height)+"px";
             splashS4.style.width = Math.floor(rect.width*(midx-1))+"px";
-            splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
+            //splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
         }
 
         newInnerHTML = "<div style='justify-items: center;'><table class='S4table'>"+
@@ -105,13 +105,13 @@ var splash = {
             for(var u=0;u<unit.status.length;u++) {
                 effectsUnitHTML += "<img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_EFE_PATH+unit.status[u].icon+IMAGE_EXTENTION+"'>&nbsp;";    
             }
-            newInnerHTML += "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+IMAGE_EXTENTION+"'></td><td>"+unit.name+"</td><tr>"+
+            newInnerHTML += "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+"'></td><td>"+unit.name+"</td><tr>"+
             "<tr><td>HP</td><td>"+unit.hp+"</td></tr>"+
             "<tr><td>MP</td><td>"+unit.mp+"</td></tr>"+
-            "<tr><td>agi</td><td>"+unit.agi+" "+(agi != 0?"(+ "+bonus.agi+")":"")+"</td></tr>"+
-            "<tr><td>vel</td><td>"+unit.vel+" "+(vel != 0?"(+ "+bonus.vel+")":"")+"</td></tr>"+
-            "<tr><td>str</td><td>"+unit.str+" "+(str != 0?"(+ "+bonus.str+")":"")+"</td></tr>"+
-            "<tr><td>def</td><td>"+unit.def+" "+(def != 0?"(+ "+bonus.def+")":"")+"</td></tr>"+
+            "<tr><td>agi</td><td>"+unit.agi+" "+(bonus.agi != 0?"(+ "+bonus.agi+")":"")+"</td></tr>"+
+            "<tr><td>vel</td><td>"+unit.vel+" "+(bonus.vel != 0?"(+ "+bonus.vel+")":"")+"</td></tr>"+
+            "<tr><td>str</td><td>"+unit.str+" "+(bonus.str != 0?"(+ "+bonus.str+")":"")+"</td></tr>"+
+            "<tr><td>def</td><td>"+unit.def+" "+(bonus.def != 0?"(+ "+bonus.def+")":"")+"</td></tr>"+
             "<tr><td colspan='2'>"+effectsUnitHTML+"</td></tr>";
             "<tr><td colspan='2'>&nbsp;</td></tr>";
         }

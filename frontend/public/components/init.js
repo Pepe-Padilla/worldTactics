@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
 var init = {
     initGame: function() {
         console.log("Game INI");
+
+        // Units
+        ajax.ajaxRequest("http://localhost/kira",function (kira) {
+            console.log(kira);
+            allUnits.push(kira);
+        });
+
         // Carga mapa y jugadores
         ajax.ajaxRequest("http://localhost/maps/1",mapController.createTiles);
 
