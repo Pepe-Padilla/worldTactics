@@ -31,7 +31,10 @@ class Dimention {
             this.widthMargin = Math.floor((this.width-(this.tiles*this.mapMaxX))/2);
             this.heightMargin = Math.floor((this.height-(this.tiles*this.mapMaxY))/2);
             console.log("mapMax["+this.mapMaxX+"|"+this.mapMaxY+"] width["+this.width+"] height["+this.height+"] tiles["+this.tiles+"] widthMargin["+this.widthMargin+"] heightMargin["+this.heightMargin+"]");
+            
+            // TODO: redrawTiles with no borders and retake the buildings with isNeutral = true
             mapController.redrawTiles(this);
+            gameController.redrawUnits();
         } );
     }
 }

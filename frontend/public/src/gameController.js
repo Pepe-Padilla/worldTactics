@@ -283,5 +283,12 @@ var gameController = {
         bonus.def+=terrain.defBonus;
 
         splash.showS4Splash(terrain,unit,bonus);
-    }
+    },
+    redrawUnits: function() {
+        for(var i=0;i< players.length;i++) {
+            for(var u=0;u<players[i].units.length;u++) {
+                Tile.upsertCharacter(players[i].units[u]);
+            }
+        }
+    },
 }
