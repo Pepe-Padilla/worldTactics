@@ -291,4 +291,11 @@ var gameController = {
             }
         }
     },
+    retakeBuildings: function() {
+        for(var i=0;i< players.length;i++) {
+            for(var t=0;t<players[i].buildings.length;t++) {
+               Tile.takeBulding(players[i].buildings[t].x,players[i].buildings[t].y,players[i].color,true);
+            }
+        }
+    },
 }

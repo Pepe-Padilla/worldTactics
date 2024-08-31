@@ -51,7 +51,7 @@ var splash = {
             var ts = document.getElementById("theSplash");
             if(ts)ts.remove();
             gameController.state4turnActive();
-          },8000);
+          },5000);
     },
     showS4Splash: function(terrain, unit, bonus) {
         // showS4Splash
@@ -103,9 +103,14 @@ var splash = {
             var effectsUnitHTML = "";
             //var bonus = {agi:0,vel:0,str:0,def:0};
             for(var u=0;u<unit.status.length;u++) {
-                effectsUnitHTML += "<img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_EFE_PATH+unit.status[u].icon+IMAGE_EXTENTION+"'>&nbsp;";    
+                var turnsLeft = 0;
+                for(var e=0;e<unit.status[u].effects.length;e++) {
+                    var turn = unit.status[u].effects[e].turn;
+                    if((turn+1)>turnsLeft) turnsLeft=turn+1;
+                }
+                effectsUnitHTML += "<div class='hpMetter' style='--imgVar: var(--"+unit.status[u].icon +"); width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;'>"+turnsLeft+"</div>&nbsp;";    
             }
-            newInnerHTML += "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+"'></td><td>"+unit.name+"</td><tr>"+
+            newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+"'></td><td>"+unit.name+"</td><tr>"+
             "<tr><td>HP</td><td>"+unit.hp+"</td></tr>"+
             "<tr><td>MP</td><td>"+unit.mp+"</td></tr>"+
             "<tr><td>agi</td><td>"+unit.agi+" "+(bonus.agi != 0?"(+ "+bonus.agi+")":"")+"</td></tr>"+
@@ -117,9 +122,9 @@ var splash = {
         }
         
         // Terrain stats
-        newInnerHTML += "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENTION+"'></td><td></td><tr>"+
-        "<tr><td>def</td><td>"+terrain.defBonus+"</td></tr>";
+        newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENTION+"'></td>def: "+terrain.defBonus+"<td></td><tr>";
         var effectsTerrainHTML = "";
+        // TODO: pasar a dev como con units
         for(var t=0;t<terrain.status.length;t++) {
             effectsTerrainHTML += "<img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_EFE_PATH+terrain.status[t].icon+IMAGE_EXTENTION+"'>&nbsp;";    
         }

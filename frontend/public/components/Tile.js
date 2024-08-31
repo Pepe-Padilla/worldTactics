@@ -20,6 +20,7 @@ class Tile {
         theTile.style.top =  ((y*dimention.tiles)+dimention.heightMargin) + "px";
         theTile.style.width = dimention.tiles + "px";
         theTile.style.height = dimention.tiles + "px";
+        theTile.style.border = "0px"
         
         if(sprite) Tile.updateSprite(x,y,sprite);
     }
@@ -94,6 +95,7 @@ class Tile {
             theUnit = document.createElement("div");
             document.body.appendChild(theUnit);
             theUnit.id = idUnit;
+            theUnit.className="hpMetter";
             theUnit.style.zIndex = 10;
             theUnit.style.background = "url("+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+")";
             theUnit.style.backgroundSize="100% 100%";
@@ -109,5 +111,6 @@ class Tile {
         theUnit.style.top = (rect.y)+"px";
         theUnit.style.width = (rect.width) + "px";
         theUnit.style.height = (rect.height) + "px";
+        theUnit.innerHTML = unit.hp;
     }
 }

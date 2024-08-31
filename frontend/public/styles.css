@@ -1,3 +1,91 @@
+:root {
+    /* Effects */
+    --enchant-acid-1:  url(img/effects/enchant-acid-1.png);
+    --enchant-acid-2:  url(img/effects/enchant-acid-2.png);
+    --enchant-acid-3:  url(img/effects/enchant-acid-3.png);
+    --enchant-blue-1:  url(img/effects/enchant-blue-1.png);
+    --enchant-blue-2:  url(img/effects/enchant-blue-2.png);
+    --enchant-blue-3:  url(img/effects/enchant-blue-3.png);
+    --enchant-eerie-1:  url(img/effects/enchant-eerie-1.png);
+    --enchant-eerie-2:  url(img/effects/enchant-eerie-2.png);
+    --enchant-eerie-3:  url(img/effects/enchant-eerie-3.png);
+    --enchant-jade-1:  url(img/effects/enchant-jade-1.png);
+    --enchant-jade-2:  url(img/effects/enchant-jade-2.png);
+    --enchant-jade-3:  url(img/effects/enchant-jade-3.png);
+    --enchant-magenta-1:  url(img/effects/enchant-magenta-1.png);
+    --enchant-magenta-2:  url(img/effects/enchant-magenta-2.png);
+    --enchant-magenta-3:  url(img/effects/enchant-magenta-3.png);
+    --enchant-orange-1:  url(img/effects/enchant-orange-1.png);
+    --enchant-orange-2:  url(img/effects/enchant-orange-2.png);
+    --enchant-orange-3:  url(img/effects/enchant-orange-3.png);
+    --enchant-red-1:  url(img/effects/enchant-red-1.png);
+    --enchant-red-2:  url(img/effects/enchant-red-2.png);
+    --enchant-red-3:  url(img/effects/enchant-red-3.png);
+    --enchant-royal-1:  url(img/effects/enchant-royal-1.png);
+    --enchant-royal-2:  url(img/effects/enchant-royal-2.png);
+    --enchant-royal-3:  url(img/effects/enchant-royal-3.png);
+    --enchant-sky-1:  url(img/effects/enchant-sky-1.png);
+    --enchant-sky-2:  url(img/effects/enchant-sky-2.png);
+    --enchant-sky-3:  url(img/effects/enchant-sky-3.png);
+    --evil-eye-eerie-1:  url(img/effects/evil-eye-eerie-1.png);
+    --evil-eye-eerie-2:  url(img/effects/evil-eye-eerie-2.png);
+    --evil-eye-eerie-3:  url(img/effects/evil-eye-eerie-3.png);
+    --evil-eye-red-1:  url(img/effects/evil-eye-red-1.png);
+    --evil-eye-red-2:  url(img/effects/evil-eye-red-2.png);
+    --evil-eye-red-3:  url(img/effects/evil-eye-red-3.png);
+    --fireball-acid-1:  url(img/effects/fireball-acid-1.png);
+    --fireball-acid-2:  url(img/effects/fireball-acid-2.png);
+    --fireball-acid-3:  url(img/effects/fireball-acid-3.png);
+    --fireball-eerie-1:  url(img/effects/fireball-eerie-1.png);
+    --fireball-eerie-2:  url(img/effects/fireball-eerie-2.png);
+    --fireball-eerie-3:  url(img/effects/fireball-eerie-3.png);
+    --fireball-red-1:  url(img/effects/fireball-red-1.png);
+    --fireball-red-2:  url(img/effects/fireball-red-2.png);
+    --fireball-red-3:  url(img/effects/fireball-red-3.png);
+    --fireball-sky-1:  url(img/effects/fireball-sky-1.png);
+    --fireball-sky-2:  url(img/effects/fireball-sky-2.png);
+    --fireball-sky-3:  url(img/effects/fireball-sky-3.png);
+    --heal-jade-1:  url(img/effects/heal-jade-1.png);
+    --heal-jade-2:  url(img/effects/heal-jade-2.png);
+    --heal-jade-3:  url(img/effects/heal-jade-3.png);
+    --heal-royal-1:  url(img/effects/heal-royal-1.png);
+    --heal-royal-2:  url(img/effects/heal-royal-2.png);
+    --heal-royal-3:  url(img/effects/heal-royal-3.png);
+    --heal-sky-1:  url(img/effects/heal-sky-1.png);
+    --heal-sky-2:  url(img/effects/heal-sky-2.png);
+    --heal-sky-3:  url(img/effects/heal-sky-3.png);
+    --protect-acid-1:  url(img/effects/protect-acid-1.png);
+    --protect-acid-2:  url(img/effects/protect-acid-2.png);
+    --protect-acid-3:  url(img/effects/protect-acid-3.png);
+    --protect-blue-1:  url(img/effects/protect-blue-1.png);
+    --protect-blue-2:  url(img/effects/protect-blue-2.png);
+    --protect-blue-3:  url(img/effects/protect-blue-3.png);
+    --protect-eerie-1:  url(img/effects/protect-eerie-1.png);
+    --protect-eerie-2:  url(img/effects/protect-eerie-2.png);
+    --protect-eerie-3:  url(img/effects/protect-eerie-3.png);
+    --protect-jade-1:  url(img/effects/protect-jade-1.png);
+    --protect-jade-2:  url(img/effects/protect-jade-2.png);
+    --protect-jade-3:  url(img/effects/protect-jade-3.png);
+    --protect-magenta-1:  url(img/effects/protect-magenta-1.png);
+    --protect-magenta-2:  url(img/effects/protect-magenta-2.png);
+    --protect-magenta-3:  url(img/effects/protect-magenta-3.png);
+    --protect-orange-1:  url(img/effects/protect-orange-1.png);
+    --protect-orange-2:  url(img/effects/protect-orange-2.png);
+    --protect-orange-3:  url(img/effects/protect-orange-3.png);
+    --protect-red-1:  url(img/effects/protect-red-1.png);
+    --protect-red-2:  url(img/effects/protect-red-2.png);
+    --protect-red-3:  url(img/effects/protect-red-3.png);
+    --protect-royal-1:  url(img/effects/protect-royal-1.png);
+    --protect-royal-2:  url(img/effects/protect-royal-2.png);
+    --protect-royal-3:  url(img/effects/protect-royal-3.png);
+    --protect-sky-1:  url(img/effects/protect-sky-1.png);
+    --protect-sky-2:  url(img/effects/protect-sky-2.png);
+    --protect-sky-3:  url(img/effects/protect-sky-3.png);
+
+    /* Units */
+    --soldier-blue:      url(img/characters/soldier0.png);
+    --commoner-blue:      url(/img/characters/commoner0.png);
+}
 body {
     background-color: black;
 }
@@ -6,6 +94,18 @@ table {
     overflow-x: auto;
     margin-left: auto;
     margin-right: auto;
-    border-spacing: 5px;
+    border-spacing: 0px;
     font-size: large;
+}
+.hpMetter {
+    text-align: right;
+    font-size: normal;
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    letter-spacing: -1px;
+    margin-top: 0px;
+    display: inline-block;
+    white-space: nowrap;
+    background-image: var(--imgVar);
+    background-size: cover;
 }
