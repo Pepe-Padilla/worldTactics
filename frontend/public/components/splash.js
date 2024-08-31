@@ -118,11 +118,11 @@ var splash = {
             "<tr><td>str</td><td>"+unit.str+" "+(bonus.str != 0?"(+ "+bonus.str+")":"")+"</td></tr>"+
             "<tr><td>def</td><td>"+unit.def+" "+(bonus.def != 0?"(+ "+bonus.def+")":"")+"</td></tr>"+
             "<tr><td colspan='2'>"+effectsUnitHTML+"</td></tr>";
-            "<tr><td colspan='2'>&nbsp;</td></tr>";
+            "<tr><td colspan='2'><hr></td></tr>";
         }
         
         // Terrain stats
-        newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENTION+"'></td>def: "+terrain.defBonus+"<td></td><tr>";
+        newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENTION+"'></td><td>def: "+terrain.defBonus+"</td><tr>";
         var effectsTerrainHTML = "";
         // TODO: pasar a dev como con units
         for(var t=0;t<terrain.status.length;t++) {

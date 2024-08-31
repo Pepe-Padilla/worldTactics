@@ -151,5 +151,6 @@
       }
     ],
     "sprite": "commoner",
-    "status": []
+    "status": [],
+    "moved": false
 }

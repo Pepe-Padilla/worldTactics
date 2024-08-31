@@ -49,8 +49,22 @@ var gameController = {
                 this.goWest(); //where the skies are blue
                 console.log(key + " This is our destiny");
                 break;
+            case "g":
+                this.acceptAcction();
+                console.log(key);
+                break;
+            case "h":
+                this.cancelAcction();
+                console.log(key);
+                break;
         }
     },
+    acceptAcction: function() {
+        if(gameState == 4) {
+            this.acceptS4Cursor();
+        }
+    },
+    cancelAcction: function() {},
     goNorth: function(){
         if(cursor.y > 0) {
             if(gameState == 4) {
@@ -297,5 +311,21 @@ var gameController = {
                Tile.takeBulding(players[i].buildings[t].x,players[i].buildings[t].y,players[i].color,true);
             }
         }
+    },
+    acceptS4Cursor: function() {
+        for(var i=0;i<players.length;i++) {
+            for(var u=0;u<players[i].units.length;u++){
+                if(cursor.x == players[i].units[u].x && cursor.y == players[i].units[u].y) {
+                    if(i == currentPlayer) {
+                        state5Controller.unitPlayerSelected(players[i].units[u]);
+                        return;
+                    } else {
+                        state5Controller.unitEnemySelected(players[i].units[u]);
+                        return;
+                    }
+                }
+            }
+        }
+        state5Controller.mapSelected(theMap.arrayTerrain[cursor.y].row[cursor.x]);
     },
 }
