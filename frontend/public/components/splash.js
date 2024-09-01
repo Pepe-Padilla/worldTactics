@@ -46,12 +46,6 @@ var splash = {
         "<h2 style='text-align: center; justify-content: center; align-items: center; font-family : consolas;'>("+unitsLost+" units lost by harmfull effects) </h2>";
 
         theSplash.innerHTML= newInnerHTML;
-
-        setTimeout(()=>{
-            var ts = document.getElementById("theSplash");
-            if(ts)ts.remove();
-            gameController.state4turnActive();
-          },5000);
     },
     showS4Splash: function(terrain, unit, bonus) {
         // showS4Splash
@@ -132,5 +126,9 @@ var splash = {
         
         newInnerHTML += "</tbody></table></div>";
         splashS4.innerHTML = newInnerHTML;
+    },
+    cancelS4Splash: function() {
+        var splashS4=document.getElementById("splashS4");
+        if(splashS4)splashS4.remove();
     }
 }

@@ -77,7 +77,7 @@ class Tile {
         var rect=theTile.getBoundingClientRect();
         
         var theCursor = document.getElementById(idCursor);
-        if(color) theTile.style.border = "4px solid "+color;
+        if(color) theCursor.style.border = "4px solid "+color;
         theCursor.style.zIndex = 3;
         theCursor.style.left = (rect.x-4) + "px";
         theCursor.style.top = (rect.y-4) + "px";

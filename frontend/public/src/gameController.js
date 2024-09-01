@@ -1,16 +1,18 @@
 /**
  * 0 - initial state
- * 1 - map charged 
- * 2 - players charged 
- * 3 - begining of player turn 
- * 4 - turn active - selecting on map
- * 5 - element selected (active allie or neutral) - move
- * 6 - element selected (not active allie or un ocupied allie structure)
- * 7 - element moved - selecting acction
- * 8 - element allie structure - selecting acction
- * 9 - end of player turn
- * 10 - end of turn (all)
- * 11 - victory
+ * 10 - map charged 
+ * 20 - players charged 
+ * 30 - begining of player turn 
+ * 40 - turn active - selecting on map
+ * 50 - element selected (active allie) - move
+ * 51 - element selected (allie structure non occupied by unit) - buy unit menu
+ * 52 - element selected (not active allie or enemy unit) - view range
+ * 60 - unit move - selecting acction
+ * 65 - unit atack/dont move/skill - selecting acction
+ * 70 - acction result
+ * 80 - end of player turn
+ * 90 - end of turn (all)
+ * 100 - victory
  */
 var gameState=0;
 var theMap=null;
@@ -18,12 +20,13 @@ var players=[];
 var currentTurn=1;
 var currentPlayer=0;
 var cursor={x:0,y:0};
+var menuCursor=0;
 var goldPerMine=100;
 var allUnits=[];
 
 var gameController = {
     initGame() {
-        gameState=3;
+        gameState=30;
         console.log("game started");
         this.state3Bot();
     },
@@ -60,44 +63,76 @@ var gameController = {
         }
     },
     acceptAcction: function() {
-        if(gameState == 4) {
+        if(gameState == 40) {
             this.acceptS4Cursor();
+        } else if(gameState == 31) {
+            this.state3close();
+        } else if(gameState == 51 ) {
+            state5Controller.cancelRange();
+            this.state4CursorMoved();
         }
     },
-    cancelAcction: function() {},
+    cancelAcction: function() {
+        if(gameState == 31) {
+            this.state3close();
+        } else if(gameState == 50 || gameState == 51 || gameState == 52) {
+            state5Controller.cancelRange();
+            this.state4CursorMoved();
+        }
+    },
     goNorth: function(){
-        if(cursor.y > 0) {
-            if(gameState == 4) {
+        if(gameState == 40) {
+            if(cursor.y > 0) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
                 this.state4CursorMoved();
             }
+        } else if(gameState == 50 || gameState == 51) {
+            if(cursor.y > 0) {
+                cursor.y--;
+                Tile.updateCursor(cursor);
+            }
         }
     },
     goSouth: function(){
-        if(gameState == 4) {
-            if(cursor.y < theMap.xSize-1) {
+        if(gameState == 40) {
+            if(cursor.y < theMap.ySize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
                 this.state4CursorMoved();
             }
+        } else if(gameState == 50 || gameState == 51) {
+            if(cursor.y < theMap.ySize-1) {
+                cursor.y++;
+                Tile.updateCursor(cursor);
+            }
         }
     },
     goEast: function(){
-        if(gameState == 4) {
-            if(cursor.x < theMap.ySize-1) {
+        if(gameState == 40) {
+            if(cursor.x < theMap.xSize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
                 this.state4CursorMoved();
             }
+        } else if(gameState == 50 || gameState == 51) {
+            if(cursor.x < theMap.xSize-1) {
+                cursor.x++;
+                Tile.updateCursor(cursor);
+            }
         }
     },
     goWest: function(){  // this is what we're gonna do
-        if(gameState == 4) {
+        if(gameState == 40) {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
                 this.state4CursorMoved();
+            }
+        } else if(gameState == 50 || gameState == 51) {
+            if(cursor.x > 0) {
+                cursor.x--;
+                Tile.updateCursor(cursor);
             }
         }
     },
@@ -163,10 +198,14 @@ var gameController = {
             }
         }
         splash.createBotSplash(gold,unitsLost);
+        gameState=31;
+    },
+    state3close: function() {
+        var ts = document.getElementById("theSplash");
+        if(ts)ts.remove();
+        gameController.state4turnActive();
     },
     state4turnActive: function() {
-        gameState=4;
-
         // temporal unit insert for player 1
         players[currentPlayer].units.push({...allUnits[0]});
         var status1 = {
@@ -265,6 +304,8 @@ var gameController = {
         Tile.upsertCharacter(players[currentPlayer].units[0]);
         // fin character temporal
 
+        gameState=40;
+
         cursor.x = players[currentPlayer].buildings[0].x;
         cursor.y = players[currentPlayer].buildings[0].y;
         Tile.updateCursor(cursor,players[currentPlayer].color);
@@ -316,7 +357,7 @@ var gameController = {
         for(var i=0;i<players.length;i++) {
             for(var u=0;u<players[i].units.length;u++){
                 if(cursor.x == players[i].units[u].x && cursor.y == players[i].units[u].y) {
-                    if(i == currentPlayer) {
+                    if(i == currentPlayer && !players[i].units[u].moved) {
                         state5Controller.unitPlayerSelected(players[i].units[u]);
                         return;
                     } else {
@@ -328,4 +369,25 @@ var gameController = {
         }
         state5Controller.mapSelected(theMap.arrayTerrain[cursor.y].row[cursor.x]);
     },
+    getTotalStats: function(unit) {
+        var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+        var bonus = {hp:0,mp:0,agi:0,vel:0,str:0,def:0};
+        // bonus from user effects
+        if(unit) {
+            for(var u=0;u<unit.status.length;u++) {
+                for(var e=0;e<unit.status[u].effects.length;e++) {
+                    var anEffect = unit.status[u].effects[e];
+                    if(anEffect.turn == 0) {
+                        bonus[anEffect.atribute] += anEffect.bonus;
+                    }
+                }
+            }
+        }
+        bonus.def+=terrain.defBonus;
+        bonus.agi +=unit.agi;
+        bonus.def +=unit.def;
+        bonus.vel +=unit.vel;
+        bonus.str +=unit.str;
+        return bonus;
+    }
 }

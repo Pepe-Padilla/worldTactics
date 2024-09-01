@@ -109,3 +109,8 @@ table {
     background-image: var(--imgVar);
     background-size: cover;
 }
+.unitRange{
+    z-index: 5;
+    background-color: white;
+    opacity: 0.5;
+}

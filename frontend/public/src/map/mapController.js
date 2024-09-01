@@ -22,7 +22,7 @@ var mapController = {
             }
         }
 
-        gameState=1;
+        gameState=10;
         createPlayers(map);
         gameController.initGame();
     },
@@ -34,6 +34,95 @@ var mapController = {
         }
         Tile.updateCursor(cursor);
         gameController.state4CursorMoved();
+    },
+    showRangeOfUnit: function(unit) {
+        var unitStats = gameController.getTotalStats(unit);
+        var currentY = unit.y;
+        var currentX = unit.x;
+        console.log(unitStats);
+        this.showRange(currentX,currentY,unitStats.vel,unitStats.agi);
+    },
+    showRange: function(currentX,currentY,currentVel,currentAgi) {
+        var currentTileId = "rangeX"+currentX+"Y"+currentY;
+        var currentTile = document.getElementById(currentTileId);
+        if(!currentTile) {
+            // theTile info
+            var idTile = "x"+currentX+"y"+currentY;
+            var theTile = document.getElementById(idTile);
+            var rect=theTile.getBoundingClientRect();
+
+            currentTile = document.createElement("div");
+            currentTile.id = currentTileId;
+            currentTile.style.position = "absolute";
+            currentTile.style.left = rect.left+"px";
+            currentTile.style.top = rect.top+"px";
+            currentTile.style.width = rect.width+"px";
+            currentTile.style.height = rect.height+"px";
+            currentTile.className="unitRange";
+            document.body.appendChild(currentTile);
+        }
+        //theMap.xSize
+        // North
+        if(currentY > 0) {
+            var vel = currentVel;
+            var agi = currentAgi;
+            var terrain=theMap.arrayTerrain[currentY-1].row[currentX].terrain;
+            var totalSteep = (terrain.steep - agi) < 0 ? 0 : (terrain.steep - agi);
+            var velRec = 10+Math.ceil(totalSteep/10);
+            if(vel >= velRec) {
+                vel -= velRec;
+                if(terrain.minAgi>agi) vel=0;
+                this.showRange(currentX,currentY-1,vel,agi);
+            }
+        }
+        // South
+        if(currentY < theMap.ySize-1) {
+            var vel = currentVel;
+            var agi = currentAgi;
+            var terrain=theMap.arrayTerrain[currentY+1].row[currentX].terrain;
+            var totalSteep = (terrain.steep - agi) < 0 ? 0 : (terrain.steep - agi);
+            var velRec = 10+Math.ceil(totalSteep/10);
+            if(vel >= velRec) {
+                vel -= velRec;
+                if(terrain.minAgi>agi) vel=0;
+                this.showRange(currentX,currentY+1,vel,agi);
+            }
+        }
+        // East
+        if(currentX < theMap.xSize-1) {
+            var vel = currentVel;
+            var agi = currentAgi;
+            var terrain=theMap.arrayTerrain[currentY].row[currentX+1].terrain;
+            var totalSteep = (terrain.steep - agi) < 0 ? 0 : (terrain.steep - agi);
+            var velRec = 10+Math.ceil(totalSteep/10);
+            if(vel >= velRec) {
+                vel -= velRec;
+                if(terrain.minAgi>agi) vel=0;
+                this.showRange(currentX+1,currentY,vel,agi);
+            }
+        }
+        // West
+        if(currentX > 0) {
+            var vel = currentVel;
+            var agi = currentAgi;
+            var terrain=theMap.arrayTerrain[currentY].row[currentX-1].terrain;
+            var totalSteep = (terrain.steep - agi) < 0 ? 0 : (terrain.steep - agi);
+            var velRec = 10 + Math.ceil(totalSteep/10);
+            if(vel >= velRec) {
+                vel -= velRec;
+                if(terrain.minAgi>agi) vel=0;
+                this.showRange(currentX-1,currentY,vel,agi);
+            }
+        }
+    },
+    cancelRange: function() {
+        var ranges = document.getElementsByClassName("unitRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                ranges[r].remove();
+                r--;
+            }
+        }
     }
 };
 
@@ -60,6 +149,6 @@ var createPlayers= function(map) {
     cursor.x=players[0].buildings[0].x;
     cursor.y=players[0].buildings[0].y;
     Tile.createCursor(cursor,theColor);
-    gameState=2;
+    gameState=20;
     
 }
