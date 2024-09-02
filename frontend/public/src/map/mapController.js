@@ -33,7 +33,7 @@ var mapController = {
             }
         }
         Tile.updateCursor(cursor);
-        gameController.state4CursorMoved();
+        if(gameState == 40) gameController.state4CursorMoved();
     },
     showRangeOfUnit: function(unit) {
         var unitStats = gameController.getTotalStats(unit);
@@ -61,7 +61,7 @@ var mapController = {
             currentTile.className="unitRange";
             document.body.appendChild(currentTile);
         }
-        //theMap.xSize
+
         // North
         if(currentY > 0) {
             var vel = currentVel;
@@ -156,7 +156,7 @@ var mapController = {
 };
 
 var createPlayers= function(map) {
-    var colors=["blue","red","yellow","purple","orange","lime","gold","silver","black","white"];
+    var colors=["blue","red","green","purple","orange","lime","yellow","silver","black","white"];
     for(var i=0;i<map.xSize;i++) {
         for(var j=0;j<map.ySize; j++) {
             if(map.arrayTerrain[j].row[i].terrain.sprite=="casttle") {

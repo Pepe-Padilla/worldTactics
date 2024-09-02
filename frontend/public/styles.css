@@ -85,6 +85,18 @@
     /* Units */
     --soldier-blue:      url(img/characters/soldier0.png);
     --commoner-blue:      url(/img/characters/commoner0.png);
+
+    /* Color Players */
+    --blue: blue;
+    --red: red;
+    --green: green;
+    --purple: purple;
+    --orange: orange;
+    --lime: lime;
+    --yellow: yellow;
+    --silver: silver;
+    --black: black;
+    --white: white;
 }
 body {
     background-color: black;
@@ -109,8 +121,32 @@ table {
     background-image: var(--imgVar);
     background-size: cover;
 }
+.unitMetter {
+    text-align: right;
+    font-size: normal;
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    letter-spacing: -1px;
+    margin-top: 0px;
+    display: inline-block;
+    white-space: nowrap;
+    background-image: var(--imgVar);
+    background-size: cover;
+    transition: all .5s ease-in-out;
+}
 .unitRange{
     z-index: 5;
     background-color: white;
     opacity: 0.5;
+}
+.splashS50 {
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    border: 5 solid var(--colorSprite);
+    border-radius: 8px;
+}
+.splashS50Button {
+    background-image: var(--imgVar);
+    background-size: cover;
 }

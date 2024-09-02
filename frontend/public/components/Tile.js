@@ -95,7 +95,7 @@ class Tile {
             theUnit = document.createElement("div");
             document.body.appendChild(theUnit);
             theUnit.id = idUnit;
-            theUnit.className="hpMetter";
+            theUnit.className="unitMetter";
             theUnit.style.zIndex = 10;
             theUnit.style.background = "url("+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+")";
             theUnit.style.backgroundSize="100% 100%";

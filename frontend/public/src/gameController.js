@@ -7,8 +7,8 @@
  * 50 - element selected (active allie) - move
  * 51 - element selected (allie structure non occupied by unit) - buy unit menu
  * 52 - element selected (not active allie or enemy unit) - view range
- * 60 - unit move - selecting acction
- * 65 - unit atack/dont move/skill - selecting acction
+ * 60 - unit move/atack/dont move/skill - selecting acction
+ * 65 - unit skill menu  - selecting acction
  * 70 - acction result
  * 80 - end of player turn
  * 90 - end of turn (all)
@@ -70,6 +70,8 @@ var gameController = {
         } else if(gameState == 51 ) {
             state5Controller.cancelRange();
             this.state4CursorMoved();
+        } else if(gameState == 50) {
+            state5Controller.moveUnit();
         }
     },
     cancelAcction: function() {
@@ -78,6 +80,8 @@ var gameController = {
         } else if(gameState == 50 || gameState == 51 || gameState == 52) {
             state5Controller.cancelRange();
             this.state4CursorMoved();
+        } else if(gameState == 60) {
+            state5Controller.cancelMoveUnit();
         }
     },
     goNorth: function(){
@@ -170,7 +174,7 @@ var gameController = {
                             unit[efect["atribute"]]=newAtr;
                         }
                         
-                        // TODO: specials efect that applay to begining of the turn
+                        // TODO: specials effects that applay to begining of the turn
 
                         // Remove obsolete status
                         status.efects.splice(ef,1);
@@ -203,7 +207,7 @@ var gameController = {
     state3close: function() {
         var ts = document.getElementById("theSplash");
         if(ts)ts.remove();
-        gameController.state4turnActive();
+        this.state4turnActive();
     },
     state4turnActive: function() {
         // temporal unit insert for player 1

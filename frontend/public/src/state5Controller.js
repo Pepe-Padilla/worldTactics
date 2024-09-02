@@ -14,10 +14,12 @@
  * 90 - end of turn (all)
  * 100 - victory
  */
+var state50Unit = null;
 var state5Controller = {
     unitPlayerSelected: function(unit) {
         splash.cancelS4Splash();
         mapController.showRangeOfUnit(unit);
+        state50Unit = unit;
         gameState = 50;
     },
     unitMovedOrEnemySelected: function(unit) {
@@ -35,5 +37,36 @@ var state5Controller = {
     cancelRange: function() {
         mapController.cancelRange();
         gameState = 40;
+    },
+    moveUnit: function() {
+        // if(cursorIsInRange)
+        var rangeTileId = "rangeX"+cursor.x+"Y"+cursor.y;
+        var rangetTile = document.getElementById(rangeTileId);
+
+        //   moveUnitPreventive
+        if(rangetTile) {
+            var rect=rangetTile.getBoundingClientRect();
+            var idUnit = "unit"+state50Unit._id;
+            var theUnit = document.getElementById(idUnit);
+            theUnit.style.position = "absolute";
+            theUnit.style.left = (rect.x)+"px";
+            theUnit.style.top = (rect.y)+"px";
+            theUnit.style.width = (rect.width) + "px";
+            theUnit.style.height = (rect.height) + "px";
+
+            //  TODO: show ActionMenu 
+        
+            gameState = 60
+        }
+    },
+    cancelMoveUnit: function () {
+        // return char
+        Tile.upsertCharacter(state50Unit);
+        state50Unit= null;
+
+        // TODO: hide ActionMenu
+
+        this.cancelRange(); // este regeresa a 40
+        gameController.state4CursorMoved(); 
     }
 };
