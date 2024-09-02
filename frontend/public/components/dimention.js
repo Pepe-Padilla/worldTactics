@@ -35,6 +35,7 @@ class Dimention {
             mapController.redrawTiles(this);
             gameController.retakeBuildings();
             gameController.redrawUnits();
+            mapController.redrawRanges();
         } );
     }
 }

@@ -123,6 +123,35 @@ var mapController = {
                 r--;
             }
         }
+    },
+    redrawRanges: function() {
+        var ranges = document.getElementsByClassName("unitRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                var rangeId = ranges[r].id;
+                //var currentTileId = "rangeX"+currentX+"Y"+currentY;
+                // /rangeX(\d+)Y(\d+)/ :
+                // 0 - complete string
+                // 1 - x
+                // 2 - y
+                var rangePos = /rangeX(\d+)Y(\d+)/.exec(rangeId);
+                if(rangePos.length==3){
+                    var rangeX = rangePos[1];
+                    var rangeY = rangePos[2];
+
+                    // theTile info
+                    var idTile = "x"+rangeX+"y"+rangeY;
+                    var theTile = document.getElementById(idTile);
+                    var rect=theTile.getBoundingClientRect();
+                    
+                    ranges[r].style.position = "absolute";
+                    ranges[r].style.left = rect.left+"px";
+                    ranges[r].style.top = rect.top+"px";
+                    ranges[r].style.width = rect.width+"px";
+                    ranges[r].style.height = rect.height+"px";
+                }
+            }
+        }
     }
 };
 
