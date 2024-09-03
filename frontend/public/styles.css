@@ -145,8 +145,22 @@ table {
     background-color: white;
     border: 5 solid var(--colorSprite);
     border-radius: 8px;
+    justify-items: center;
+    display: flex;
+    column-gap: 10px;
+    justify-content: space-between;
+    padding: 10px;
 }
 .splashS50Button {
     background-image: var(--imgVar);
     background-size: cover;
+    width: var(--widthico);
+    height: var(--heightico);
+}
+.splashS50Text {
+    text-align: left;
+    font-size: large;
+    color: black;
+    text-shadow: 2px 2px 4px purple;
+    letter-spacing: -1px;
 }

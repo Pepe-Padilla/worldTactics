@@ -16,15 +16,15 @@
  */
 var state50Unit = null;
 var state5Controller = {
-    unitPlayerSelected: function(unit) {
+    unitPlayerSelected: function(unit,playerIndex) {
         splash.cancelS4Splash();
-        mapController.showRangeOfUnit(unit);
+        mapController.showRangeOfUnit(unit,playerIndex);
         state50Unit = unit;
         gameState = 50;
     },
-    unitMovedOrEnemySelected: function(unit) {
+    unitMovedOrEnemySelected: function(unit,playerIndex) {
         splash.cancelS4Splash();
-        mapController.showRangeOfUnit(unit);
+        mapController.showRangeOfUnit(unit,playerIndex);
         gameState = 51;
     },
     mapSelected: function(terrain) {
@@ -54,7 +54,7 @@ var state5Controller = {
             theUnit.style.width = (rect.width) + "px";
             theUnit.style.height = (rect.height) + "px";
 
-            //  TODO: show ActionMenu 
+            splash.showS50Splash(state50Unit); 
         
             gameState = 60
         }
@@ -64,7 +64,7 @@ var state5Controller = {
         Tile.upsertCharacter(state50Unit);
         state50Unit= null;
 
-        // TODO: hide ActionMenu
+        splash.cancelS50Splash();
 
         this.cancelRange(); // este regeresa a 40
         gameController.state4CursorMoved(); 

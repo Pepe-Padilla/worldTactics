@@ -72,6 +72,8 @@ var gameController = {
             this.state4CursorMoved();
         } else if(gameState == 50) {
             state5Controller.moveUnit();
+        } else if(gameState == 60) {
+            state6Controller.actionSelected();
         }
     },
     cancelAcction: function() {
@@ -96,6 +98,8 @@ var gameController = {
                 cursor.y--;
                 Tile.updateCursor(cursor);
             }
+        } else if(gameState == 60) {
+            if(Tile.updateCursorMenu(menuCursor-1)) menuCursor--;
         }
     },
     goSouth: function(){
@@ -110,6 +114,8 @@ var gameController = {
                 cursor.y++;
                 Tile.updateCursor(cursor);
             }
+        } else if(gameState == 60) {
+            if(Tile.updateCursorMenu(menuCursor+1)) menuCursor++;
         }
     },
     goEast: function(){
@@ -143,75 +149,10 @@ var gameController = {
     state3Bot: function() {
         var gold = 0;
         var unitsLost = 0;
-        for(var ch=0;ch<players[currentPlayer].units.length;ch++) {
-            var unit = players[currentPlayer].units[ch];
 
-            // Terrain effects
-            var terrain = theMap.arrayTerrain[unit.y].row[unit.x];
-            for(var st=0;st<terrain.status.length;st++) {
-                var status = terrain.status[st];
-                for(var ef=0;ef<status.efects.length;ef++){
-                    var efect = status.efects[ef];
-                    if(efect.turn == 0 && (efect.atribute == "hp" || efect.atribute == "mp")) {
-                        var newAtr = unit[efect["atribute"]]+efect.bonus;
-                        if(newAtr>100) newAtr=100;
-                        unit[efect["atribute"]]=newAtr;
-                        
-                        // TODO: specials efect that applay to begining of the turn
-                    }
-                }
-            }
-
-            // Unit effects
-            for(var stu=0;stu<unit.status.length;stu++) {
-                var status = unit.status[stu];
-                for(var ef=0;ef<status.efects.length;ef++){
-                    var efect = status.efects[ef];
-                    if(efect.turn == 0) {
-                        if(efect.atribute == "hp" || efect.atribute == "mp") {
-                            var newAtr = unit[efect["atribute"]]+efect.bonus;
-                            if(newAtr>100) newAtr=100;
-                            unit[efect["atribute"]]=newAtr;
-                        }
-                        
-                        // TODO: specials effects that applay to begining of the turn
-
-                        // Remove obsolete status
-                        status.efects.splice(ef,1);
-                        ef--;
-                    } else {
-                        efect.turn--;
-                    }
-                }
-                if(efect.length == 0) {
-                    status.splice(stu,1);
-                    stu--;
-                }
-            }
-
-            // Terrain gold
-            if(terrain.sprite == "mine" && unit.name == "commoner" && unit.hp > 0) {
-                gold+=Math.round(goldPerMine*(unit.hp/100));
-            }
-
-            // If the unit is death because of the efects kill them!!!!
-            if(unit.hp <= 0) {
-                unitsLost++;
-                players[currentPlayer].units.splice(ch,1);
-                ch--;
-            }
-        }
-        splash.createBotSplash(gold,unitsLost);
-        gameState=31;
-    },
-    state3close: function() {
-        var ts = document.getElementById("theSplash");
-        if(ts)ts.remove();
-        this.state4turnActive();
-    },
-    state4turnActive: function() {
-        // temporal unit insert for player 1
-        players[currentPlayer].units.push({...allUnits[0]});
+        // temporal unit insert 
+        // for player 1
+        players[currentPlayer].units.push(JSON.parse(JSON.stringify(allUnits[0])));
         var status1 = {
             "name": "Tennan",
             "description": "Rise the defense of allies by 20%",
@@ -300,14 +241,95 @@ var gameController = {
             }]
         };
         players[currentPlayer].units[0]._id = Math.floor(Math.random()*1000000);
+        players[currentPlayer].units[0].hp=70;
         players[currentPlayer].units[0].x=1;
         players[currentPlayer].units[0].y=3;
         players[currentPlayer].units[0].status.push(status1);
         players[currentPlayer].units[0].status.push(status2);
         players[currentPlayer].units[0].status.push(status3);
-        Tile.upsertCharacter(players[currentPlayer].units[0]);
+        players[currentPlayer].units.push(JSON.parse(JSON.stringify(players[currentPlayer].units[0])));
+        players[currentPlayer].units[1]._id = Math.floor(Math.random()*1000000);
+        players[currentPlayer].units[1].hp=10;
+        players[currentPlayer].units[1].x=2;
+        players[currentPlayer].units[1].y=4;
+        players[currentPlayer].units[1].status.pop();
+        players[1].units.push(JSON.parse(JSON.stringify(players[currentPlayer].units[0])));
+        players[1].units[0]._id = Math.floor(Math.random()*1000000);
+        players[1].units[0].hp=50;
+        players[1].units[0].x=3;
+        players[1].units[0].y=5;
+        players[1].units[0].status.shift();
         // fin character temporal
 
+        for(var ch=0;ch<players[currentPlayer].units.length;ch++) {
+            var unit = players[currentPlayer].units[ch];
+
+            // Terrain effects
+            var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+            for(var st=0;st<terrain.status.length;st++) {
+                var status = terrain.status[st];
+                for(var ef=0;ef<status.effects.length;ef++){
+                    var efect = status.effects[ef];
+                    if(efect.turn == 0 && (efect.atribute == "hp" || efect.atribute == "mp")) {
+                        var newAtr = unit[efect["atribute"]]+efect.bonus;
+                        if(newAtr>100) newAtr=100;
+                        unit[efect["atribute"]]=newAtr;
+                        
+                        // TODO: specials efect that applay to begining of the turn
+                    }
+                }
+            }
+
+            // Unit effects
+            for(var stu=0;stu<unit.status.length;stu++) {
+                var status = unit.status[stu];
+                for(var ef=0;ef<status.effects.length;ef++){
+                    var efect = status.effects[ef];
+                    if(efect.turn == 0) {
+                        if(efect.atribute == "hp" || efect.atribute == "mp") {
+                            var newAtr = unit[efect["atribute"]]+efect.bonus;
+                            if(newAtr>100) newAtr=100;
+                            unit[efect["atribute"]]=newAtr;
+                        }
+                        
+                        // TODO: specials effects that applay to begining of the turn
+
+                        // Remove obsolete status
+                        status.effects.splice(ef,1);
+                        ef--;
+                    } else {
+                        efect.turn--;
+                    }
+                }
+                if(efect.length == 0) {
+                    status.splice(stu,1);
+                    stu--;
+                }
+            }
+
+            // Terrain gold
+            if(terrain.sprite == "mine" && unit.name == "commoner" && unit.hp > 0) {
+                gold+=Math.round(goldPerMine*(unit.hp/100));
+            }
+
+            // If the unit is death because of the efects kill them!!!!
+            if(unit.hp <= 0) {
+                unitsLost++;
+                var theUnit=players[currentPlayer].units.splice(ch,1);
+                Tile.killCharacter(theUnit);
+                ch--;
+            }
+        }
+        splash.createBotSplash(gold,unitsLost);
+        this.redrawUnits();
+        gameState=31;
+    },
+    state3close: function() {
+        var ts = document.getElementById("theSplash");
+        if(ts)ts.remove();
+        this.state4turnActive();
+    },
+    state4turnActive: function() {
         gameState=40;
 
         cursor.x = players[currentPlayer].buildings[0].x;
@@ -318,10 +340,14 @@ var gameController = {
     state4CursorMoved: function() {
         var terrain = theMap.arrayTerrain[cursor.y].row[cursor.x].terrain;
         var unit = null;
-        for(var u=0;u<players[currentPlayer].units.length;u++) {
-            var aUnit = players[currentPlayer].units[u];
-            if(aUnit.x == cursor.x && aUnit.y == cursor.y) {
-                unit = aUnit;
+        var indexUnit = currentPlayer;
+        for(var p=0;p<players.length;p++) {
+           for(var u=0;u<players[p].units.length;u++) {
+                var aUnit = players[p].units[u];
+                if(aUnit.x == cursor.x && aUnit.y == cursor.y) {
+                    unit = aUnit;
+                    indexUnit=p;
+                }
             }
         }
         
@@ -341,7 +367,7 @@ var gameController = {
         // bonus form terrain
         bonus.def+=terrain.defBonus;
 
-        splash.showS4Splash(terrain,unit,bonus);
+        splash.showS4Splash(terrain,unit,bonus,indexUnit);
     },
     redrawUnits: function() {
         for(var i=0;i< players.length;i++) {
@@ -362,10 +388,10 @@ var gameController = {
             for(var u=0;u<players[i].units.length;u++){
                 if(cursor.x == players[i].units[u].x && cursor.y == players[i].units[u].y) {
                     if(i == currentPlayer && !players[i].units[u].moved) {
-                        state5Controller.unitPlayerSelected(players[i].units[u]);
+                        state5Controller.unitPlayerSelected(players[i].units[u],i);
                         return;
                     } else {
-                        state5Controller.unitEnemySelected(players[i].units[u]);
+                        state5Controller.unitMovedOrEnemySelected(players[i].units[u],i);
                         return;
                     }
                 }

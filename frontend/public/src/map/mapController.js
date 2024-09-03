@@ -35,17 +35,32 @@ var mapController = {
         Tile.updateCursor(cursor);
         if(gameState == 40) gameController.state4CursorMoved();
     },
-    showRangeOfUnit: function(unit) {
+    showRangeOfUnit: function(unit,playerIndex) {
         var unitStats = gameController.getTotalStats(unit);
         var currentY = unit.y;
         var currentX = unit.x;
         console.log(unitStats);
-        this.showRange(currentX,currentY,unitStats.vel,unitStats.agi);
+        this.showRange(currentX,currentY,unitStats.vel,unitStats.agi,true,playerIndex);
     },
-    showRange: function(currentX,currentY,currentVel,currentAgi) {
+    showRange: function(currentX,currentY,currentVel,currentAgi,self,playerIndex) {
+        
+        // see if there is a unit (not self thats always true and dont want the self unit)
+        var isThereUnit = false;
+        var isEnemy = false;
+        if(!self) {
+            for(var p=0;p<players.length;p++) {
+                for(var u=0;u<players[p].units.length;u++) { 
+                    if(players[p].units[u].x == currentX && players[p].units[u].y == currentY) {
+                        isThereUnit = true;
+                        isEnemy = p != playerIndex;
+                    }
+                }
+            }
+        }
+
         var currentTileId = "rangeX"+currentX+"Y"+currentY;
         var currentTile = document.getElementById(currentTileId);
-        if(!currentTile) {
+        if(!currentTile && !isThereUnit) {
             // theTile info
             var idTile = "x"+currentX+"y"+currentY;
             var theTile = document.getElementById(idTile);
@@ -63,7 +78,7 @@ var mapController = {
         }
 
         // North
-        if(currentY > 0) {
+        if(currentY > 0 && !isEnemy) {
             var vel = currentVel;
             var agi = currentAgi;
             var terrain=theMap.arrayTerrain[currentY-1].row[currentX].terrain;
@@ -72,11 +87,11 @@ var mapController = {
             if(vel >= velRec) {
                 vel -= velRec;
                 if(terrain.minAgi>agi) vel=0;
-                this.showRange(currentX,currentY-1,vel,agi);
+                this.showRange(currentX,currentY-1,vel,agi,false,playerIndex);
             }
         }
         // South
-        if(currentY < theMap.ySize-1) {
+        if(currentY < theMap.ySize-1  && !isEnemy) {
             var vel = currentVel;
             var agi = currentAgi;
             var terrain=theMap.arrayTerrain[currentY+1].row[currentX].terrain;
@@ -85,11 +100,11 @@ var mapController = {
             if(vel >= velRec) {
                 vel -= velRec;
                 if(terrain.minAgi>agi) vel=0;
-                this.showRange(currentX,currentY+1,vel,agi);
+                this.showRange(currentX,currentY+1,vel,agi,false,playerIndex);
             }
         }
         // East
-        if(currentX < theMap.xSize-1) {
+        if(currentX < theMap.xSize-1  && !isEnemy) {
             var vel = currentVel;
             var agi = currentAgi;
             var terrain=theMap.arrayTerrain[currentY].row[currentX+1].terrain;
@@ -98,11 +113,11 @@ var mapController = {
             if(vel >= velRec) {
                 vel -= velRec;
                 if(terrain.minAgi>agi) vel=0;
-                this.showRange(currentX+1,currentY,vel,agi);
+                this.showRange(currentX+1,currentY,vel,agi,false,playerIndex);
             }
         }
         // West
-        if(currentX > 0) {
+        if(currentX > 0  && !isEnemy) {
             var vel = currentVel;
             var agi = currentAgi;
             var terrain=theMap.arrayTerrain[currentY].row[currentX-1].terrain;
@@ -111,7 +126,7 @@ var mapController = {
             if(vel >= velRec) {
                 vel -= velRec;
                 if(terrain.minAgi>agi) vel=0;
-                this.showRange(currentX-1,currentY,vel,agi);
+                this.showRange(currentX-1,currentY,vel,agi,false,playerIndex);
             }
         }
     },

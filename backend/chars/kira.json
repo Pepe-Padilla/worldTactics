@@ -131,16 +131,13 @@
             "sprites": "Schema.Types.ObjectId",
             "special": "removeHarmfull"
           }]
-      }, {
+      }],
+    "pasiveSkills": [
+      {
         "name": "Tetonalli",
         "description": "Pasive effect that restore 10% MP at the beggining of each turn",
-        "range": 0,
         "area": 1,
-        "mp": 0,
-        "lineEfect": false,
-        "pasive": true,
-        "afects": "allies",
-        "harmfull": false,
+        "icon": "",
         "effects": [{
           "turn": 0,
           "atribute": "mp",
@@ -148,8 +145,7 @@
           "sprites": "Schema.Types.ObjectId",
           "special": ""
         }]
-      }
-    ],
+      }],
     "sprite": "commoner",
     "status": [],
     "moved": false

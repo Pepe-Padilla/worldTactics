@@ -47,7 +47,7 @@ var splash = {
 
         theSplash.innerHTML= newInnerHTML;
     },
-    showS4Splash: function(terrain, unit, bonus) {
+    showS4Splash: function(terrain, unit, bonus, playerIndex) {
         // showS4Splash
         var splashS4=document.getElementById("splashS4");
 
@@ -88,7 +88,7 @@ var splash = {
         }
 
         newInnerHTML = "<div style='justify-items: center;'><table class='S4table'>"+
-        "<h1 style='text-align: center; color:"+players[currentPlayer].color+"; justify-content: center; align-items : center; font-family : consolas;'>"+players[currentPlayer].playerName+"</h1>"+
+        "<h1 style='text-align: center; color:"+players[playerIndex].color+"; justify-content: center; align-items : center; font-family : consolas;'>"+players[playerIndex].playerName+"</h1>"+
         "<div style='justify-items: center;'><table>"+
         "<tbody>";
 
@@ -131,7 +131,7 @@ var splash = {
         var splashS4=document.getElementById("splashS4");
         if(splashS4)splashS4.remove();
     },
-    showS50Splash: function(terrain, unit, bonus) {
+    showS50Splash: function(unit) {
         // showS4Splash
         var splashS50=document.getElementById("splashS50");
 
@@ -146,63 +146,118 @@ var splash = {
             splashS50 = document.createElement("div");
             document.body.appendChild(splashS50);
             splashS50.id = "splashS50";
-            splashS50.style.position = "absolute";
-            splashS50.style.zIndex = 100;
-            splashS50.style.background = 'white';
-            splashS50.style.border = "5px solid "+players[currentPlayer].color;
-            splashS50.style.borderRadius = "8px";
+            splashS50.className="splashS50";
+            splashS50.style.setProperty("--colorSprite","var(--"+players[currentPlayer].color+")");
         }
 
         if(cursor.x > theMap.xSize / 2) {
             // splashS4 en la izquierda
             splashS50.style.left = Math.floor(rect.left+rect.width)+"px";
             splashS50.style.top = Math.floor(rect.top+rect.height)+"px";
-            //splashS50.style.width = Math.floor(rect.width*(midx-1))+"px";
+            //splashS4.style.width = Math.floor(rect.width*(midx-1))+"px";
+            //splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
+        } else {
+            // splashS4 en la derecha
+            splashS50.style.left = Math.floor(rect.left+(rect.width*(midx+1)))+"px";
+            splashS50.style.top = Math.floor(rect.top+rect.height)+"px";
+            //splashS4.style.width = Math.floor(rect.width*(midx-1))+"px";
             //splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
         }
 
-        newInnerHTML = "<div style='justify-items: center;'><table class='S4table'>"+
-        "<h1 style='text-align: center; color:"+players[currentPlayer].color+"; justify-content: center; align-items : center; font-family : consolas;'>"+players[currentPlayer].playerName+"</h1>"+
-        "<div style='justify-items: center;'><table>"+
-        "<tbody>";
+        var elementsOnMenu = 0;
+        var table= document.createElement("table");
+        var tbody= document.createElement("tbody");
 
-        // Unit stats
-        if(unit) {
-            var effectsUnitHTML = "";
-            //var bonus = {agi:0,vel:0,str:0,def:0};
-            for(var u=0;u<unit.status.length;u++) {
-                var turnsLeft = 0;
-                for(var e=0;e<unit.status[u].effects.length;e++) {
-                    var turn = unit.status[u].effects[e].turn;
-                    if((turn+1)>turnsLeft) turnsLeft=turn+1;
-                }
-                effectsUnitHTML += "<div class='hpMetter' style='--imgVar: var(--"+unit.status[u].icon +"); width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;'>"+turnsLeft+"</div>&nbsp;";    
-            }
-            newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+"'></td><td>"+unit.name+"</td><tr>"+
-            "<tr><td>HP</td><td>"+unit.hp+"</td></tr>"+
-            "<tr><td>MP</td><td>"+unit.mp+"</td></tr>"+
-            "<tr><td>agi</td><td>"+unit.agi+" "+(bonus.agi != 0?"(+ "+bonus.agi+")":"")+"</td></tr>"+
-            "<tr><td>vel</td><td>"+unit.vel+" "+(bonus.vel != 0?"(+ "+bonus.vel+")":"")+"</td></tr>"+
-            "<tr><td>str</td><td>"+unit.str+" "+(bonus.str != 0?"(+ "+bonus.str+")":"")+"</td></tr>"+
-            "<tr><td>def</td><td>"+unit.def+" "+(bonus.def != 0?"(+ "+bonus.def+")":"")+"</td></tr>"+
-            "<tr><td colspan='2'>"+effectsUnitHTML+"</td></tr>";
-            "<tr><td colspan='2'><hr></td></tr>";
+        // atack
+        var atrow= document.createElement("tr");
+        atrow.id="menu60_"+elementsOnMenu;
+        elementsOnMenu++;
+        var atdt1= document.createElement("td");
+        atdt1.id="menu60_attack";
+        var atico= document.createElement("div");
+        atico.className="splashS50Button";
+        atico.style.setProperty("--imgVar","var(--enchant-magenta-3)");
+        atico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+        atico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+        var atdt2= document.createElement("td");
+        atdt2.className="splashS50Text";
+        atdt2.innerHTML="Attack";
+        atdt1.appendChild(atico);
+        atrow.appendChild(atdt1);
+        atrow.appendChild(atdt2);
+        tbody.appendChild(atrow);
+
+        // Skills
+        if(unit.skills.length > 0) {
+            var skrow= document.createElement("tr");
+            skrow.id="menu60_"+elementsOnMenu;
+            elementsOnMenu++;
+            var skdt1= document.createElement("td");
+            skdt1.id="menu60_skills";
+            var skico= document.createElement("div");
+            skico.className="splashS50Button";
+            skico.style.setProperty("--imgVar","var(--evil-eye-red-3)");
+            skico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+            skico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+            var skdt2= document.createElement("td");
+            skdt2.className="splashS50Text";
+            skdt2.innerHTML="Skills";
+            skdt1.appendChild(skico);
+            skrow.appendChild(skdt1);
+            skrow.appendChild(skdt2);
+            tbody.appendChild(skrow);
         }
-        
-        // Terrain stats
-        newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENTION+"'></td><td>def: "+terrain.defBonus+"</td><tr>";
-        var effectsTerrainHTML = "";
-        // TODO: pasar a dev como con units
-        for(var t=0;t<terrain.status.length;t++) {
-            effectsTerrainHTML += "<img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_EFE_PATH+terrain.status[t].icon+IMAGE_EXTENTION+"'>&nbsp;";    
-        }
-        "<tr><td colspan='2'>"+effectsTerrainHTML+"</td></tr>";
-        
-        newInnerHTML += "</tbody></table></div>";
-        splashS50.innerHTML = newInnerHTML;
+
+        // TODO: Take
+
+        // Move
+        var morow= document.createElement("tr");
+        morow.id="menu60_"+elementsOnMenu;
+        elementsOnMenu++;
+        var modt1= document.createElement("td");
+        modt1.id="menu60_move";
+        var moico= document.createElement("div");
+        moico.className="splashS50Button";
+        moico.style.setProperty("--imgVar","var(--protect-sky-3)");
+        moico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+        moico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+        var modt2= document.createElement("td");
+        modt2.className="splashS50Text";
+        modt2.innerHTML="Move";
+        modt1.appendChild(moico);
+        morow.appendChild(modt1);
+        morow.appendChild(modt2);
+        tbody.appendChild(morow);
+
+        // Cancel
+        var carow= document.createElement("tr");
+        carow.id="menu60_"+elementsOnMenu;
+        elementsOnMenu++;
+        var cadt1= document.createElement("td");
+        cadt1.id="menu60_cancel";
+        var caico= document.createElement("div");
+        caico.className="splashS50Button";
+        caico.style.setProperty("--imgVar","var(--heal-sky-1)");
+        caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+        caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+        var cadt2= document.createElement("td");
+        cadt2.className="splashS50Text";
+        cadt2.innerHTML="Cancel";
+        cadt1.appendChild(caico);
+        carow.appendChild(cadt1);
+        carow.appendChild(cadt2);
+        tbody.appendChild(carow);
+
+        table.appendChild(tbody);
+        splashS50.appendChild(table);
+        document.body.appendChild(splashS50);
+
+        menuCursor = 0;
+        Tile.createCursorMenu(menuCursor,players[currentPlayer].color);
     },
     cancelS50Splash: function() {
         var splashS50=document.getElementById("splashS50");
         if(splashS50)splashS50.remove();
+        Tile.deleteCursorMenu();
     }
 }

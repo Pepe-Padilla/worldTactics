@@ -112,5 +112,54 @@ class Tile {
         theUnit.style.width = (rect.width) + "px";
         theUnit.style.height = (rect.height) + "px";
         theUnit.innerHTML = unit.hp;
+
+        if(unit.moved) {
+            theUnit.style.opacity = 0.7;
+        }
+    }
+    static killCharacter(unit) {
+        var idUnit = "unit"+unit._id;
+        var theUnit = document.getElementById(idUnit);
+        if(theUnit) {
+            theUnit.remove();
+        }
+    }
+
+    static createCursorMenu(cursorMenu,color) {
+        var idTR="menu60_"+cursorMenu;
+        var theTile = document.getElementById(idTR);
+        var rect=theTile.getBoundingClientRect();
+
+        var idCursor = "cursorMenu";
+        var div = document.createElement("div");
+        div.id=idCursor;
+        document.getElementById("wtGame").appendChild(div);
+        div.style.zIndex = 103;
+        div.style.position = "absolute";
+        div.style.left = (rect.x-4) + "px";
+        div.style.top = (rect.y-4) + "px";
+        div.style.width = rect.width + "px";
+        div.style.height = rect.height + "px";
+        div.style.border = "4px solid "+color;
+    }
+    static updateCursorMenu(cursorMenu) {
+        var idTR="menu60_"+cursorMenu;
+        var theTile = document.getElementById(idTR);
+        if(!theTile) return false;
+        var rect=theTile.getBoundingClientRect();
+
+        var idCursor = "cursorMenu";
+        var div = document.getElementById(idCursor);
+        div.style.position = "absolute";
+        div.style.left = (rect.x-4) + "px";
+        div.style.top = (rect.y-4) + "px";
+        div.style.width = rect.width + "px";
+        div.style.height = rect.height + "px";
+        return true;
+    }
+    static deleteCursorMenu() {
+        var idCursor = "cursorMenu";
+        var div = document.getElementById(idCursor);
+        if(div) div.remove();
     }
 }
