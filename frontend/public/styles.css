@@ -139,6 +139,16 @@ table {
     background-color: white;
     opacity: 0.5;
 }
+.unitHarmfullRange{
+    z-index: 5;
+    background-color: red;
+    opacity: 0.4;
+}
+.unitAllyRange{
+    z-index: 5;
+    background-color: lime;
+    opacity: 0.4;
+}
 .splashS50 {
     position: absolute;
     z-index: 100;

@@ -24,7 +24,6 @@ var mapController = {
 
         gameState=10;
         createPlayers(map);
-        gameController.initGame();
     },
     redrawTiles: function(dimention) {
         for(var i=0; i<dimention.mapMaxX; i++) {
@@ -139,6 +138,22 @@ var mapController = {
             }
         }
     },
+    cancelXRange: function() {
+        var ranges=document.getElementsByClassName("unitHarmfullRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                ranges[r].remove();
+                r--;
+            }
+        }
+        ranges=document.getElementsByClassName("unitAllyRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                ranges[r].remove();
+                r--;
+            }
+        }
+    },
     redrawRanges: function() {
         var ranges = document.getElementsByClassName("unitRange");
         for(var r=0;r<ranges.length;r++) {
@@ -167,7 +182,115 @@ var mapController = {
                 }
             }
         }
-    }
+        ranges=document.getElementsByClassName("unitHarmfullRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                var rangeId = ranges[r].id;
+                //var currentTileId = "rangeX"+currentX+"Y"+currentY;
+                // /rangeX(\d+)Y(\d+)/ :
+                // 0 - complete string
+                // 1 - x
+                // 2 - y
+                var rangePos = /rangeX+(\d+)Y(\d+)/.exec(rangeId);
+                if(rangePos.length==3){
+                    var rangeX = rangePos[1];
+                    var rangeY = rangePos[2];
+
+                    // theTile info
+                    var idTile = "x"+rangeX+"y"+rangeY;
+                    var theTile = document.getElementById(idTile);
+                    var rect=theTile.getBoundingClientRect();
+                    
+                    ranges[r].style.position = "absolute";
+                    ranges[r].style.left = rect.left+"px";
+                    ranges[r].style.top = rect.top+"px";
+                    ranges[r].style.width = rect.width+"px";
+                    ranges[r].style.height = rect.height+"px";
+                }
+            }
+        }
+        ranges=document.getElementsByClassName("unitAllyRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                var rangeId = ranges[r].id;
+                //var currentTileId = "rangeX"+currentX+"Y"+currentY;
+                // /rangeX(\d+)Y(\d+)/ :
+                // 0 - complete string
+                // 1 - x
+                // 2 - y
+                var rangePos = /rangeX+(\d+)Y(\d+)/.exec(rangeId);
+                if(rangePos.length==3){
+                    var rangeX = rangePos[1];
+                    var rangeY = rangePos[2];
+
+                    // theTile info
+                    var idTile = "x"+rangeX+"y"+rangeY;
+                    var theTile = document.getElementById(idTile);
+                    var rect=theTile.getBoundingClientRect();
+                    
+                    ranges[r].style.position = "absolute";
+                    ranges[r].style.left = rect.left+"px";
+                    ranges[r].style.top = rect.top+"px";
+                    ranges[r].style.width = rect.width+"px";
+                    ranges[r].style.height = rect.height+"px";
+                }
+            }
+        }
+    },
+    showXRange: function(currentX,currentY,currentXrange,harmfull,playerIndex) {
+        
+        // see if there is a unit
+        var isTarget = false;
+        for(var p=0;p<players.length;p++) {
+            for(var u=0;u<players[p].units.length;u++) { 
+                if(players[p].units[u].x == currentX && players[p].units[u].y == currentY) {
+                    isTarget = !((p == playerIndex) == harmfull); // XOR
+                }
+            }
+        }
+
+        var currentTileId = "rangeXX"+currentX+"Y"+currentY;
+        var currentTile = document.getElementById(currentTileId);
+        if(!currentTile && isTarget) {
+            // theTile info
+            var idTile = "x"+currentX+"y"+currentY;
+            var theTile = document.getElementById(idTile);
+            var rect=theTile.getBoundingClientRect();
+
+            currentTile = document.createElement("div");
+            currentTile.id = currentTileId;
+            currentTile.style.position = "absolute";
+            currentTile.style.left = rect.left+"px";
+            currentTile.style.top = rect.top+"px";
+            currentTile.style.width = rect.width+"px";
+            currentTile.style.height = rect.height+"px";
+            if(harmfull) currentTile.className="unitHarmfullRange";
+            else         currentTile.className="unitAllyRange";
+            document.body.appendChild(currentTile);
+        }
+
+        if(currentXrange<=0) return;
+
+        var aRange = currentXrange;
+        aRange--;
+
+        // North
+        if(currentY > 0) {
+            this.showXRange(currentX,currentY-1,aRange,harmfull,playerIndex);
+        }
+        // South
+        if(currentY < theMap.ySize-1) {
+            this.showXRange(currentX,currentY+1,aRange,harmfull,playerIndex);
+        }
+        // East
+        if(currentX < theMap.xSize-1) {
+            this.showXRange(currentX+1,currentY,aRange,harmfull,playerIndex);
+        }
+        // West
+        if(currentX > 0) {
+            this.showXRange(currentX-1,currentY,aRange,harmfull,playerIndex);
+        }
+    },
 };
 
 var createPlayers= function(map) {
@@ -194,5 +317,6 @@ var createPlayers= function(map) {
     cursor.y=players[0].buildings[0].y;
     Tile.createCursor(cursor,theColor);
     gameState=20;
+    gameController.initGame();
     
 }

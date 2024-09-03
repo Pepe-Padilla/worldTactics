@@ -5,10 +5,11 @@
  * 30 - begining of player turn 
  * 40 - turn active - selecting on map
  * 50 - element selected (active allie) - move
- * 51 - element selected (allie structure non occupied by unit) - buy unit menu
- * 52 - element selected (not active allie or enemy unit) - view range
+ * 51 - element selected (not active allie or enemy unit) - view range
+ * 52 - element selected (map non occupied by unit) - buy unit menu
  * 60 - unit move/atack/dont move/skill - selecting acction
  * 65 - unit skill menu  - selecting acction
+ * 67 - unit target (atack/skill)
  * 70 - acction result
  * 80 - end of player turn
  * 90 - end of turn (all)
@@ -79,11 +80,13 @@ var gameController = {
     cancelAcction: function() {
         if(gameState == 31) {
             this.state3close();
-        } else if(gameState == 50 || gameState == 51 || gameState == 52) {
+        } else if(gameState == 50 || gameState == 51 || gameState == 52 ) {
             state5Controller.cancelRange();
             this.state4CursorMoved();
         } else if(gameState == 60) {
             state5Controller.cancelMoveUnit();
+        } else if(gameState == 67) {
+            state6Controller.cancelS60();
         }
     },
     goNorth: function(){
@@ -93,7 +96,7 @@ var gameController = {
                 Tile.updateCursor(cursor);
                 this.state4CursorMoved();
             }
-        } else if(gameState == 50 || gameState == 51) {
+        } else if(gameState == 50 || gameState == 51 || gameState == 67) {
             if(cursor.y > 0) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
@@ -109,7 +112,7 @@ var gameController = {
                 Tile.updateCursor(cursor);
                 this.state4CursorMoved();
             }
-        } else if(gameState == 50 || gameState == 51) {
+        } else if(gameState == 50 || gameState == 51 || gameState == 67) {
             if(cursor.y < theMap.ySize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
@@ -125,7 +128,7 @@ var gameController = {
                 Tile.updateCursor(cursor);
                 this.state4CursorMoved();
             }
-        } else if(gameState == 50 || gameState == 51) {
+        } else if(gameState == 50 || gameState == 51 || gameState == 67) {
             if(cursor.x < theMap.xSize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
@@ -139,7 +142,7 @@ var gameController = {
                 Tile.updateCursor(cursor);
                 this.state4CursorMoved();
             }
-        } else if(gameState == 50 || gameState == 51) {
+        } else if(gameState == 50 || gameState == 51 || gameState == 67) {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
@@ -258,6 +261,7 @@ var gameController = {
         players[1].units[0].hp=50;
         players[1].units[0].x=3;
         players[1].units[0].y=5;
+        players[1].units[0].sprite="knight";
         players[1].units[0].status.shift();
         // fin character temporal
 

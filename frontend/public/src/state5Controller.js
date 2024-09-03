@@ -61,12 +61,21 @@ var state5Controller = {
     },
     cancelMoveUnit: function () {
         // return char
+        console.log("cancelMoveUnit");
         Tile.upsertCharacter(state50Unit);
-        state50Unit= null;
+        console.log("cancelMoveUnit2");
 
         splash.cancelS50Splash();
+        console.log("cancelMoveUnit3");
 
         this.cancelRange(); // este regeresa a 40
+        console.log("cancelMoveUnit4");
+
         gameController.state4CursorMoved(); 
+        console.log("cancelMoveUnit5");
+
+        state50Unit= null;
+        state6Cursor = null;
+        action67=null;
     }
 };
