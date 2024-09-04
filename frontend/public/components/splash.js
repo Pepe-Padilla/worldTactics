@@ -176,7 +176,7 @@ var splash = {
         atdt1.id="menu60_attack";
         var atico= document.createElement("div");
         atico.className="splashS50Button";
-        atico.style.setProperty("--imgVar","var(--enchant-magenta-3)");
+        atico.style.setProperty("--imgVar","var(--atack)");
         atico.style.setProperty("--widthico",(rect.width*0.7)+"px");
         atico.style.setProperty("--heightico",(rect.height*0.7)+"px");
         var atdt2= document.createElement("td");
@@ -196,7 +196,7 @@ var splash = {
             skdt1.id="menu60_skills";
             var skico= document.createElement("div");
             skico.className="splashS50Button";
-            skico.style.setProperty("--imgVar","var(--evil-eye-red-3)");
+            skico.style.setProperty("--imgVar","var(--skills)");
             skico.style.setProperty("--widthico",(rect.width*0.7)+"px");
             skico.style.setProperty("--heightico",(rect.height*0.7)+"px");
             var skdt2= document.createElement("td");
@@ -218,7 +218,7 @@ var splash = {
         modt1.id="menu60_move";
         var moico= document.createElement("div");
         moico.className="splashS50Button";
-        moico.style.setProperty("--imgVar","var(--protect-sky-3)");
+        moico.style.setProperty("--imgVar","var(--move)");
         moico.style.setProperty("--widthico",(rect.width*0.7)+"px");
         moico.style.setProperty("--heightico",(rect.height*0.7)+"px");
         var modt2= document.createElement("td");
@@ -237,7 +237,7 @@ var splash = {
         cadt1.id="menu60_cancel";
         var caico= document.createElement("div");
         caico.className="splashS50Button";
-        caico.style.setProperty("--imgVar","var(--heal-sky-1)");
+        caico.style.setProperty("--imgVar","var(--cancel)");
         caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
         caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
         var cadt2= document.createElement("td");

@@ -81,6 +81,11 @@
     --protect-sky-1:  url(img/effects/protect-sky-1.png);
     --protect-sky-2:  url(img/effects/protect-sky-2.png);
     --protect-sky-3:  url(img/effects/protect-sky-3.png);
+    --boot_tetonalli: url(img/effects/boot_tetonalli.png);
+    --cancel: url(img/effects/cancel.png);
+    --atack: url(img/effects/atack.png);
+    --skills: url(img/effects/skills.png);
+    --move: url(img/effects/move.png);
 
     /* Units */
     --soldier-blue:      url(img/characters/soldier0.png);
@@ -147,6 +152,11 @@ table {
 .unitAllyRange{
     z-index: 5;
     background-color: lime;
+    opacity: 0.4;
+}
+.skillRange{
+    z-index: 6;
+    background-color: blueviolet;
     opacity: 0.4;
 }
 .splashS50 {

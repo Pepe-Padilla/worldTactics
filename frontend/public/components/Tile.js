@@ -117,10 +117,12 @@ class Tile {
             theUnit.style.opacity = 0.7;
         }
     }
-    static killCharacter(unit) {
-        var idUnit = "unit"+unit._id;
-        var theUnit = document.getElementById(idUnit);
+    static killCharacter(idUnit) {
+        var idu = "unit"+idUnit;
+        console.log("killlll "+idu);
+        var theUnit = document.getElementById(idu);
         if(theUnit) {
+            console.log("done");
             theUnit.remove();
         }
     }

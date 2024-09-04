@@ -1,6 +1,6 @@
 {
     "_id": 123,
-    "name": "Kira",
+    "name": "kira",
     "description": "White mage, excelent asistant unit that protects and cure allies",
     "x": 0,
     "y": 0,
@@ -11,7 +11,7 @@
     "str": 20,
     "def": 0,
     "atkrange": 1,
-    "bonus": [],
+    "bonus": {"commoner": {"str": 0, "def": 0 },"advocate": {"str": 0, "def": 0 },"halberdier": {"str": 0, "def": 0 },"knight": {"str": 20, "def": 10 },"assasin": {"str": 0, "def": 0 },"ranger": {"str": 0, "def": 0 },"pavwill": {"str": 0, "def": 0 },"mage": {"str": 0, "def": 0 },"nun": {"str": 0, "def": 0 },"warlock": {"str": 0, "def": 0 },"druid": {"str": 0, "def": 0 },"kira": {"str": 0, "def": 0 }},
     "skills": [
       { 
         "name": "Tepatiliz",

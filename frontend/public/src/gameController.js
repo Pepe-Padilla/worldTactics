@@ -24,6 +24,7 @@ var cursor={x:0,y:0};
 var menuCursor=0;
 var goldPerMine=100;
 var allUnits=[];
+var GOLD_BOT=10;
 
 var gameController = {
     initGame() {
@@ -75,6 +76,9 @@ var gameController = {
             state5Controller.moveUnit();
         } else if(gameState == 60) {
             state6Controller.actionSelected();
+        } else if(gameState == 67) {
+            console.log ("FTW!!!")
+            state6Controller.atackConfirmed();
         }
     },
     cancelAcction: function() {
@@ -247,20 +251,24 @@ var gameController = {
         players[currentPlayer].units[0].hp=70;
         players[currentPlayer].units[0].x=1;
         players[currentPlayer].units[0].y=3;
+        players[currentPlayer].units[0].playerIndex = currentPlayer;
         players[currentPlayer].units[0].status.push(status1);
         players[currentPlayer].units[0].status.push(status2);
         players[currentPlayer].units[0].status.push(status3);
         players[currentPlayer].units.push(JSON.parse(JSON.stringify(players[currentPlayer].units[0])));
         players[currentPlayer].units[1]._id = Math.floor(Math.random()*1000000);
-        players[currentPlayer].units[1].hp=10;
+        players[currentPlayer].units[1].hp=20;
         players[currentPlayer].units[1].x=2;
         players[currentPlayer].units[1].y=4;
+        players[currentPlayer].units[1].str+=15;
+        players[currentPlayer].units[1].playerIndex = currentPlayer;
         players[currentPlayer].units[1].status.pop();
         players[1].units.push(JSON.parse(JSON.stringify(players[currentPlayer].units[0])));
         players[1].units[0]._id = Math.floor(Math.random()*1000000);
         players[1].units[0].hp=50;
         players[1].units[0].x=3;
         players[1].units[0].y=5;
+        players[1].units[0].playerIndex = 1;
         players[1].units[0].sprite="knight";
         players[1].units[0].status.shift();
         // fin character temporal
@@ -324,9 +332,36 @@ var gameController = {
                 ch--;
             }
         }
+        players[currentPlayer].gold+=gold+GOLD_BOT;
         splash.createBotSplash(gold,unitsLost);
         this.redrawUnits();
         gameState=31;
+    },
+    resolveHPUnits: function () {
+        for(var p=0;p<players.length;p++){
+            for(var ch=0;ch<players[p].units.length;ch++) {
+                var unit = players[p].units[ch];
+
+                // If the unit is death because of the efects kill them!!!!
+                if(unit.hp <= 0) {
+                    var theUnit=players[p].units[ch]._id;
+                    players[p].units.splice(ch,1);
+                    console.log(theUnit);
+                    Tile.killCharacter(theUnit);
+                    ch--;
+                }
+            }
+        }
+        this.redrawUnits();
+    },
+    getUnit: function(posX,posY) {
+        for(var p=0;p<players.length;p++){
+            for(var ch=0;ch<players[p].units.length;ch++) {
+                var unit = players[p].units[ch];
+                if(unit.x == posX && unit.y == posY) return unit;
+            }
+        }
+        return null;
     },
     state3close: function() {
         var ts = document.getElementById("theSplash");
@@ -403,8 +438,9 @@ var gameController = {
         }
         state5Controller.mapSelected(theMap.arrayTerrain[cursor.y].row[cursor.x]);
     },
-    getTotalStats: function(unit) {
-        var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+    getTotalStats: function(unit,withTerrain) {
+        var terrain = {defBonus: 0};
+        if(withTerrain) terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
         var bonus = {hp:0,mp:0,agi:0,vel:0,str:0,def:0};
         // bonus from user effects
         if(unit) {
@@ -422,6 +458,25 @@ var gameController = {
         bonus.def +=unit.def;
         bonus.vel +=unit.vel;
         bonus.str +=unit.str;
+        return bonus;
+    },
+    getTotalBonus: function(unit,enemyUnitName) {
+        return unit.bonus[enemyUnitName];
+    },
+    getTerrainStats: function(posX,posY) {
+        var bonus={sprite:"",def:0,str:0,hp:0,mp:0,vel:0,agi:0,steed:0,specials:[]};
+        var terrain = theMap.arrayTerrain[posY].row[posX].terrain;
+        bonus["def"] += terrain.defBonus;
+        bonus["sprite"] = terrain.sprite;
+        for(var s=0;s<terrain.status.length;s++) {
+            for(var e=0;e<terrain.status[s].effects.length;e++) {
+                var effect = terrain.status[s].effects[e];
+                if(effect.turn == 0){
+                    bonus[effect.atribute]+= effect.bonus;
+                    if(effect.special != "") bonus.specials.push(effect.special); 
+                }
+            }
+        }
         return bonus;
     }
 }

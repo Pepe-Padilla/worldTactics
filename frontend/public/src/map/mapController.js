@@ -35,7 +35,7 @@ var mapController = {
         if(gameState == 40) gameController.state4CursorMoved();
     },
     showRangeOfUnit: function(unit,playerIndex) {
-        var unitStats = gameController.getTotalStats(unit);
+        var unitStats = gameController.getTotalStats(unit,true);
         var currentY = unit.y;
         var currentX = unit.x;
         console.log(unitStats);
@@ -81,7 +81,7 @@ var mapController = {
             var vel = currentVel;
             var agi = currentAgi;
             var terrain=theMap.arrayTerrain[currentY-1].row[currentX].terrain;
-            var totalSteep = (terrain.steep - agi) < 0 ? 0 : (terrain.steep - agi);
+            var totalSteep = (terrain.steep - ((agi/100)*terrain.steep)) < 0 ? 0 : (terrain.steep - ((agi/100)*terrain.steep));
             var velRec = 10+Math.ceil(totalSteep/10);
             if(vel >= velRec) {
                 vel -= velRec;
@@ -94,7 +94,7 @@ var mapController = {
             var vel = currentVel;
             var agi = currentAgi;
             var terrain=theMap.arrayTerrain[currentY+1].row[currentX].terrain;
-            var totalSteep = (terrain.steep - agi) < 0 ? 0 : (terrain.steep - agi);
+            var totalSteep = (terrain.steep - ((agi/100)*terrain.steep)) < 0 ? 0 : (terrain.steep - ((agi/100)*terrain.steep));
             var velRec = 10+Math.ceil(totalSteep/10);
             if(vel >= velRec) {
                 vel -= velRec;
@@ -107,7 +107,7 @@ var mapController = {
             var vel = currentVel;
             var agi = currentAgi;
             var terrain=theMap.arrayTerrain[currentY].row[currentX+1].terrain;
-            var totalSteep = (terrain.steep - agi) < 0 ? 0 : (terrain.steep - agi);
+            var totalSteep = (terrain.steep - ((agi/100)*terrain.steep)) < 0 ? 0 : (terrain.steep - ((agi/100)*terrain.steep));
             var velRec = 10+Math.ceil(totalSteep/10);
             if(vel >= velRec) {
                 vel -= velRec;
@@ -120,7 +120,7 @@ var mapController = {
             var vel = currentVel;
             var agi = currentAgi;
             var terrain=theMap.arrayTerrain[currentY].row[currentX-1].terrain;
-            var totalSteep = (terrain.steep - agi) < 0 ? 0 : (terrain.steep - agi);
+            var totalSteep = (terrain.steep - ((agi/100)*terrain.steep)) < 0 ? 0 : (terrain.steep - ((agi/100)*terrain.steep));
             var velRec = 10 + Math.ceil(totalSteep/10);
             if(vel >= velRec) {
                 vel -= velRec;
@@ -147,6 +147,13 @@ var mapController = {
             }
         }
         ranges=document.getElementsByClassName("unitAllyRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                ranges[r].remove();
+                r--;
+            }
+        }
+        ranges=document.getElementsByClassName("skillRange");
         for(var r=0;r<ranges.length;r++) {
             if(ranges[r]) {
                 ranges[r].remove();
@@ -291,6 +298,91 @@ var mapController = {
             this.showXRange(currentX-1,currentY,aRange,harmfull,playerIndex);
         }
     },
+    showSkillArea: function(currentX,currentY,currentArea,harmfull) {
+        var currentTileId = "skillAreaX"+currentX+"Y"+currentY;
+        var currentTile = document.getElementById(currentTileId);
+        if(!currentTile) {
+            // theTile info
+            var idTile = "x"+currentX+"y"+currentY;
+            var theTile = document.getElementById(idTile);
+            var rect=theTile.getBoundingClientRect();
+
+            currentTile = document.createElement("div");
+            currentTile.id = currentTileId;
+            currentTile.style.position = "absolute";
+            currentTile.style.left = rect.left+"px";
+            currentTile.style.top = rect.top+"px";
+            currentTile.style.width = rect.width+"px";
+            currentTile.style.height = rect.height+"px";
+            if(harmfull) currentTile.className="unitHarmfullRange";
+            else currentTile.className="unitAllyRange";
+            document.body.appendChild(currentTile);
+        }
+
+        if(currentArea<=0) return;
+
+        var aRange = currentArea;
+        aRange--;
+
+        // North
+        if(currentY > 0) {
+            this.showSkillArea(currentX,currentY-1,aRange);
+        }
+        // South
+        if(currentY < theMap.ySize-1) {
+            this.showSkillArea(currentX,currentY+1,aRange);
+        }
+        // East
+        if(currentX < theMap.xSize-1) {
+            this.showSkillArea(currentX+1,currentY,aRange);
+        }
+        // West
+        if(currentX > 0) {
+            this.showSkillArea(currentX-1,currentY,aRange);
+        }
+    },
+    showSkillRange: function(currentX,currentY,currentArea) {
+        var currentTileId = "skillRangeX"+currentX+"Y"+currentY;
+        var currentTile = document.getElementById(currentTileId);
+        if(!currentTile) {
+            // theTile info
+            var idTile = "x"+currentX+"y"+currentY;
+            var theTile = document.getElementById(idTile);
+            var rect=theTile.getBoundingClientRect();
+
+            currentTile = document.createElement("div");
+            currentTile.id = currentTileId;
+            currentTile.style.position = "absolute";
+            currentTile.style.left = rect.left+"px";
+            currentTile.style.top = rect.top+"px";
+            currentTile.style.width = rect.width+"px";
+            currentTile.style.height = rect.height+"px";
+            currentTile.className="skillAreaRange";
+            document.body.appendChild(currentTile);
+        }
+
+        if(currentArea<=0) return;
+
+        var aRange = currentArea;
+        aRange--;
+
+        // North
+        if(currentY > 0) {
+            this.showSkillArea(currentX,currentY-1,aRange);
+        }
+        // South
+        if(currentY < theMap.ySize-1) {
+            this.showSkillArea(currentX,currentY+1,aRange);
+        }
+        // East
+        if(currentX < theMap.xSize-1) {
+            this.showSkillArea(currentX+1,currentY,aRange);
+        }
+        // West
+        if(currentX > 0) {
+            this.showSkillArea(currentX-1,currentY,aRange);
+        }
+    },
 };
 
 var createPlayers= function(map) {
@@ -304,7 +396,8 @@ var createPlayers= function(map) {
                     playerName:"Player "+ (index+1),
                     color: colors[index],
                     buildings: [{x:i,y:j,terrain:map.arrayTerrain[j].row[i].terrain}],
-                    units:[]
+                    units:[],
+                    gold: 90
                 };
                 Tile.takeBulding(i,j,colors[index],true);
             }
