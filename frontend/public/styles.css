@@ -88,9 +88,21 @@
     --move: url(img/effects/move.png);
 
     /* Units */
-    --soldier-blue:      url(img/characters/soldier0.png);
-    --commoner-blue:      url(/img/characters/commoner0.png);
-    --kira: url(img/characters/kira0.png);
+    --advocate-blue:      url(img/characters/advocate-blue.png);
+    --assasin-blue:       url(img/characters/assasin-blue.png);
+    --commoner-blue:      url(img/characters/commoner-blue.png);
+    --halberdier-blue:    url(img/characters/halberdier-blue.png);
+    --kira-blue:          url(img/characters/kira-blue.png);
+    --knight-blue:        url(img/characters/knight-blue.png);
+    --ranger-blue:        url(img/characters/ranger-blue.png);
+    --advocate-red:      url(img/characters/advocate-red.png);
+    --assasin-red:       url(img/characters/assasin-red.png);
+    --commoner-red:      url(img/characters/commoner-red.png);
+    --halberdier-red:    url(img/characters/halberdier-red.png);
+    --kira-red:          url(img/characters/kira-red.png);
+    --knight-red:        url(img/characters/knight-red.png);
+    --ranger-red:        url(img/characters/ranger-red.png);
+
 
     /* Terrain */
     --casttle: url(img/map/casttle0.png);

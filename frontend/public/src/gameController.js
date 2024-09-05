@@ -549,6 +549,7 @@ var gameController = {
         unit.x = posX;
         unit.y = posY;
         unit.moved = true;
+        unit.playerIndex=currentPlayer;
         players[currentPlayer].units.push(unit);
         Tile.upsertCharacter(unit);
     },

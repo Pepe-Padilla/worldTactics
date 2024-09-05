@@ -97,7 +97,7 @@ class Tile {
             theUnit.id = idUnit;
             theUnit.className="unitMetter";
             theUnit.style.zIndex = 10;
-            theUnit.style.background = "url("+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+")";
+            theUnit.style.background = "url("+IMAGE_CHA_PATH+unit.sprite+"-"+players[unit.playerIndex].color+IMAGE_EXTENTION+")";
             theUnit.style.backgroundSize="100% 100%";
         }
 

@@ -37,7 +37,7 @@ var splash = {
         "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"casttle0"+IMAGE_EXTENTION+"'></td><td>1</td>";
         if(!need4Colums) newInnerHTML +=  "</tr><tr>"; 
         newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"keep0"+IMAGE_EXTENTION+"'></td><td>"+(players[currentPlayer].buildings.length -1)+"</td></tr>"+
-        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"assasin0"+IMAGE_EXTENTION+"'></td><td>"+players[currentPlayer].units.length+" </td>";
+        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"commoner-"+players[currentPlayer].color+IMAGE_EXTENTION+"'></td><td>"+players[currentPlayer].units.length+" </td>";
         if(!need4Colums) newInnerHTML += "</tr><tr>"; 
         newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"mine0"+IMAGE_EXTENTION+"'></td><td>"+gold+" Gold</td></tr>"+
         "</tbody>"+
@@ -104,7 +104,7 @@ var splash = {
                 }
                 effectsUnitHTML += "<div class='hpMetter' style='--imgVar: var(--"+unit.status[u].icon +"); width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;'>"+turnsLeft+"</div>&nbsp;";    
             }
-            newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"0"+IMAGE_EXTENTION+"'></td><td>"+unit.name+"</td><tr>"+
+            newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"-"+players[playerIndex].color+IMAGE_EXTENTION+"'></td><td>"+unit.name+"</td><tr>"+
             "<tr><td>HP</td><td>"+unit.hp+"</td></tr>"+
             "<tr><td>MP</td><td>"+unit.mp+"</td></tr>"+
             "<tr><td>agi</td><td>"+unit.agi+" "+(bonus.agi != 0?"(+ "+bonus.agi+")":"")+"</td></tr>"+
@@ -307,7 +307,7 @@ var splash = {
                 var divUnit = document.createElement("div");
 
                 divUnit.className = "hpMetter";
-                divUnit.style.setProperty("--imgVar","var(--"+allUnits[i].sprite+")");
+                divUnit.style.setProperty("--imgVar","var(--"+allUnits[i].sprite+"-"+players[currentPlayer].color+")");
                 divUnit.style.width= rect.width+"px";
                 divUnit.style.height = rect.height+"px";
                 td1Unit.rowSpan=2;
