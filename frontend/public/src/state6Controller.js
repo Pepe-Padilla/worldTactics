@@ -85,17 +85,22 @@ var state6Controller = {
         // 5. make the objective take the damage
         enemyUnit.hp -= dmg;
 
-        // 6. with the new HP of the objective resolve the objective final damage
-        eUnitHP = enemyUnit.hp;
-        dmg = Math.floor((eUnitHP/100) * eUnitStr)-((unitHP/100)*unitDef);
+        // only if adjacent
+        var distance=Math.abs(cursor.x-state6Cursor.x)+Math.abs(cursor.y-state6Cursor.y);
+        console.log(distance);
+        if(distance <= 1) {
+            // 6. with the new HP of the objective resolve the objective final damage
+            eUnitHP = (enemyUnit.hp + eUnitHP)/2; // average HP used
+            dmg = Math.floor((eUnitHP/100) * eUnitStr)-((unitHP/100)*unitDef);
 
-        // 7. make the atacker take the damage
-        if(dmg < 0) dmg = 0;
-        state50Unit.hp -= dmg;
+            // 7. make the atacker take the damage
+            if(dmg < 0) dmg = 0;
+            state50Unit.hp -= dmg;
+        }
 
         // 9. destroy de killed units
         gameController.resolveHPUnits();
-        
+
         // 8. finish the turn with this.moveSelected();
         this.moveSelected();
     }

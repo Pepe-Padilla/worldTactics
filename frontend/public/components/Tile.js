@@ -127,10 +127,18 @@ class Tile {
         }
     }
 
-    static createCursorMenu(cursorMenu,color) {
-        var idTR="menu60_"+cursorMenu;
+    static createCursorMenu(cursorMenu,color,menuId) {
+        var idTR="menu"+menuId+"_"+cursorMenu;
         var theTile = document.getElementById(idTR);
         var rect=theTile.getBoundingClientRect();
+
+        var totalHeight = rect.height;
+        if(menuId == 52) { // only por menu 52 take the second TR too.
+            var idTR2="menu_2_"+menuId+"_"+cursorMenu;
+            var theTile2 = document.getElementById(idTR2);
+            var rect2=theTile2.getBoundingClientRect();
+            totalHeight+=rect2.height;
+        }
 
         var idCursor = "cursorMenu";
         var div = document.createElement("div");
@@ -141,11 +149,11 @@ class Tile {
         div.style.left = (rect.x-4) + "px";
         div.style.top = (rect.y-4) + "px";
         div.style.width = rect.width + "px";
-        div.style.height = rect.height + "px";
+        div.style.height = totalHeight + "px";
         div.style.border = "4px solid "+color;
     }
-    static updateCursorMenu(cursorMenu) {
-        var idTR="menu60_"+cursorMenu;
+    static updateCursorMenu(cursorMenu,menuId) {
+        var idTR="menu"+menuId+"_"+cursorMenu;
         var theTile = document.getElementById(idTR);
         if(!theTile) return false;
         var rect=theTile.getBoundingClientRect();

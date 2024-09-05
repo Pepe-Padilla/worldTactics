@@ -392,6 +392,7 @@ var createPlayers= function(map) {
             if(map.arrayTerrain[j].row[i].terrain.sprite=="casttle") {
                 var index = players.length;
                 if(index>9) throw new Error("Map recives too many players");
+                map.arrayTerrain[j].row[i].terrain.taker=index;
                 players[index] = {
                     playerName:"Player "+ (index+1),
                     color: colors[index],

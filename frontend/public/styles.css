@@ -90,6 +90,11 @@
     /* Units */
     --soldier-blue:      url(img/characters/soldier0.png);
     --commoner-blue:      url(/img/characters/commoner0.png);
+    --kira: url(img/characters/kira0.png);
+
+    /* Terrain */
+    --casttle: url(img/map/casttle0.png);
+    --keep: url(img/map/keep0.png);
 
     /* Color Players */
     --blue: blue;
@@ -183,4 +188,17 @@ table {
     color: black;
     text-shadow: 2px 2px 4px purple;
     letter-spacing: -1px;
+}
+.splashBM {
+    background-color: white;
+    z-index: 100;
+    border: 5px solid var(--playerColor);
+    border-radius: 8px;
+    position: relative;
+    margin: auto;
+    top: auto;
+    align-content: center;
+    width: 80%;
+    height: 80%;
+    padding: 20px;
 }

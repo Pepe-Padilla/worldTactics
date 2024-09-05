@@ -1,18 +1,20 @@
 /**
- * 0 - initial state
- * 10 - map charged 
- * 20 - players charged 
- * 30 - begining of player turn 
- * 40 - turn active - selecting on map
- * 50 - element selected (active allie) - move
- * 51 - element selected (allie structure non occupied by unit) - buy unit menu
- * 52 - element selected (not active allie or enemy unit) - view range
- * 60 - unit move - selecting acction
- * 65 - unit atack/dont move/skill - selecting acction
- * 70 - acction result
- * 80 - end of player turn
- * 90 - end of turn (all)
- * 100 - victory
+ * 0 - initial state - 10
+ * 5 - map selection - 0
+ * 10 - map charged - 8
+ * 20 - players charged  - 10
+ * 30 - begining of player turn - 7
+ * 40 - turn active - selecting on map - 10
+ * 50 - element selected (active allie) - move - 10
+ * 51 - element selected (not active allie or enemy unit) - view range - 10
+ * 52 - element selected (allie structure non occupied by unit) - buy unit menu - 3
+ * 53 - element selected (map, no allie structure, non occupied by unit) - end turn menu - 0
+ * 60 - unit move - selecting acction - 10
+ * 65 - unit atack/dont move/skill - selecting acction - 4
+ * 70 - acction result - 0
+ * 80 - end of player turn - 0
+ * 90 - end of turn (all) - 0
+ * 100 - victory - 0
  */
 var state50Unit = null;
 var state5Controller = {
@@ -28,10 +30,14 @@ var state5Controller = {
         gameState = 51;
     },
     mapSelected: function(terrain) {
-        if(terrain.taken && terrain.taker == currentPlayer) {
+        if(terrain.taker == currentPlayer) {
             splash.cancelS4Splash();
-            splash.showCasttleMenu(terrain.sprite);
+            splash.showBuildingMenu(terrain.sprite);
+            menuCursor = 0;
+            Tile.createCursorMenu(menuCursor,players[currentPlayer].color,52);
             gameState = 52;
+        } else {
+
         }
     },
     cancelRange: function() {
@@ -71,5 +77,23 @@ var state5Controller = {
         state50Unit= null;
         state6Cursor = null;
         action67=null;
+    },
+    cancelS52: function() {
+        splash.cancelBuildingMenu();
+        Tile.deleteCursorMenu();
+        gameController.state4CursorMoved();
+        gameState = 40;
+    },
+    accept52Menu: function() {
+        var selected = document.getElementById("menu52_"+menuCursor);
+        var tds=selected.getElementsByTagName("td");
+        var action = tds[0].id; 
+        var unitIndex = parseInt(action.split("_")[1]);
+
+        if(players[currentPlayer].gold > allUnits[unitIndex].gold) {
+            players[currentPlayer].gold -= allUnits[unitIndex].gold;
+            gameController.createUnit(cursor.x,cursor.y,unitIndex);
+            this.cancelS52();
+        }
     }
 };

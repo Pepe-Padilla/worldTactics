@@ -22,7 +22,7 @@ var currentTurn=1;
 var currentPlayer=0;
 var cursor={x:0,y:0};
 var menuCursor=0;
-var goldPerMine=100;
+var goldPerMine=50;
 var allUnits=[];
 var GOLD_BOT=10;
 
@@ -62,6 +62,14 @@ var gameController = {
                 this.cancelAcction();
                 console.log(key);
                 break;
+            case "q":
+                this.leftTab();
+                console.log(key);
+                break;
+            case "e":
+                this.rightTab();
+                console.log(key);
+                break;
         }
     },
     acceptAcction: function() {
@@ -74,6 +82,8 @@ var gameController = {
             this.state4CursorMoved();
         } else if(gameState == 50) {
             state5Controller.moveUnit();
+        } else if(gameState == 52) {
+            state5Controller.accept52Menu();
         } else if(gameState == 60) {
             state6Controller.actionSelected();
         } else if(gameState == 67) {
@@ -84,13 +94,15 @@ var gameController = {
     cancelAcction: function() {
         if(gameState == 31) {
             this.state3close();
-        } else if(gameState == 50 || gameState == 51 || gameState == 52 ) {
+        } else if(gameState == 50 || gameState == 51) {
             state5Controller.cancelRange();
             this.state4CursorMoved();
         } else if(gameState == 60) {
             state5Controller.cancelMoveUnit();
         } else if(gameState == 67) {
             state6Controller.cancelS60();
+        } else if(gameState == 52) {
+            state5Controller.cancelS52();
         }
     },
     goNorth: function(){
@@ -105,8 +117,8 @@ var gameController = {
                 cursor.y--;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState == 60) {
-            if(Tile.updateCursorMenu(menuCursor-1)) menuCursor--;
+        } else if(gameState == 60 || gameState == 52) {
+            if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         }
     },
     goSouth: function(){
@@ -121,8 +133,8 @@ var gameController = {
                 cursor.y++;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState == 60) {
-            if(Tile.updateCursorMenu(menuCursor+1)) menuCursor++;
+        } else if(gameState == 60 || gameState == 52) {
+            if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
         }
     },
     goEast: function(){
@@ -151,6 +163,20 @@ var gameController = {
                 cursor.x--;
                 Tile.updateCursor(cursor);
             }
+        }
+    },
+    rightTab: function() {
+        if(gameState == 40) {
+            this.cicleRight();
+        } else if(gameState == 60 || gameState == 52) {
+            if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
+        }
+    },
+    leftTab: function() {
+        if(gameState == 40) {
+            this.cicleLeft();
+        } else if(gameState == 60 || gameState == 52) {
+            if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         }
     },
     state3Bot: function() {
@@ -257,20 +283,37 @@ var gameController = {
         players[currentPlayer].units[0].status.push(status3);
         players[currentPlayer].units.push(JSON.parse(JSON.stringify(players[currentPlayer].units[0])));
         players[currentPlayer].units[1]._id = Math.floor(Math.random()*1000000);
-        players[currentPlayer].units[1].hp=20;
+        players[currentPlayer].units[1].hp=40;
         players[currentPlayer].units[1].x=2;
         players[currentPlayer].units[1].y=4;
         players[currentPlayer].units[1].str+=15;
         players[currentPlayer].units[1].playerIndex = currentPlayer;
+        players[currentPlayer].units[1].sprite="advocate";
         players[currentPlayer].units[1].status.pop();
+        players[currentPlayer].units.push(JSON.parse(JSON.stringify(players[currentPlayer].units[0])));
+        players[currentPlayer].units[2]._id = Math.floor(Math.random()*1000000);
+        players[currentPlayer].units[2].hp=40;
+        players[currentPlayer].units[2].x=2;
+        players[currentPlayer].units[2].y=3;
+        players[currentPlayer].units[2].str+=15;
+        players[currentPlayer].units[2].playerIndex = currentPlayer;
+        players[currentPlayer].units[2].atkrange=4;
+        players[currentPlayer].units[2].sprite="ranger";
         players[1].units.push(JSON.parse(JSON.stringify(players[currentPlayer].units[0])));
         players[1].units[0]._id = Math.floor(Math.random()*1000000);
-        players[1].units[0].hp=50;
+        players[1].units[0].hp=100;
         players[1].units[0].x=3;
         players[1].units[0].y=5;
         players[1].units[0].playerIndex = 1;
         players[1].units[0].sprite="knight";
         players[1].units[0].status.shift();
+
+        var aKeep=theMap.arrayTerrain[2].row[0].terrain;
+        var color = players[0].color;
+        aKeep.taker = 0;
+        aKeeptaken = 0;
+        players[0].buildings.push({x:0,y:2,terrain:aKeep});
+        Tile.takeBulding(0,2,color,true);
         // fin character temporal
 
         for(var ch=0;ch<players[currentPlayer].units.length;ch++) {
@@ -344,9 +387,12 @@ var gameController = {
 
                 // If the unit is death because of the efects kill them!!!!
                 if(unit.hp <= 0) {
-                    var theUnit=players[p].units[ch]._id;
+                    var theUnit=unit._id;
+                    if(unit.name=="commoner") {
+                        var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+                        terrain.taken = 0;
+                    }
                     players[p].units.splice(ch,1);
-                    console.log(theUnit);
                     Tile.killCharacter(theUnit);
                     ch--;
                 }
@@ -436,7 +482,7 @@ var gameController = {
                 }
             }
         }
-        state5Controller.mapSelected(theMap.arrayTerrain[cursor.y].row[cursor.x]);
+        state5Controller.mapSelected(theMap.arrayTerrain[cursor.y].row[cursor.x].terrain);
     },
     getTotalStats: function(unit,withTerrain) {
         var terrain = {defBonus: 0};
@@ -478,5 +524,118 @@ var gameController = {
             }
         }
         return bonus;
-    }
+    },
+    takeBuilding: function(unit){
+        var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+        var color = players[unit.playerIndex].color;
+        var isNeutral = terrain.taker == -1;
+
+        if(terrain.taker != unit.playerIndex) {
+            if(terrain.sprite == "casttle") {
+                // TODO: kill player and casttle
+                // TODO: if players.lenght < 2 players[0] wins!!!
+            } 
+            terrain.taken += unit.hp;
+            if(terrain.taken >= 200) {
+                terrain.taker = unit.playerIndex;
+                terrain.taken = 0;
+                players[unit.playerIndex].buildings.push({x:terrain.x,y:terrain.y,terrain:terrain});
+                Tile.takeBulding(unit.x,unit.y,color,isNeutral);
+            }
+        }
+    },
+    createUnit: function(posX,posY,unitIndex) {
+        var unit = JSON.parse(JSON.stringify(allUnits[unitIndex]));
+        unit.x = posX;
+        unit.y = posY;
+        unit.moved = true;
+        players[currentPlayer].units.push(unit);
+        Tile.upsertCharacter(unit);
+    },
+    cicleRight: function() {
+        console.log("cicleRight");
+        var initialX = cursor.x;
+        var initialY = cursor.y;
+        var lowestX = 100000;
+        var lowestY = 100000;
+        var highestX = 100000;
+        var highestY = 100000;
+
+        for(var u=0;u<players[currentPlayer].units.length;u++){
+            var unit = players[currentPlayer].units[u];
+
+            if(!unit.moved) { //
+                var difx = unit.x - initialX;
+                var dify = unit.y - initialY;
+
+                if(dify > 0 || (dify == 0 && difx > 0)) { //highest
+                    if(highestY > unit.y || (highestY == unit.y && highestX > unit.x)) {
+                        highestX = unit.x;
+                        highestY = unit.y;
+                    } 
+                } else {  //lowest
+                    if(lowestY > unit.y || (lowestY == unit.y && lowestX > unit.x)) {
+                        lowestX = unit.x;
+                        lowestY = unit.y;
+                    }
+                }
+            } 
+        }
+
+        console.log("highest:["+highestX+"|"+highestY+"] lowest["+lowestX+"|"+lowestY+"]");
+        if(highestY <  100000) {
+            cursor.x = highestX;
+            cursor.y = highestY;
+            Tile.updateCursor(cursor);
+            this.state4CursorMoved();
+        } else if(lowestY < 100000) {
+            cursor.x = lowestX;
+            cursor.y = lowestY;
+            Tile.updateCursor(cursor);
+            this.state4CursorMoved();
+        }
+    },
+    cicleLeft: function() {
+        console.log("cicleLeft");
+        var initialX = cursor.x;
+        var initialY = cursor.y;
+        var lowestX = -1;
+        var lowestY = -1;
+        var highestX = -1;
+        var highestY = -1;
+
+        for(var u=0;u<players[currentPlayer].units.length;u++){
+            var unit = players[currentPlayer].units[u];
+
+            if(!unit.moved) { 
+                var difx = unit.x - initialX;
+                var dify = unit.y - initialY;
+
+                if(dify < 0 || (dify == 0 && difx < 0)) { 
+                    if(lowestY < unit.y || (lowestY == unit.y && lowestX < unit.x)) {
+                        lowestX = unit.x;
+                        lowestY = unit.y;
+                    } 
+                } else {  
+                    if(highestY < unit.y || (highestY == unit.y && highestX < unit.x)) {
+                        highestX = unit.x;
+                        highestY = unit.y;
+                    }
+                }
+            } 
+        }
+
+        console.log("highest:["+highestX+"|"+highestY+"] lowest["+lowestX+"|"+lowestY+"]");
+        if(lowestY > -1) {
+            cursor.x = lowestX;
+            cursor.y = lowestY;
+            Tile.updateCursor(cursor);
+            this.state4CursorMoved();
+        } else if(highestY > -1) {
+            cursor.x = highestX;
+            cursor.y = highestY;
+            Tile.updateCursor(cursor);
+            this.state4CursorMoved();
+        }
+    },
 }

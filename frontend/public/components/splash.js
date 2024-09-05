@@ -37,7 +37,7 @@ var splash = {
         "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"casttle0"+IMAGE_EXTENTION+"'></td><td>1</td>";
         if(!need4Colums) newInnerHTML +=  "</tr><tr>"; 
         newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"keep0"+IMAGE_EXTENTION+"'></td><td>"+(players[currentPlayer].buildings.length -1)+"</td></tr>"+
-        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"soldier0"+IMAGE_EXTENTION+"'></td><td>"+players[currentPlayer].units.length+" </td>";
+        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"assasin0"+IMAGE_EXTENTION+"'></td><td>"+players[currentPlayer].units.length+" </td>";
         if(!need4Colums) newInnerHTML += "</tr><tr>"; 
         newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"mine0"+IMAGE_EXTENTION+"'></td><td>"+gold+" Gold</td></tr>"+
         "</tbody>"+
@@ -253,11 +253,92 @@ var splash = {
         document.body.appendChild(splashS50);
 
         menuCursor = 0;
-        Tile.createCursorMenu(menuCursor,players[currentPlayer].color);
+        Tile.createCursorMenu(menuCursor,players[currentPlayer].color,60);
     },
     cancelS50Splash: function() {
         var splashS50=document.getElementById("splashS50");
         if(splashS50)splashS50.remove();
         Tile.deleteCursorMenu();
+    },
+    showBuildingMenu: function(sprite) {
+        var idTile = "x0y0";
+        var theTile = document.getElementById(idTile);
+        var rect=theTile.getBoundingClientRect();
+
+        var idMenu = "building";
+        var splashBM=document.getElementById(idMenu);
+        if(!splashBM) {
+            splashBM=document.createElement("div");
+            splashBM.id = idMenu;
+            splashBM.className = "splashBM";
+            splashBM.style.setProperty("--playerColor",players[currentPlayer].color);
+        }
+        splashBM.innerHTML = "";
+
+        var table = document.createElement("table");
+        var caption = document.createElement("caption");
+        caption.innerHTML=players[currentPlayer].name +" gold: "+players[currentPlayer].gold;
+        table.appendChild(caption);
+        
+        var trTerrain = document.createElement("tr");
+        var td1Terrain = document.createElement("td");
+        var td2Terrain = document.createElement("td");
+        var divTerrain = document.createElement("div");
+        divTerrain.className = "hpMetter";
+        divTerrain.style.setProperty("--imgVar","var(--"+sprite+")");
+        divTerrain.style.width= rect.width+"px";
+        divTerrain.style.height = rect.height+"px";
+        td1Terrain.appendChild(divTerrain);
+        td2Terrain.textContent = sprite;
+        trTerrain.appendChild(td1Terrain);
+        trTerrain.appendChild(td2Terrain);
+        table.appendChild(trTerrain);
+
+        var count = 0;
+        for(var i=0;i<allUnits.length;i++) {
+            if(allUnits[i].traingGround == sprite) {
+                var trUnit = document.createElement("tr");
+                trUnit.id = "menu52_"+count;
+                var trUnitDescription = document.createElement("tr");
+                var td1Unit = document.createElement("td");
+                td1Unit.id = "unit_"+i;
+                var td2Unit = document.createElement("td");
+                var td3Unit = document.createElement("td");
+                var divUnit = document.createElement("div");
+
+                divUnit.className = "hpMetter";
+                divUnit.style.setProperty("--imgVar","var(--"+allUnits[i].sprite+")");
+                divUnit.style.width= rect.width+"px";
+                divUnit.style.height = rect.height+"px";
+                td1Unit.rowSpan=2;
+                td1Unit.appendChild(divUnit);
+
+                td2Unit.textContent = allUnits[i].name + " - " + allUnits[i].gold + " gold";
+                td2Unit.style.fontSize="larger";
+                td3Unit.style.fontSize="normal";
+                td3Unit.textContent = allUnits[i].description;
+                var idTR2="menu_2_52_"+count;
+                td3Unit.id = idTR2;
+                
+                trUnit.appendChild(td1Unit);
+                trUnit.appendChild(td2Unit);
+                trUnitDescription.appendChild(td3Unit);
+                
+                table.appendChild(trUnit);
+                table.appendChild(trUnitDescription);
+                
+                count++;
+            }
+        }
+
+        splashBM.appendChild(table);
+        document.body.appendChild(splashBM);
+    },
+    cancelBuildingMenu: function() {
+        var idMenu = "building";
+        var splashBM=document.getElementById(idMenu);
+        if(splashBM) {
+            splashBM.remove();
+        }
     }
 }
