@@ -76,7 +76,7 @@ var state5Controller = {
         
         this.cancelRange(); // este regeresa a 40
         
-        gameController.state4CursorMoved(); 
+        state4Controller.state4CursorMoved(); 
         
         state50Unit= null;
         state6Cursor = null;
@@ -85,7 +85,7 @@ var state5Controller = {
     cancelS52: function() {
         splash.cancelBuildingMenu();
         Tile.deleteCursorMenu();
-        gameController.state4CursorMoved();
+        state4Controller.state4CursorMoved();
         gameState = 40;
     },
     accept52Menu: function() {
@@ -103,7 +103,7 @@ var state5Controller = {
     cancelS80: function() {
         splash.cancelEOTMenu();
         Tile.deleteCursorMenu();
-        gameController.state4CursorMoved();
+        state4Controller.state4CursorMoved();
         gameState = 40;
     },
     accept80Menu: function() {
@@ -118,19 +118,20 @@ var state5Controller = {
                     if(unit.name == "commoner") {
                         var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
                         if(terrain.sprite == "keep" || terrain.sprite == "casttle") {
-                            console.log("taking the "+terrain.sprite);
+                            //console.log("taking the "+terrain.sprite);
                             gameController.takeBuilding(unit);
                         }
                     }
                 });
                 currentPlayer++;
-                console.log("end of turn!!! "+currentPlayer+" "+players.length);
+                //console.log("end of turn!!! "+currentPlayer+" "+players.length);
                 if(players.length <= currentPlayer) {
-                    console.log("turno nuevo!!");
+                    //console.log("turno nuevo!!");
                     currentPlayer=0;
                     currentTurn++;
                 }
-                gameController.redrawUnits();
+                this.iSeeDeadPeope();
+                state4Controller.redrawUnits();
                 this.cancelS80();
                 gameController.initGame();
                 break;
@@ -141,6 +142,22 @@ var state5Controller = {
             case "menu80_cancel":
                 this.cancelS80();
                 break;
+        }
+    },
+    iSeeDeadPeope: function(){
+        var fantoms = document.getElementsByClassName("unitMetter");
+        for(var f=0;f<fantoms.length;f++) {
+            var fId = fantoms[f].id;
+            var isAlive = false; 
+            players.forEach(player => {
+                player.units.forEach(unit => {
+                    if(("unit"+unit._id) == fId) isAlive = true; // Its Alive!!!!
+                });
+            });
+            if(!isAlive) {
+                console.log("I see dead people!!!["+fId+"]");
+                fantoms[f].remove();
+            }
         }
     }
 };

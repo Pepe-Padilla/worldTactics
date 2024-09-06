@@ -123,9 +123,7 @@ class Tile {
         var idu = "unit"+idUnit;
         console.log("killlll "+idu);
         var theUnit = document.getElementById(idu);
-        if(theUnit) {
-            theUnit.remove();
-        }
+        theUnit.remove();
     }
 
     static createCursorMenu(cursorMenu,color,menuId) {

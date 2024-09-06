@@ -32,7 +32,7 @@ var mapController = {
             }
         }
         Tile.updateCursor(cursor);
-        if(gameState == 40) gameController.state4CursorMoved();
+        if(gameState == 40) state4Controller.state4CursorMoved();
     },
     showRangeOfUnit: function(unit,playerIndex) {
         var unitStats = gameController.getTotalStats(unit,true);
@@ -411,6 +411,7 @@ var createPlayers= function(map) {
     cursor.y=players[0].buildings[0].y;
     Tile.createCursor(cursor,theColor);
     gameState=20;
+    state3Controller.createInitialUnits();
     gameController.initGame();
     
 }

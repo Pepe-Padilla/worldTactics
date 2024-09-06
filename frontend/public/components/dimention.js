@@ -33,8 +33,8 @@ class Dimention {
             console.log("mapMax["+this.mapMaxX+"|"+this.mapMaxY+"] width["+this.width+"] height["+this.height+"] tiles["+this.tiles+"] widthMargin["+this.widthMargin+"] heightMargin["+this.heightMargin+"]");
             
             mapController.redrawTiles(this);
-            gameController.retakeBuildings();
-            gameController.redrawUnits();
+            state4Controller.retakeBuildings();
+            state4Controller.redrawUnits();
             mapController.redrawRanges();
         } );
     }
