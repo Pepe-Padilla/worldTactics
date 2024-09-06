@@ -10,7 +10,7 @@ var init = {
         // Units
         ajax.ajaxRequest("http://localhost/kira",function (kira) {
             console.log(kira);
-            allUnits.push(kira);
+            allUnits=kira;
         });
 
         // Carga mapa y jugadores

@@ -82,10 +82,15 @@
     --protect-sky-2:  url(img/effects/protect-sky-2.png);
     --protect-sky-3:  url(img/effects/protect-sky-3.png);
     --boot_tetonalli: url(img/effects/boot_tetonalli.png);
+
+    /* Buttons */
     --cancel: url(img/effects/cancel.png);
     --atack: url(img/effects/atack.png);
     --skills: url(img/effects/skills.png);
     --move: url(img/effects/move.png);
+    --eot:  url(img/effects/eot.png);
+    --rotate: url(img/effects/rotate.png);
+
 
     /* Units */
     --advocate-blue:      url(img/characters/advocate-blue.png);
@@ -95,18 +100,63 @@
     --kira-blue:          url(img/characters/kira-blue.png);
     --knight-blue:        url(img/characters/knight-blue.png);
     --ranger-blue:        url(img/characters/ranger-blue.png);
-    --advocate-red:      url(img/characters/advocate-red.png);
-    --assasin-red:       url(img/characters/assasin-red.png);
-    --commoner-red:      url(img/characters/commoner-red.png);
-    --halberdier-red:    url(img/characters/halberdier-red.png);
-    --kira-red:          url(img/characters/kira-red.png);
-    --knight-red:        url(img/characters/knight-red.png);
-    --ranger-red:        url(img/characters/ranger-red.png);
+    --mage-blue:          url(img/characters/mage-blue.png);
+    --nun-blue:           url(img/characters/nun-blue.png);
 
+    --advocate-red:       url(img/characters/advocate-red.png);
+    --assasin-red:        url(img/characters/assasin-red.png);
+    --commoner-red:       url(img/characters/commoner-red.png);
+    --halberdier-red:     url(img/characters/halberdier-red.png);
+    --kira-red:           url(img/characters/kira-red.png);
+    --knight-red:         url(img/characters/knight-red.png);
+    --ranger-red:         url(img/characters/ranger-red.png);
+    --mage-red:           url(img/characters/mage-red.png);
+    --nun-red:            url(img/characters/nun-red.png);
+
+    --advocate-green:       url(img/characters/advocate0.png);
+    --assasin-green:        url(img/characters/assasin0.png);
+    --commoner-green:       url(img/characters/commoner0.png);
+    --halberdier-green:     url(img/characters/halberdier0.png);
+    --kira-green:           url(img/characters/kira0.png);
+    --knight-green:         url(img/characters/knight0.png);
+    --ranger-green:         url(img/characters/ranger0.png);
+    --mage-green:           url(img/characters/mage0.png);
+    --nun-green:            url(img/characters/nun0.png);
+
+    --advocate-purple:       url(img/characters/advocate0.png);
+    --assasin-purple:        url(img/characters/assasin0.png);
+    --commoner-purple:       url(img/characters/commoner0.png);
+    --halberdier-purple:     url(img/characters/halberdier0.png);
+    --kira-purple:           url(img/characters/kira0.png);
+    --knight-purple:         url(img/characters/knight0.png);
+    --ranger-purple:         url(img/characters/ranger0.png);
+    --mage-purple:           url(img/characters/mage0.png);
+    --nun-purple:            url(img/characters/nun0.png);
+
+    --advocate-orange:       url(img/characters/advocate0.png);
+    --assasin-orange:        url(img/characters/assasin0.png);
+    --commoner-orange:       url(img/characters/commoner0.png);
+    --halberdier-orange:     url(img/characters/halberdier0.png);
+    --kira-orange:           url(img/characters/kira0.png);
+    --knight-orange:         url(img/characters/knight0.png);
+    --ranger-orange:         url(img/characters/ranger0.png);
+    --mage-orange:           url(img/characters/mage0.png);
+    --nun-orange:            url(img/characters/nun0.png);
+
+    --advocate-lime:       url(img/characters/advocate0.png);
+    --assasin-lime:        url(img/characters/assasin0.png);
+    --commoner-lime:       url(img/characters/commoner0.png);
+    --halberdier-lime:     url(img/characters/halberdier0.png);
+    --kira-lime:           url(img/characters/kira0.png);
+    --knight-lime:         url(img/characters/knight0.png);
+    --ranger-lime:         url(img/characters/ranger0.png);
+    --mage-lime:           url(img/characters/mage0.png);
+    --nun-lime:            url(img/characters/nun0.png);
 
     /* Terrain */
     --casttle: url(img/map/casttle0.png);
     --keep: url(img/map/keep0.png);
+    --ruins: url(img/map/ruins0.png);
 
     /* Color Players */
     --blue: blue;

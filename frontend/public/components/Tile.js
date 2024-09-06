@@ -115,6 +115,8 @@ class Tile {
 
         if(unit.moved) {
             theUnit.style.opacity = 0.7;
+        } else {
+            theUnit.style.opacity = 1;
         }
     }
     static killCharacter(idUnit) {
@@ -122,7 +124,6 @@ class Tile {
         console.log("killlll "+idu);
         var theUnit = document.getElementById(idu);
         if(theUnit) {
-            console.log("done");
             theUnit.remove();
         }
     }

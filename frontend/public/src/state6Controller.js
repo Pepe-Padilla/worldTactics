@@ -8,19 +8,19 @@ var state6Controller = {
 
         switch(action) {
             case "menu60_attack":
-                console.log(action);
+                //console.log(action);
                 this.atackSelected();
                 break;
             case "menu60_skill":
-                console.log(action);
+                //console.log(action);
                 break;
             case "menu60_move":
-                console.log(action);
+                //console.log(action);
                 state6Cursor = {...cursor};
                 this.moveSelected();
                 break;
             case "menu60_cancel":
-                console.log(action);
+                //console.log(action);
                 state5Controller.cancelMoveUnit();
                 break;
         }
@@ -87,7 +87,7 @@ var state6Controller = {
 
         // only if adjacent
         var distance=Math.abs(cursor.x-state6Cursor.x)+Math.abs(cursor.y-state6Cursor.y);
-        console.log(distance);
+        //console.log(distance);
         if(distance <= 1) {
             // 6. with the new HP of the objective resolve the objective final damage
             eUnitHP = (enemyUnit.hp + eUnitHP)/2; // average HP used

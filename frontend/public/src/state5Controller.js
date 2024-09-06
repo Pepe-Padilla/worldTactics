@@ -37,7 +37,11 @@ var state5Controller = {
             Tile.createCursorMenu(menuCursor,players[currentPlayer].color,52);
             gameState = 52;
         } else {
-
+            splash.cancelS4Splash();
+            splash.showEOTMenu();
+            menuCursor = 0;
+            Tile.createCursorMenu(menuCursor,players[currentPlayer].color,80);
+            gameState = 80;
         }
     },
     cancelRange: function() {
@@ -94,6 +98,49 @@ var state5Controller = {
             players[currentPlayer].gold -= allUnits[unitIndex].gold;
             gameController.createUnit(cursor.x,cursor.y,unitIndex);
             this.cancelS52();
+        }
+    },
+    cancelS80: function() {
+        splash.cancelEOTMenu();
+        Tile.deleteCursorMenu();
+        gameController.state4CursorMoved();
+        gameState = 40;
+    },
+    accept80Menu: function() {
+        var selected = document.getElementById("menu80_"+menuCursor);
+        var tds=selected.getElementsByTagName("td");
+        var action = tds[0].id; 
+
+        switch(action) {
+            case "menu80_eot":
+                players[currentPlayer].units.forEach(unit => {
+                    unit.moved = false;
+                    if(unit.name == "commoner") {
+                        var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+                        if(terrain.sprite == "keep" || terrain.sprite == "casttle") {
+                            console.log("taking the "+terrain.sprite);
+                            gameController.takeBuilding(unit);
+                        }
+                    }
+                });
+                currentPlayer++;
+                console.log("end of turn!!! "+currentPlayer+" "+players.length);
+                if(players.length <= currentPlayer) {
+                    console.log("turno nuevo!!");
+                    currentPlayer=0;
+                    currentTurn++;
+                }
+                gameController.redrawUnits();
+                this.cancelS80();
+                gameController.initGame();
+                break;
+            case "menu80_cicle":
+                gameController.cicleRight();
+                this.cancelS80();
+                break;
+            case "menu80_cancel":
+                this.cancelS80();
+                break;
         }
     }
 };

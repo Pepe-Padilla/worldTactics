@@ -38,7 +38,7 @@ var mapController = {
         var unitStats = gameController.getTotalStats(unit,true);
         var currentY = unit.y;
         var currentX = unit.x;
-        console.log(unitStats);
+        //console.log(unitStats);
         this.showRange(currentX,currentY,unitStats.vel,unitStats.agi,true,playerIndex);
     },
     showRange: function(currentX,currentY,currentVel,currentAgi,self,playerIndex) {

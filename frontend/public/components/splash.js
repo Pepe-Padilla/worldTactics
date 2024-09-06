@@ -340,5 +340,100 @@ var splash = {
         if(splashBM) {
             splashBM.remove();
         }
+    },
+    showEOTMenu: function(){
+        var idTile = "x0y0";
+        var theTile = document.getElementById(idTile);
+        var rect=theTile.getBoundingClientRect();
+
+        var idMenu = "endofturn";
+        var splashBM=document.getElementById(idMenu);
+        if(!splashBM) {
+            splashBM=document.createElement("div");
+            splashBM.id = idMenu;
+            splashBM.className = "splashBM";
+            splashBM.style.setProperty("--playerColor",players[currentPlayer].color);
+        }
+        splashBM.innerHTML = "";
+
+        var table = document.createElement("table");
+        var tbody = document.createElement("tbody");
+
+        var elementsOnMenu = 0;
+
+        // Cicle
+        var areActiveUnits = false;
+        players[currentPlayer].units.forEach(element => {
+            if(!element.moved) areActiveUnits = true;
+        });
+        if(areActiveUnits) {
+            var rorow= document.createElement("tr");
+            rorow.id="menu80_"+elementsOnMenu;
+            elementsOnMenu++;
+            var rodt1= document.createElement("td");
+            rodt1.id="menu80_cicle";
+            var roico= document.createElement("div");
+            roico.className="splashS50Button";
+            roico.style.setProperty("--imgVar","var(--rotate)");
+            roico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+            roico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+            var rodt2= document.createElement("td");
+            rodt2.className="splashS50Text";
+            rodt2.innerHTML="Next active unit";
+            rodt1.appendChild(roico);
+            rorow.appendChild(rodt1);
+            rorow.appendChild(rodt2);
+            tbody.appendChild(rorow);
+        }
+
+        // EOT
+        var carow= document.createElement("tr");
+        carow.id="menu80_"+elementsOnMenu;
+        elementsOnMenu++;
+        var cadt1= document.createElement("td");
+        cadt1.id="menu80_eot";
+        var caico= document.createElement("div");
+        caico.className="splashS50Button";
+        caico.style.setProperty("--imgVar","var(--eot)");
+        caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+        caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+        var cadt2= document.createElement("td");
+        cadt2.className="splashS50Text";
+        cadt2.innerHTML="End of turn?";
+        cadt1.appendChild(caico);
+        carow.appendChild(cadt1);
+        carow.appendChild(cadt2);
+        tbody.appendChild(carow);
+
+        // Cancel
+        var carow= document.createElement("tr");
+        carow.id="menu80_"+elementsOnMenu;
+        elementsOnMenu++;
+        var cadt1= document.createElement("td");
+        cadt1.id="menu80_cancel";
+        var caico= document.createElement("div");
+        caico.className="splashS50Button";
+        caico.style.setProperty("--imgVar","var(--cancel)");
+        caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+        caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+        var cadt2= document.createElement("td");
+        cadt2.className="splashS50Text";
+        cadt2.innerHTML="Cancel";
+        cadt1.appendChild(caico);
+        carow.appendChild(cadt1);
+        carow.appendChild(cadt2);
+        tbody.appendChild(carow);
+
+        table.appendChild(tbody);
+
+        splashBM.appendChild(table);
+        document.body.appendChild(splashBM);
+    },
+    cancelEOTMenu: function() {
+        var idMenu = "endofturn";
+        var splashBM=document.getElementById(idMenu);
+        if(splashBM) {
+            splashBM.remove();
+        }
     }
 }
