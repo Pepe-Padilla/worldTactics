@@ -90,6 +90,8 @@ var gameController = {
             state6Controller.atackConfirmed();
         } else if(gameState == 80) {
             state5Controller.accept80Menu();
+        } else if(gameState == 65) {
+            state6Controller.accept65Menu();
         }
     },
     cancelAcction: function() {
@@ -98,7 +100,7 @@ var gameController = {
         } else if(gameState == 50 || gameState == 51) {
             state5Controller.cancelRange();
             state4Controller.state4CursorMoved();
-        } else if(gameState == 60) {
+        } else if(gameState == 60|| gameState == 65) {
             state5Controller.cancelMoveUnit();
         } else if(gameState == 67) {
             state6Controller.cancelS60();
@@ -120,7 +122,7 @@ var gameController = {
                 cursor.y--;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState == 60 || gameState == 52 || gameState == 80) {
+        } else if(gameState == 60 || gameState == 52 || gameState == 80 || gameState == 65) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         }
     },
@@ -136,7 +138,7 @@ var gameController = {
                 cursor.y++;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState == 60 || gameState == 52  || gameState == 80) {
+        } else if(gameState == 60 || gameState == 52  || gameState == 80 || gameState == 65) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
         }
     },
@@ -171,14 +173,14 @@ var gameController = {
     rightTab: function() {
         if(gameState == 40) {
             this.cicleRight();
-        } else if(gameState == 60 || gameState == 52 || gameState == 80) {
+        } else if(gameState == 60 || gameState == 52 || gameState == 80 || gameState == 65) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
         }
     },
     leftTab: function() {
         if(gameState == 40) {
             this.cicleLeft();
-        } else if(gameState == 60 || gameState == 52 || gameState == 80) {
+        } else if(gameState == 60 || gameState == 52 || gameState == 80 || gameState == 65) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         }
     },
@@ -293,6 +295,17 @@ var gameController = {
         if(playerIndex) playerI = playerIndex;
         unit.playerIndex=playerI;
         players[playerI].units.push(unit);
+        unit.skills.forEach(skill => {
+            if(skill.pasive) {
+                
+                var stat= JSON.parse(JSON.stringify(skill));
+                stat.effects.forEach(effect => {
+                    //console.log("turno 0");
+                    effect.turn = 0; // pasivos siempre 0
+                })
+                unit.status.push(stat);
+            }
+        });
         Tile.upsertCharacter(unit);
         return unit;
     },

@@ -98,9 +98,15 @@ var splash = {
             //var bonus = {agi:0,vel:0,str:0,def:0};
             for(var u=0;u<unit.status.length;u++) {
                 var turnsLeft = 0;
-                for(var e=0;e<unit.status[u].effects.length;e++) {
-                    var turn = unit.status[u].effects[e].turn;
-                    if((turn+1)>turnsLeft) turnsLeft=turn+1;
+                if(unit.status[u].pasive) {
+                    //console.log("pasive");
+                    turnsLeft = "∞";
+                }
+                else {
+                    for(var e=0;e<unit.status[u].effects.length;e++) {
+                        var turn = unit.status[u].effects[e].turn;
+                        if((turn+1)>turnsLeft) turnsLeft=turn+1;
+                    }
                 }
                 effectsUnitHTML += "<div class='hpMetter' style='--imgVar: var(--"+unit.status[u].icon +"); width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;'>"+turnsLeft+"</div>&nbsp;";    
             }
@@ -435,5 +441,99 @@ var splash = {
         if(splashBM) {
             splashBM.remove();
         }
+    },
+    skillS50Splash: function(unit) {
+        // showS4Splash
+        var splashS50=document.getElementById("splashS50");
+
+        // get mesures
+        var idTile = "x0y0";
+        var theTile = document.getElementById(idTile);
+        var rect=theTile.getBoundingClientRect();
+
+        if(!splashS50) {
+            splashS50 = document.createElement("div");
+            document.body.appendChild(splashS50);
+            splashS50.id = "splashS50";
+            splashS50.className="splashS50";
+            splashS50.style.setProperty("--colorSprite","var(--"+players[currentPlayer].color+")");
+        }
+
+        splashS50.innerHTML = "";
+
+        splashS50.style.left = Math.floor(rect.left+(rect.width/2))+"px";
+        splashS50.style.top = Math.floor(rect.top+(rect.height/2))+"px";
+
+        var elementsOnMenu = 0;
+        var table= document.createElement("table");
+        table.style.borderCollapse = "colapse";
+        var tbody= document.createElement("tbody");
+
+        var pasiveSkills = [];
+        var lasttr = null;
+        for(var s = 0;s < unit.skills.length; s++) {
+            var skill = unit.skills[s];
+            var atrow= document.createElement("tr");
+            if(!skill.pasive) {
+                atrow.id="menu65_"+elementsOnMenu;
+                elementsOnMenu++;
+            }
+            var atdt1= document.createElement("td");
+            atdt1.id="menu65_"+skill.name;
+            var atico= document.createElement("div");
+            atico.className="splashS50Button";
+            atico.style.setProperty("--imgVar","var(--"+skill.icon+")");
+            atico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+            atico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+            var atdt2= document.createElement("td");
+            atdt2.className="splashS50Text";
+            atdt2.innerHTML=skill.name + " ["+skill.mp+" mp] - "+ skill.description;
+            atdt1.appendChild(atico);
+            atrow.appendChild(atdt1);
+            atrow.appendChild(atdt2);
+            if(!skill.pasive) { 
+                tbody.appendChild(atrow);
+                lasttr = atrow;
+            }
+            else {
+                pasiveSkills.push(atrow);
+            }
+        }
+
+        if(lasttr && pasiveSkills.length>0) lasttr.style.borderBottom = "1px solid black";
+
+        for(var ps= 0;ps<pasiveSkills.length; ps++) {
+            tbody.appendChild(pasiveSkills[ps]);
+            lasttr = pasiveSkills[ps];
+        }
+
+        lasttr.style.borderBottom = "1px solid black";
+
+        // Cancel
+        var carow= document.createElement("tr");
+        carow.id="menu65_"+elementsOnMenu;
+        elementsOnMenu++;
+        var cadt1= document.createElement("td");
+        cadt1.id="menu65_cancel";
+        var caico= document.createElement("div");
+        caico.className="splashS50Button";
+        caico.style.setProperty("--imgVar","var(--cancel)");
+        caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
+        caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+        var cadt2= document.createElement("td");
+        cadt2.className="splashS50Text";
+        cadt2.innerHTML="Cancel";
+        cadt1.appendChild(caico);
+        carow.appendChild(cadt1);
+        carow.appendChild(cadt2);
+        tbody.appendChild(carow);
+
+        table.appendChild(tbody);
+        splashS50.appendChild(table);
+        document.body.appendChild(splashS50);
+
+        menuCursor = 0;
+        Tile.deleteCursorMenu();
+        Tile.createCursorMenu(menuCursor,players[currentPlayer].color,65);
     }
 }

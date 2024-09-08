@@ -36,13 +36,16 @@ var state3Controller = {
                         
                         // TODO: specials effects that applay to begining of the turn
 
-                        // Remove obsolete status
-                        status.effects.splice(ef,1);
-                        ef--;
+                        // Remove obsolete effects
+                        if(!status.pasive) {
+                            status.effects.splice(ef,1);
+                            ef--;
+                        }
                     } else {
                         efect.turn--;
                     }
                 }
+                // Remove obsolet status
                 if(efect.length == 0) {
                     status.splice(stu,1);
                     stu--;
@@ -73,11 +76,13 @@ var state3Controller = {
         state4Controller.state4turnActive();
     },
     createInitialUnits: function () {
+        if(allUnits.length > 0)
         players.forEach((player,indexPlayer) => {
             var x = player.buildings[0].x;
             var y = player.buildings[0].y;
             var unit1 = gameController.createUnit(x,y,0,indexPlayer);
             unit1.moved = false;
+            /*
             if(x < theMap.xSize) {
                 var unit2 = gameController.createUnit(x+1,y,0,indexPlayer);
                 unit2.moved = false;
@@ -93,7 +98,7 @@ var state3Controller = {
             if(x > 0) {
                 var unit5 = gameController.createUnit(x-1,y,0,indexPlayer);
                 unit5.moved = false;
-            }
+            }*/
         });
     }
 };

@@ -11,8 +11,8 @@ var state6Controller = {
                 //console.log(action);
                 this.atackSelected();
                 break;
-            case "menu60_skill":
-                //console.log(action);
+            case "menu60_skills":
+                console.log(action);
                 this.skillSelected();
                 break;
             case "menu60_move":
@@ -41,7 +41,7 @@ var state6Controller = {
     },
     skillSelected: function() {
         state6Cursor = {...cursor};
-        splash.skillS50Splash();
+        splash.skillS50Splash(state50Unit);
         gameState = 65;
     },
     cancelS60: function() {
@@ -145,4 +145,10 @@ var state6Controller = {
             });
         };
     },
+    accept65Menu: function() {
+        var selected = document.getElementById("menu65_"+menuCursor);
+        var tds=selected.getElementsByTagName("td");
+        var action = tds[0].id;
+        console.log(action);
+    }
 }

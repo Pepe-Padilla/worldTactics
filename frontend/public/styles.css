@@ -83,6 +83,7 @@
     --protect-sky-3:  url(img/effects/protect-sky-3.png);
     --boot_tetonalli: url(img/effects/boot_tetonalli.png);
     --E2-or-E1-Icon-9: url(img/effects/E2-or-E1-Icon-9.png);
+    --prayer-mp: url(img/effects/prayer-mp.png);
 
     /* Buttons */
     --cancel: url(img/effects/cancel.png);
@@ -181,6 +182,7 @@ table {
     margin-right: auto;
     border-spacing: 0px;
     font-size: large;
+    border-collapse: collapse;
 }
 .hpMetter {
     text-align: right;
