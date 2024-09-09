@@ -1,5 +1,6 @@
 var state6Cursor = null;
 var action67=null;
+var action65=null;
 var state6Controller = {
     actionSelected: function () {
         var selected = document.getElementById("menu60_"+menuCursor);
@@ -112,10 +113,10 @@ var state6Controller = {
             }
         }
 
-        // 9. destroy de killed units
+        // 8. destroy de killed units
         gameController.resolveHPUnits();
 
-        // 8. finish the turn with this.moveSelected();
+        // 9. finish the turn with this.moveSelected();
         this.moveSelected();
     },
     specialUnitBonus: function(unit,terrain) {
@@ -150,5 +151,157 @@ var state6Controller = {
         var tds=selected.getElementsByTagName("td");
         var action = tds[0].id;
         console.log(action);
+
+        if(action == "menu65_cancel") {
+            state5Controller.cancelMoveUnit();
+            return;
+        }
+
+        var actionSelected = action.split("_");
+        var skillSelected = actionSelected[1];
+        
+        state6Cursor = {...cursor};
+        splash.cancelS50Splash();
+
+        state50Unit.skills.forEach(skill => {
+            if(skill.name == skillSelected) {
+                action65 = JSON.parse(JSON.stringify(skill)); //cloned
+            }
+        });
+
+        var currentRage = action65.range;
+
+        mapController.showSkillRange(state6Cursor.x,state6Cursor.y,currentRage);
+        mapController.showSkillArea(cursor.x,cursor.y,action65.area,action65.harmfull,cursor.x,cursor.y);
+        // and show area of effect
+        gameState = 66;
+    },
+    cursorMoved66: function() { 
+        mapController.cancelXArea();
+        mapController.showSkillArea(cursor.x,cursor.y,action65.area,action65.harmfull,cursor.x,cursor.y);
+    },
+    cancelS66: function(){
+        cursor = {...state6Cursor};
+        Tile.updateCursor(cursor);
+        state6Cursor=null;
+        action67=null;
+        action65=null;
+        mapController.cancelXRange();
+        splash.showS50Splash(state50Unit);
+        gameState = 60;
+    },
+    executeSkill: function() {
+        // state50Unit is the atacker
+        // in cursor is the objective
+        // in state6Cursor is the atacker final position,  moveSelected()
+        // action65 is the skill used
+        //unitHarmfullRange
+        //unitAllyRange
+
+        // 0. Validate target is on harmfull or ally range
+        var typeOfTarguets = action65.harmfull?"unitHarmfullRange":"unitAllyRange";
+        var ranges=document.getElementsByClassName(typeOfTarguets);
+
+        for(var r=0;r<ranges.length;r++) {
+            var rangeId = ranges[r].id;
+            // "skillRangeX"+initialX+"Y"+initialY;
+            // /skillRangeX(\d+)Y(\d+)/ :
+            // 0 - complete string
+            // 1 - x
+            // 2 - y
+            var rangePos = /skillAreaX(\d+)Y(\d+)/.exec(rangeId);
+            if(rangePos.length==3){
+                // 1. get ojectives
+                var xPos = parseInt(rangePos[1]);
+                var yPos = parseInt(rangePos[2]);
+                var targetUnit = gameController.getUnit(xPos,yPos);
+                if(targetUnit) { 
+                    console.log(targetUnit);
+                    var isAllie = targetUnit.playerIndex == state50Unit.playerIndex;
+                    if(isAllie && !action65.harmfull || !isAllie && action65.harmfull) {
+                        state50Unit.mp -= action65.mp;
+                        console.log("is a target!!");
+                        // 2. pass the status to the targuet
+                        var stat= JSON.parse(JSON.stringify(action65)); //cloned
+                        for(var e=0;e < stat.effects.length; e++) {
+                            console.log("giribilla");
+                            var effect = stat.effects[e];
+                            if(effect.atribute == "hp" || effect.atribute == "mp") {
+                                var newAtr = targetUnit[effect["atribute"]]+effect.bonus;
+                                if(newAtr>100) newAtr=100;
+                                targetUnit[effect["atribute"]]=newAtr;
+                                effect.turn--;
+                            }
+
+                            if(effect.atribute == "hp" && stat.harmfull) {
+                                this.applySpecialEffectsOnDamage(targetUnit);
+                            }
+                            this.applySpecialEffects(targetUnit,effect);
+                            
+                            if(effect.turn == -1){
+                                stat.effects.splice(e,1);
+                                e--;
+                            }
+                        }
+                        if(stat.effects.length > 0) {
+                            console.log("juai de rito");
+                            targetUnit.status.push(stat);
+                        }
+                    }
+                }
+            }
+        }
+
+        // 9. destroy de killed units
+        gameController.resolveHPUnits();
+
+        // 8. finish the turn with this.moveSelected();
+        this.moveSelected();
+        action65=null;
+    },
+    applySpecialEffects: function(unit,effect) {
+        switch(effect.special) {
+            case "twoPerPahtia":
+                var pahtiaCount=0;
+                players[unit.playerIndex].units.forEach(un => {
+                    un.status.forEach(stt => {
+                        if(stt.name == "Pahtia") pahtiaCount++;
+                    });
+                });
+                unit.mp += pahtiaCount*2;
+                if(unit.mp>100) unit.mp = 100;
+                break;
+            case "removeHarmfull":
+                for(var s=0;s<unit.status.lenght;s++) {
+                    if(unit.status[s].harmfull) {
+                        unit.status.splice(s,1);
+                        s--;
+                    }
+                }
+                break;
+            case "theMountainIsLava":
+                var posX = unit.x;
+                var posY = unit.y;
+                var terrain = theMap.arrayTerrain[posY].row[posX].terrain;
+                if(terrain.sprite == "mountain" || terrain.sprite == "casttle") {
+                    unit.hp -= 20;
+                    this.applySpecialEffectsOnDamage(unit);
+                }
+                break;
+            case "onePerHarmfull":
+                var pahtiaCount=0;
+                players.forEach((player,index) => {
+                    if(index != unit.playerIndex){
+                        player.units.forEach(un => {
+                            un.status.forEach(stt => {
+                                if(stt.harmfull) pahtiaCount++;
+                            });
+                        });
+                    }
+                });
+                unit.mp += pahtiaCount*1;
+                if(unit.mp>100) unit.mp = 100;
+                break;
+        }
     }
 }

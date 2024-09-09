@@ -27,9 +27,7 @@ var state4Controller = {
             for(var u=0;u<unit.status.length;u++) {
                 for(var e=0;e<unit.status[u].effects.length;e++) {
                     var anEffect = unit.status[u].effects[e];
-                    if(anEffect.turn == 0) {
-                        bonus[anEffect.atribute] += anEffect.bonus;
-                    }
+                    bonus[anEffect.atribute] += anEffect.bonus;
                 }
             }
         }

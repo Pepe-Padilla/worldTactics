@@ -27,15 +27,19 @@ var state3Controller = {
                 var status = unit.status[stu];
                 for(var ef=0;ef<status.effects.length;ef++){
                     var efect = status.effects[ef];
-                    if(efect.turn == 0) {
-                        if(efect.atribute == "hp" || efect.atribute == "mp") {
-                            var newAtr = unit[efect["atribute"]]+efect.bonus;
-                            if(newAtr>100) newAtr=100;
-                            unit[efect["atribute"]]=newAtr;
-                        }
-                        
-                        // TODO: specials effects that applay to begining of the turn
+                    if(efect.atribute == "hp" || efect.atribute == "mp") {
+                        var newAtr = unit[efect["atribute"]]+efect.bonus;
+                        if(newAtr>100) newAtr=100;
+                        unit[efect["atribute"]]=newAtr;
+                    }
+                    
+                    if(efect.atribute == "hp" && status.harmfull) {
+                        state6Controller.applySpecialEffectsOnDamage(unit);
+                    }
+                    
+                    state6Controller.applySpecialEffects(unit,efect);
 
+                    if(efect.turn == 0){
                         // Remove obsolete effects
                         if(!status.pasive) {
                             status.effects.splice(ef,1);
@@ -46,8 +50,8 @@ var state3Controller = {
                     }
                 }
                 // Remove obsolet status
-                if(efect.length == 0) {
-                    status.splice(stu,1);
+                if(status.effects.length == 0) {
+                    unit.status.splice(stu,1);
                     stu--;
                 }
             }

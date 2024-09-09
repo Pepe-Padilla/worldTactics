@@ -161,6 +161,22 @@ var mapController = {
             }
         }
     },
+    cancelXArea: function () {
+        var ranges=document.getElementsByClassName("unitHarmfullRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                ranges[r].remove();
+                r--;
+            }
+        }
+        ranges=document.getElementsByClassName("unitAllyRange");
+        for(var r=0;r<ranges.length;r++) {
+            if(ranges[r]) {
+                ranges[r].remove();
+                r--;
+            }
+        }
+    },
     redrawRanges: function() {
         var ranges = document.getElementsByClassName("unitRange");
         for(var r=0;r<ranges.length;r++) {
@@ -298,15 +314,18 @@ var mapController = {
             this.showXRange(currentX-1,currentY,aRange,harmfull,playerIndex);
         }
     },
-    showSkillArea: function(currentX,currentY,currentArea,harmfull) {
+    showSkillArea: function(currentX,currentY,currentArea,harmfull,initialX,initialY) {
+        var idIniTile = "skillRangeX"+initialX+"Y"+initialY;
+        var theIniTile = document.getElementById(idIniTile);
+        if(!theIniTile) return; // only inside  the skill Range
+
         var currentTileId = "skillAreaX"+currentX+"Y"+currentY;
         var currentTile = document.getElementById(currentTileId);
         if(!currentTile) {
-            // theTile info
             var idTile = "x"+currentX+"y"+currentY;
             var theTile = document.getElementById(idTile);
             var rect=theTile.getBoundingClientRect();
-
+            
             currentTile = document.createElement("div");
             currentTile.id = currentTileId;
             currentTile.style.position = "absolute";
@@ -319,26 +338,25 @@ var mapController = {
             document.body.appendChild(currentTile);
         }
 
-        if(currentArea<=0) return;
-
         var aRange = currentArea;
         aRange--;
+        if(aRange<=0) return;
 
         // North
         if(currentY > 0) {
-            this.showSkillArea(currentX,currentY-1,aRange);
+            this.showSkillArea(currentX,currentY-1,aRange, harmfull,initialX,initialY);
         }
         // South
         if(currentY < theMap.ySize-1) {
-            this.showSkillArea(currentX,currentY+1,aRange);
+            this.showSkillArea(currentX,currentY+1,aRange, harmfull,initialX,initialY);
         }
         // East
         if(currentX < theMap.xSize-1) {
-            this.showSkillArea(currentX+1,currentY,aRange);
+            this.showSkillArea(currentX+1,currentY,aRange,harmfull,initialX,initialY);
         }
         // West
         if(currentX > 0) {
-            this.showSkillArea(currentX-1,currentY,aRange);
+            this.showSkillArea(currentX-1,currentY,aRange,harmfull,initialX,initialY);
         }
     },
     showSkillRange: function(currentX,currentY,currentArea) {
@@ -357,10 +375,11 @@ var mapController = {
             currentTile.style.top = rect.top+"px";
             currentTile.style.width = rect.width+"px";
             currentTile.style.height = rect.height+"px";
-            currentTile.className="skillAreaRange";
+            currentTile.className="skillRange";
             document.body.appendChild(currentTile);
         }
 
+        //console.log("currentX[%s] currentY[%s] currentArea[%s]",currentX,currentY,currentArea);
         if(currentArea<=0) return;
 
         var aRange = currentArea;
@@ -368,19 +387,19 @@ var mapController = {
 
         // North
         if(currentY > 0) {
-            this.showSkillArea(currentX,currentY-1,aRange);
+            this.showSkillRange(currentX,currentY-1,aRange);
         }
         // South
         if(currentY < theMap.ySize-1) {
-            this.showSkillArea(currentX,currentY+1,aRange);
+            this.showSkillRange(currentX,currentY+1,aRange);
         }
         // East
         if(currentX < theMap.xSize-1) {
-            this.showSkillArea(currentX+1,currentY,aRange);
+            this.showSkillRange(currentX+1,currentY,aRange);
         }
         // West
         if(currentX > 0) {
-            this.showSkillArea(currentX-1,currentY,aRange);
+            this.showSkillRange(currentX-1,currentY,aRange);
         }
     },
 };

@@ -442,7 +442,7 @@ var splash = {
             splashBM.remove();
         }
     },
-    skillS50Splash: function(unit) {
+    skillS50Splash: function(unit) { 
         // showS4Splash
         var splashS50=document.getElementById("splashS50");
 

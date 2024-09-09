@@ -221,12 +221,12 @@ table {
 }
 .unitAllyRange{
     z-index: 5;
-    background-color: lime;
-    opacity: 0.4;
+    background-color: cyan;
+    opacity: 0.6;
 }
 .skillRange{
     z-index: 6;
-    background-color: blueviolet;
+    background-color: purple;
     opacity: 0.4;
 }
 .splashS50 {

@@ -92,6 +92,8 @@ var gameController = {
             state5Controller.accept80Menu();
         } else if(gameState == 65) {
             state6Controller.accept65Menu();
+        } else if(gameState == 66) {
+            state6Controller.executeSkill();
         }
     },
     cancelAcction: function() {
@@ -108,6 +110,8 @@ var gameController = {
             state5Controller.cancelS52();
         } else if(gameState == 80) {
             state5Controller.cancelS80();
+        } else if(gameState == 66) {
+            state6Controller.cancelS66();
         }
     },
     goNorth: function(){
@@ -124,6 +128,12 @@ var gameController = {
             }
         } else if(gameState == 60 || gameState == 52 || gameState == 80 || gameState == 65) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
+        } else if(gameState == 66) {
+            if(cursor.y > 0) {
+                cursor.y--;
+                Tile.updateCursor(cursor);
+                state6Controller.cursorMoved66();
+            }
         }
     },
     goSouth: function(){
@@ -140,6 +150,12 @@ var gameController = {
             }
         } else if(gameState == 60 || gameState == 52  || gameState == 80 || gameState == 65) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
+        } else if(gameState == 66) {
+            if(cursor.y < theMap.ySize-1) {
+                cursor.y++;
+                Tile.updateCursor(cursor);
+                state6Controller.cursorMoved66();
+            }
         }
     },
     goEast: function(){
@@ -154,6 +170,12 @@ var gameController = {
                 cursor.x++;
                 Tile.updateCursor(cursor);
             }
+        } else if(gameState == 66) {
+            if(cursor.x < theMap.xSize-1) {
+                cursor.x++;
+                Tile.updateCursor(cursor);
+                state6Controller.cursorMoved66();
+            }
         }
     },
     goWest: function(){  // this is what we're gonna do
@@ -167,6 +189,12 @@ var gameController = {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
+            }
+        } else if(gameState == 66) {
+            if(cursor.x > 0) {
+                cursor.x--;
+                Tile.updateCursor(cursor);
+                state6Controller.cursorMoved66();
             }
         }
     },
@@ -297,12 +325,7 @@ var gameController = {
         players[playerI].units.push(unit);
         unit.skills.forEach(skill => {
             if(skill.pasive) {
-                
                 var stat= JSON.parse(JSON.stringify(skill));
-                stat.effects.forEach(effect => {
-                    //console.log("turno 0");
-                    effect.turn = 0; // pasivos siempre 0
-                })
                 unit.status.push(stat);
             }
         });
