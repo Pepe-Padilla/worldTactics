@@ -136,7 +136,7 @@ var state6Controller = {
         return bonus;
     },
     applySpecialEffectsOnDamage: function(unit) {
-        for(var s;s < unit.status.lenght; s++) {
+        for(var s;s < unit.status.length; s++) {
             var stat = unit.status[s];
             stat.effects.forEach(effect => {
                 if(effect.special == "lostOnDamage") {
@@ -226,17 +226,19 @@ var state6Controller = {
                         for(var e=0;e < stat.effects.length; e++) {
                             console.log("giribilla");
                             var effect = stat.effects[e];
-                            if(effect.atribute == "hp" || effect.atribute == "mp") {
+                            var applaySpecials = false;
+                            if((effect.atribute == "hp" || effect.atribute == "mp") && effect.turn == 0) {
                                 var newAtr = targetUnit[effect["atribute"]]+effect.bonus;
                                 if(newAtr>100) newAtr=100;
                                 targetUnit[effect["atribute"]]=newAtr;
                                 effect.turn--;
+                                applaySpecials = true;
                             }
 
-                            if(effect.atribute == "hp" && stat.harmfull) {
+                            if(effect.atribute == "hp" && stat.harmfull && applaySpecials) {
                                 this.applySpecialEffectsOnDamage(targetUnit);
                             }
-                            this.applySpecialEffects(targetUnit,effect);
+                            if(applaySpecials) this.applySpecialEffects(targetUnit,effect);
                             
                             if(effect.turn == -1){
                                 stat.effects.splice(e,1);
@@ -272,7 +274,7 @@ var state6Controller = {
                 if(unit.mp>100) unit.mp = 100;
                 break;
             case "removeHarmfull":
-                for(var s=0;s<unit.status.lenght;s++) {
+                for(var s=0;s<unit.status.length;s++) {
                     if(unit.status[s].harmfull) {
                         unit.status.splice(s,1);
                         s--;

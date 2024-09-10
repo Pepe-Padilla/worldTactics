@@ -250,9 +250,7 @@ var gameController = {
             for(var u=0;u<unit.status.length;u++) {
                 for(var e=0;e<unit.status[u].effects.length;e++) {
                     var anEffect = unit.status[u].effects[e];
-                    if(anEffect.turn == 0) {
-                        bonus[anEffect.atribute] += anEffect.bonus;
-                    }
+                    bonus[anEffect.atribute] += anEffect.bonus;
                 }
             }
         }
@@ -274,10 +272,8 @@ var gameController = {
         for(var s=0;s<terrain.status.length;s++) {
             for(var e=0;e<terrain.status[s].effects.length;e++) {
                 var effect = terrain.status[s].effects[e];
-                if(effect.turn == 0){
-                    bonus[effect.atribute]+= effect.bonus;
-                    if(effect.special != "") bonus.specials.push(effect.special); 
-                }
+                bonus[effect.atribute]+= effect.bonus;
+                if(effect.special != "") bonus.specials.push(effect.special); 
             }
         }
         return bonus;
@@ -308,7 +304,7 @@ var gameController = {
 
                 if(terrain.sprite == "casttle") {
                     // TODO: kill player and casttle
-                    // TODO: if players.lenght < 2 players[0] wins!!!
+                    // TODO: if players.length < 2 players[0] wins!!!
                 } 
             }
         }
@@ -423,9 +419,7 @@ var gameController = {
             for(var u=0;u<unit.status.length;u++) {
                 for(var e=0;e<unit.status[u].effects.length;e++) {
                     var anEffect = unit.status[u].effects[e];
-                    if(anEffect.turn == 0) {
-                        bonus[anEffect.atribute] += anEffect.bonus;
-                    }
+                    bonus[anEffect.atribute] += anEffect.bonus;
                 }
             }
         }

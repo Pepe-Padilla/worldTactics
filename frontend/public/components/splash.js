@@ -467,6 +467,9 @@ var splash = {
         var elementsOnMenu = 0;
         var table= document.createElement("table");
         table.style.borderCollapse = "colapse";
+        var caption = document.createElement("caption");
+        caption.innerHTML = unit.mp + " mp";
+        table.appendChild(caption);
         var tbody= document.createElement("tbody");
 
         var pasiveSkills = [];
@@ -474,7 +477,7 @@ var splash = {
         for(var s = 0;s < unit.skills.length; s++) {
             var skill = unit.skills[s];
             var atrow= document.createElement("tr");
-            if(!skill.pasive) {
+            if(!skill.pasive && skill.mp <= unit.mp) {
                 atrow.id="menu65_"+elementsOnMenu;
                 elementsOnMenu++;
             }
@@ -485,6 +488,7 @@ var splash = {
             atico.style.setProperty("--imgVar","var(--"+skill.icon+")");
             atico.style.setProperty("--widthico",(rect.width*0.7)+"px");
             atico.style.setProperty("--heightico",(rect.height*0.7)+"px");
+            if(skill.mp > unit.mp)  atico.style.opacity=0.4;
             var atdt2= document.createElement("td");
             atdt2.className="splashS50Text";
             atdt2.innerHTML=skill.name + " ["+skill.mp+" mp] - "+ skill.description;
