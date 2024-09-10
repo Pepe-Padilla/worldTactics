@@ -224,8 +224,8 @@ var gameController = {
                         var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
                         terrain.taken = 0;
                     }
-                    players[p].units.splice(ch,1);
                     Tile.killCharacter(theUnit);
+                    players[p].units.splice(ch,1);
                     ch--;
                 }
             }
@@ -297,7 +297,7 @@ var gameController = {
 
                 terrain.taker = unit.playerIndex;
                 terrain.taken = 0;
-                players[unit.playerIndex].buildings.push({x:terrain.x,y:terrain.y,terrain:terrain});
+                players[unit.playerIndex].buildings.push(theMap.arrayTerrain[unit.y].row[unit.x]);
 
                 console.log("take Building payer["+terrain.taker+"]");
                 Tile.takeBulding(unit.x,unit.y,color,isNeutral);

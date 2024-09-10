@@ -202,6 +202,8 @@ var state6Controller = {
         var typeOfTarguets = action65.harmfull?"unitHarmfullRange":"unitAllyRange";
         var ranges=document.getElementsByClassName(typeOfTarguets);
 
+        state50Unit.mp -= action65.mp;
+
         for(var r=0;r<ranges.length;r++) {
             var rangeId = ranges[r].id;
             // "skillRangeX"+initialX+"Y"+initialY;
@@ -219,7 +221,6 @@ var state6Controller = {
                     console.log(targetUnit);
                     var isAllie = targetUnit.playerIndex == state50Unit.playerIndex;
                     if(isAllie && !action65.harmfull || !isAllie && action65.harmfull) {
-                        state50Unit.mp -= action65.mp;
                         console.log("is a target!!");
                         // 2. pass the status to the targuet
                         var stat= JSON.parse(JSON.stringify(action65)); //cloned
