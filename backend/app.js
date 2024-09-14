@@ -28,7 +28,17 @@ app.use((req, res, next) => {
 });
 
 app.get('/maps/1', async(req, res) => {
-  const kira = require('./maps/StepOn1v1.json');
+  const kira = require('./maps/customMap1.json');
+  console.log(kira);
+  res.status(200).json(kira);
+}); 
+app.get('/maps/2', async(req, res) => {
+  const kira = require('./maps/customMap2.json');
+  console.log(kira);
+  res.status(200).json(kira);
+}); 
+app.get('/maps/3', async(req, res) => {
+  const kira = require('./maps/customMap3.json');
   console.log(kira);
   res.status(200).json(kira);
 }); 

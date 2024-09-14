@@ -34,6 +34,7 @@ var state3Controller = {
                     }
                     
                     if(efect.atribute == "hp" && status.harmfull) {
+                        console.log("harmfull");
                         state6Controller.applySpecialEffectsOnDamage(unit);
                     }
                     

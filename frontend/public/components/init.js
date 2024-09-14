@@ -14,7 +14,11 @@ var init = {
         });
 
         // Carga mapa y jugadores
-        ajax.ajaxRequest("http://localhost/maps/1",mapController.createTiles);
+        var mapId=1;
+        if(GET["mapId"]) {
+            mapId = GET["mapId"];
+        }
+        ajax.ajaxRequest("http://localhost/maps/"+mapId,mapController.createTiles);
 
         // Controladores keyboard y gamepad
         keyboard.init();

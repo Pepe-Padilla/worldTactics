@@ -34,7 +34,7 @@ var splash = {
         if(need4Colums) newInnerHTML += "<th></th><th></th>"; 
         newInnerHTML += "</tr></thead>"+
         "<tbody>"+
-        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"casttle0"+IMAGE_EXTENTION+"'></td><td>1</td>";
+        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"castle0"+IMAGE_EXTENTION+"'></td><td>1</td>";
         if(!need4Colums) newInnerHTML +=  "</tr><tr>"; 
         newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"keep0"+IMAGE_EXTENTION+"'></td><td>"+(players[currentPlayer].buildings.length -1)+"</td></tr>"+
         "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"commoner-"+players[currentPlayer].color+IMAGE_EXTENTION+"'></td><td>"+players[currentPlayer].units.length+" </td>";

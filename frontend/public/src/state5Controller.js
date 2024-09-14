@@ -94,7 +94,7 @@ var state5Controller = {
         var action = tds[0].id; 
         var unitIndex = parseInt(action.split("_")[1]);
 
-        if(players[currentPlayer].gold > allUnits[unitIndex].gold) {
+        if(players[currentPlayer].gold >= allUnits[unitIndex].gold) {
             players[currentPlayer].gold -= allUnits[unitIndex].gold;
             gameController.createUnit(cursor.x,cursor.y,unitIndex);
             this.cancelS52();
@@ -117,7 +117,7 @@ var state5Controller = {
                     unit.moved = false;
                     if(unit.name == "commoner") {
                         var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
-                        if(terrain.sprite == "keep" || terrain.sprite == "casttle") {
+                        if(terrain.sprite == "keep" || terrain.sprite == "castle") {
                             //console.log("taking the "+terrain.sprite);
                             gameController.takeBuilding(unit);
                         }

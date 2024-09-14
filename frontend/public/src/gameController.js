@@ -302,8 +302,8 @@ var gameController = {
                 console.log("take Building payer["+terrain.taker+"]");
                 Tile.takeBulding(unit.x,unit.y,color,isNeutral);
 
-                if(terrain.sprite == "casttle") {
-                    // TODO: kill player and casttle
+                if(terrain.sprite == "castle") {
+                    // TODO: kill player and castle
                     // TODO: if players.length < 2 players[0] wins!!!
                 } 
             }

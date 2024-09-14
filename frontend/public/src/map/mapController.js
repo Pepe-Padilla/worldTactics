@@ -408,7 +408,7 @@ var createPlayers= function(map) {
     var colors=["blue","red","green","purple","orange","lime","yellow","silver","black","white"];
     for(var i=0;i<map.xSize;i++) {
         for(var j=0;j<map.ySize; j++) {
-            if(map.arrayTerrain[j].row[i].terrain.sprite=="casttle") {
+            if(map.arrayTerrain[j].row[i].terrain.sprite=="castle") {
                 var index = players.length;
                 if(index>9) throw new Error("Map recives too many players");
                 map.arrayTerrain[j].row[i].terrain.taker=index;
@@ -424,7 +424,7 @@ var createPlayers= function(map) {
         }
     }
     console.log(""+players.length+" players detected");
-    if(players.length == 0) throw new Error("Map have no casttles there are no players");
+    if(players.length == 0) throw new Error("Map have no castles there are no players");
     var theColor= players[0].color;
     cursor.x=players[0].buildings[0].x;
     cursor.y=players[0].buildings[0].y;

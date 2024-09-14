@@ -123,12 +123,12 @@ var state6Controller = {
         var bonus = {str:0,def:0};
         switch(unit.name) {
             case "assasin":
-                if(terrain.sprite == "thiket" || terrain.sprite == "forest" || terrain.sprite == "mountain") {
+                if(terrain.sprite == "thicket" || terrain.sprite == "forest" || terrain.sprite == "mountain") {
                     bonus.str += terrain.defBonus;
                 }
                 break;
             case "ranger":
-                if(terrain.sprite == "casttle" || terrain.sprite == "keep" || terrain.sprite == "mountain") {
+                if(terrain.sprite == "castle" || terrain.sprite == "keep" || terrain.sprite == "mountain") {
                     bonus.str += terrain.defBonus;
                 }
                 break;
@@ -136,15 +136,16 @@ var state6Controller = {
         return bonus;
     },
     applySpecialEffectsOnDamage: function(unit) {
-        for(var s;s < unit.status.length; s++) {
+        for(var s=0;s < unit.status.length; s++) {
             var stat = unit.status[s];
             stat.effects.forEach(effect => {
                 if(effect.special == "lostOnDamage") {
+                    console.log("lostOnDamage["+unit._id+"] status["+s+"]");
                     unit.status.splice(s,1);
                     s--;
                 }
             });
-        };
+        }
     },
     accept65Menu: function() {
         var selected = document.getElementById("menu65_"+menuCursor);
@@ -203,6 +204,8 @@ var state6Controller = {
         var ranges=document.getElementsByClassName(typeOfTarguets);
 
         state50Unit.mp -= action65.mp;
+        state50Unit.x=state6Cursor.x; // the caster must be in the new position to get their benefits
+        state50Unit.y=state6Cursor.y;
 
         for(var r=0;r<ranges.length;r++) {
             var rangeId = ranges[r].id;
@@ -213,25 +216,25 @@ var state6Controller = {
             // 2 - y
             var rangePos = /skillAreaX(\d+)Y(\d+)/.exec(rangeId);
             if(rangePos.length==3){
-                // 1. get ojectives
+                // 1. get ojectivess
                 var xPos = parseInt(rangePos[1]);
                 var yPos = parseInt(rangePos[2]);
                 var targetUnit = gameController.getUnit(xPos,yPos);
                 if(targetUnit) { 
-                    console.log(targetUnit);
                     var isAllie = targetUnit.playerIndex == state50Unit.playerIndex;
                     if(isAllie && !action65.harmfull || !isAllie && action65.harmfull) {
                         console.log("is a target!!");
                         // 2. pass the status to the targuet
                         var stat= JSON.parse(JSON.stringify(action65)); //cloned
                         for(var e=0;e < stat.effects.length; e++) {
-                            console.log("giribilla");
                             var effect = stat.effects[e];
+                            console.log("effect in "+effect.atribute);
                             var applaySpecials = false;
                             if((effect.atribute == "hp" || effect.atribute == "mp") && effect.turn == 0) {
-                                var newAtr = targetUnit[effect["atribute"]]+effect.bonus;
+                                var newAtr = targetUnit[effect.atribute]+effect.bonus;
                                 if(newAtr>100) newAtr=100;
-                                targetUnit[effect["atribute"]]=newAtr;
+                                console.log("newAtr["+newAtr+"]");
+                                targetUnit[effect.atribute]=newAtr;
                                 effect.turn--;
                                 applaySpecials = true;
                             }
@@ -286,7 +289,7 @@ var state6Controller = {
                 var posX = unit.x;
                 var posY = unit.y;
                 var terrain = theMap.arrayTerrain[posY].row[posX].terrain;
-                if(terrain.sprite == "mountain" || terrain.sprite == "casttle") {
+                if(terrain.sprite == "mountain" || terrain.sprite == "castle") {
                     unit.hp -= 20;
                     this.applySpecialEffectsOnDamage(unit);
                 }
