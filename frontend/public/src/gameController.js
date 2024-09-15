@@ -290,7 +290,7 @@ var gameController = {
                     // delete it form the other player
                     for(var b=0;b<players[terrain.taker].buildings.length;b++){
                         if(players[terrain.taker].buildings[b].x == unit.x &&  players[terrain.taker].buildings[b].y == unit.y) {
-                            players[terrain.taker].buildingssplice(b,1);
+                            players[terrain.taker].buildings.splice(b,1);
                         }
                     }
                 }
