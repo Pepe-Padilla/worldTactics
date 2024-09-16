@@ -1,4 +1,6 @@
 var gamepad = {
+    keys: [],
+    keyRelation: [],
     control: null,
     isGamepadConnected: 'ongamepadconnected' in window,
     isConnected: false,
@@ -9,6 +11,14 @@ var gamepad = {
         } else {
             gamepad.update();
         }
+        this.keyRelation["gamePadA"]= 0;
+        this.keyRelation["gamePadB"]= 1;
+        this.keyRelation["gamePadLB"]= 4;
+        this.keyRelation["gamePadRB"]= 5;
+        this.keyRelation["gamePadUp"]= 12;
+        this.keyRelation["gamePadDown"]= 13;
+        this.keyRelation["gamePadLeft"]= 14;
+        this.keyRelation["gamePadRight"]= 15;
     },
     connect: function (e) {
         gamepad.control = e.gamepad;
@@ -34,8 +44,19 @@ var gamepad = {
         if(!gamepad.control) {
             return;
         }
-        if(gamepad.isButtonDown(gamepad.control.buttons[0])) {
-            console.log("controll A");
+        for (const [key, value] of Object.entries(this.keyRelation)) {
+            //console.log(key+"-"+value);
+            if(gamepad.isButtonDown(gamepad.control.buttons[value])) {
+                if(this.keys.indexOf(key) == -1) {
+                    this.keys.push(key);
+                    gameController.readAction(key);
+                }
+            } else {
+                var indexKey = this.keys.indexOf(key);
+                if(indexKey !== -1) {
+                    this.keys.splice(indexKey,1);
+                }
+            } 
         }
     },
     identifiy: function() {

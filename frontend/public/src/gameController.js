@@ -35,37 +35,45 @@ var gameController = {
         switch(key) {
             case "ArrowUp":
             case "w":
+            case "gamePadUp":
                 this.goNorth();
                 //console.log(key);
                 break;
             case "ArrowDown":
             case "s":
+            case "gamePadDown":
                 this.goSouth();
                 //console.log(key);
                 break;
             case "ArrowRight":
             case "d":
+            case "gamePadRight":
                 this.goEast();
                 //console.log(key);
                 break;
             case "ArrowLeft":
             case "a":
+            case "gamePadLeft":
                 this.goWest(); //where the skies are blue
                 //console.log(key + " This is our destiny");
                 break;
             case "g":
+            case "gamePadA":
                 this.acceptAcction();
                 //console.log(key);
                 break;
             case "h":
+            case "gamePadB":
                 this.cancelAcction();
                 //console.log(key);
                 break;
             case "q":
+            case "gamePadLB":
                 this.leftTab();
                 //console.log(key);
                 break;
             case "e":
+            case "gamePadRB":
                 this.rightTab();
                 //console.log(key);
                 break;

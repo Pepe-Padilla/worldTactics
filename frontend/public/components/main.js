@@ -6,7 +6,7 @@ var mainLoop = {
     idExecution: null,
     
     // aux variables for UPS and FPS reading, not necesary
-    //lastMS: 0,
+    lastMS: 0,
     //ups: 0,
     //fps: 0,
 
@@ -19,12 +19,13 @@ var mainLoop = {
         mainLoop.draw(currentMS);
 
         // show UPSs and FPSs
-        //if(currentMS - mainLoop.lastMS > 999) { // 1 sec = 1000 ms
-        //    mainLoop.lastMS = currentMS;
+        if(currentMS - mainLoop.lastMS > 999) { // 1 sec = 1000 ms
+            mainLoop.lastMS = currentMS;
         //    console.log( "UPS: " + mainLoop.ups + " | FPS: " + mainLoop.fps );
         //    mainLoop.ups = 0;
+            //gamepad.update();
         //    mainLoop.fps = 0;
-        //}
+        }
 
     },
     stop: function() {},
@@ -32,7 +33,7 @@ var mainLoop = {
         //mainLoop.ups++; // UPS reading
 
         // game logic
-        keyboard.reset();
+        //keyboard.reset();
         gamepad.update();
     },
     draw: function(currentMS) {

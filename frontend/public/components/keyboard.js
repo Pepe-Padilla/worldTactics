@@ -4,8 +4,7 @@ var keyboard = {
         document.onkeydown = keyboard.readKey;
     },
     readKey: function(e) {
-        keyboard.keys.push(e.key);
-        //console.log(e.key);
+        //keyboard.keys.push(e.key);
         gameController.readAction(e.key);
     },
     isKeyDown: function(key) {
