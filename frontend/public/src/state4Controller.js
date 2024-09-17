@@ -66,5 +66,12 @@ var state4Controller = {
             }
         }
         state5Controller.mapSelected(theMap.arrayTerrain[cursor.y].row[cursor.x].terrain);
+    },
+    keepWorking: function() {
+        var workWork= gameController.getUnit(cursor.x,cursor.y);
+        if(workWork && workWork.name == "commoner" && theMap.arrayTerrain[cursor.y].row[cursor.x].terrain.sprite == "mine") {
+            workWork.moved = true;
+            Tile.upsertCharacter(workWork);
+        }
     }
 };

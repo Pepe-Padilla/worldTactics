@@ -13,12 +13,21 @@ var gamepad = {
         }
         this.keyRelation["gamePadA"]= 0;
         this.keyRelation["gamePadB"]= 1;
+        //this.keyRelation["gamePadX"]= 2;
+        this.keyRelation["gamePadY"]= 3;
         this.keyRelation["gamePadLB"]= 4;
         this.keyRelation["gamePadRB"]= 5;
+        //this.keyRelation["gamePadLT"]= 6;
+        //this.keyRelation["gamePadLB"]= 7;
+        //this.keyRelation["gamePadBack"]= 8;
+        //this.keyRelation["gamePadStart"]= 9;
+        //this.keyRelation["gamePadLSB"]= 10;
+        //this.keyRelation["gamePadRSB"]= 11;
         this.keyRelation["gamePadUp"]= 12;
         this.keyRelation["gamePadDown"]= 13;
         this.keyRelation["gamePadLeft"]= 14;
         this.keyRelation["gamePadRight"]= 15;
+        //this.keyRelation["gamePadHome"]= 16; // don't touch xbox and steam have it form the balls
     },
     connect: function (e) {
         gamepad.control = e.gamepad;

@@ -25,7 +25,7 @@ var init = {
                 state4Controller.state4turnActive();
             });
         } else {
-                // Units
+            // Units
             ajax.ajaxRequest("http://localhost/kira",function (kira) {
                 console.log(kira);
                 allUnits=kira;

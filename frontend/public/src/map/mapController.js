@@ -22,7 +22,7 @@ var mapController = {
             }
         }
 
-        if(uploaded === false) {
+        if(!uploaded) {
             gameState=10;
             createPlayers(map);
         }

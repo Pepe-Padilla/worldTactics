@@ -34,6 +34,10 @@ var gameController = {
     },
     readAction: function(key){
         switch(key) {
+            case "t":
+            case "gamePadY":
+                this.keepWorking();
+                break;
             case "ArrowUp":
             case "w":
             case "gamePadUp":
@@ -121,6 +125,11 @@ var gameController = {
             state5Controller.cancelS80();
         } else if(gameState == 66) {
             state6Controller.cancelS66();
+        }
+    },
+    keepWorking: function() {
+        if(gameState == 40) {
+            state4Controller.keepWorking();
         }
     },
     goNorth: function(){
