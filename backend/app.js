@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
 const Character = require('./models/character');
-const MapT = require('./models/map');
+const Map = require('./models/map');
+const Game = require('./models/game');
 
 const app = express();
 
@@ -52,7 +53,7 @@ app.get('/kira', async(req, res) => {
 app.get('/maps', async (req, res) => {
   console.log('TRYING TO FETCH MAPS');
   try {
-    const maps = await MapT.find();
+    const maps = await Map.find();
     res.status(200).json({
       maps: maps.map((maps) => ({
         id: maps.id,
@@ -67,44 +68,57 @@ app.get('/maps', async (req, res) => {
   }
 });
 
-/*app.post('/goals', async (req, res) => {
-  console.log('TRYING TO STORE GOAL');
-  const goalText = req.body.text;
+// Game
+app.post('/games', async (req, res) => {
+  console.log('TRYING TO STORE A GAME');
+  const gameText = req.body;
+  console.log(gameText);
 
-  if (!goalText || goalText.trim().length === 0) {
+  if (!gameText) {
     console.log('INVALID INPUT - NO TEXT');
-    return res.status(422).json({ message: 'Invalid goal text.' });
+    return res.status(422).json({ message: 'Invalid game' });
   }
 
-  const goal = new Goal({
-    text: goalText,
-  });
+  const game = new Game(gameText);
 
-  try {
-    await goal.save();
-    res
-      .status(201)
-      .json({ message: 'Goal saved', goal: { id: goal.id, text: goalText } });
-    console.log('STORED NEW GOAL');
-  } catch (err) {
-    console.error('ERROR FETCHING GOALS');
-    console.error(err.message);
-    res.status(500).json({ message: 'Failed to save goal.' });
+  if(!game._id) {
+    try {
+      await game.save();
+      res
+        .status(201)
+        .json({ message: 'Game saved', game: { _id: game._id } });
+      console.log('GAME SAVED');
+    } catch (err) {
+      console.error('ERROR GAME SAVED');
+      console.error(err.message);
+      res.status(500).json({ message: 'Failed to save the GAME.' });
+    }
+  } else {
+    const filter = { _id: game._id }
+    try {
+      await Game.findOneAndUpdate(filter,game);
+      res
+        .status(201)
+        .json({ message: 'Game updated', game: { _id: game._id } });
+      console.log('GAME SAVED');
+    } catch (err) {
+      console.error('ERROR GAME SAVED');
+      console.error(err.message);
+      res.status(500).json({ message: 'Failed to save the GAME.' });
+    }
   }
-});*/
+});
 
-app.get('/maps/:id', async (req, res) => {
-  console.log('TRYING TO DELETE GOAL');
+app.get('/games/:id', async (req, res) => {
+  console.log('TRYING TO FETCH GAME');
   try {
-    const maps = await MapT.findOne({ _id: req.params.id });
-    res.status(200).json({
-      maps: maps.map(maps),
-    });
-    console.log('FETCHED MAP');
+    const game = await Game.findById(req.params.id );
+    res.status(200).json(game);
+    console.log('FETCHED GAME');
   } catch (err) {
-    console.error('ERROR FETCHING MAPS');
+    console.error('ERROR FETCHING GAME');
     console.error(err.message);
-    res.status(500).json({ message: 'Failed to delete MAPS.' });
+    res.status(500).json({ message: 'Failed to get GAME' });
   }
 });
 

@@ -2,56 +2,163 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const characterSchema = new Schema({
-  name: String,
-  description: String,
-  hp: { type: Number, default: 100, require: true },
-  mp: { type: Number, default: 0, require: true },
-  agi: { type: Number, default: 100, require: true },
-  vel: { type: Number, default: 70, require: true },
-  str: { type: Number, default: 100, require: true },
-  def: { type: Number, default: 0, require: true },
-  atkrange: { type: Number, default: 1, require: true },
-  bonus: [{
-    characterId: Schema.Types.ObjectId, 
-    atribute: [{
-      atriName: { type: String, enum: [ "str", "def" ] },
-      bonus: Number
-    }]
-  }],
-  skills: [{ 
-    name: String,
-    description: String,
-    range: Number,
-    area: Number,
-    mp: Number,
-    lineEfect: { type: Boolean, default: false },
-    pasive: { type: Boolean, default: false },
-    afects: { type: String, enum: [ "allies", "enemies", "bouth", "alliesNoSelf", "bouthNoSelf", "terrainAllies", "terrainEnemies", "terrainBouth" ] },
-    harmfull: { type: Boolean, default: true },
-    efect: [{
-      turn: Number,
-      atribute: { type: String, enum: [ "hp", "mp", "agi", "vel", "str", "def" ] },
-      bonus: Number,
-      sprites: Schema.Types.ObjectId,
-      special: String
-    }]
-  }],
-  sprites: Schema.Types.ObjectId,
-  status: [{ 
-    name: String,
-    description: String,
-    icon: Schema.Types.ObjectId,
-    efect: [{
-      turn: Number,
-      atribute: { type: String, enum: [ "hp", "mp", "vel", "str", "def" ] },
-      bonus: Number,
-      sprites: Schema.Types.ObjectId,
-      special: String
-    }]
-  }],
+const modelSchema = new Schema({
+  "name": {
+    "type": "String"
+  },
+  "description": {
+    "type": "String"
+  },
+  "traingGround": {
+    "type": "String"
+  },
+  "gold": {
+    "type": "Number"
+  },
+  "x": {
+    "type": "Number"
+  },
+  "y": {
+    "type": "Number"
+  },
+  "hp": {
+    "type": "Number"
+  },
+  "mp": {
+    "type": "Number"
+  },
+  "agi": {
+    "type": "Number"
+  },
+  "vel": {
+    "type": "Number"
+  },
+  "str": {
+    "type": "Number"
+  },
+  "def": {
+    "type": "Number"
+  },
+  "atkrange": {
+    "type": "Number"
+  },
+  "sprite": {
+    "type": "String"
+  },
+  "moved": {
+    "type": "Boolean"
+  },
+  "playerIndex": {
+    "type": "Number"
+  },
+  "bonus": {
+    "commoner": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "advocate": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "halberdier": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "knight": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "assasin": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "ranger": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "pavwill": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "mage": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "nun": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "warlock": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "druid": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    },
+    "kira": {
+      "str": {
+        "type": "Number"
+      },
+      "def": {
+        "type": "Number"
+      }
+    }
+  },
+  "skills": {
+    "type": [
+      "Mixed"
+    ]
+  },
+  "status": {
+    "type": "Array"
+  }
 });
 
-const CharacterModel = mongoose.model('Character', characterSchema);
+const model = mongoose.model('Character', modelSchema);
 
-module.exports = CharacterModel;
+module.exports = model;

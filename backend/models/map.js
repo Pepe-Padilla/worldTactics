@@ -2,32 +2,43 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const mapSchema = new Schema(
+const modelSchema = new Schema(
   {
-    name: String,
-    description: String,
-    author: String,
-    public: Boolean,
-    craeateDate: { type: Date, default: Date.now },
-    lastModifiedDate: { type: Date, default: Date.now },
-    rate: Number,
-    xSize: Number,
-    ySize: Number,
-    arrayTerrain: [
-      {
-        rowNumber: Number,
-        row: [
-          {
-            x: Number,
-            y: Number,
-            terrain: Schema.Types.ObjectId
-          },
-        ],
-      }
-    ]
+    "name": {
+      "type": "String"
+    },
+    "description": {
+      "type": "String"
+    },
+    "author": {
+      "type": "String"
+    },
+    "public": {
+      "type": "Boolean"
+    },
+    "craeateDate": {
+      "type": "Date"
+    },
+    "lastModifiedDate": {
+      "type": "Date"
+    },
+    "rate": {
+      "type": "Number"
+    },
+    "xSize": {
+      "type": "Number"
+    },
+    "ySize": {
+      "type": "Number"
+    },
+    "arrayTerrain": {
+      "type": [
+        "Mixed"
+      ]
+    }
   }
 );
 
-const MapModel = mongoose.model('Map', mapSchema);
+const model = mongoose.model('Map', modelSchema);
 
-module.exports = MapModel;
+module.exports = model;

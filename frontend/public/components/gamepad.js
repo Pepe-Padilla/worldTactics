@@ -45,16 +45,21 @@ var gamepad = {
             return;
         }
         for (const [key, value] of Object.entries(this.keyRelation)) {
-            //console.log(key+"-"+value);
             if(gamepad.isButtonDown(gamepad.control.buttons[value])) {
+                // whileKeyDown
+
                 if(this.keys.indexOf(key) == -1) {
                     this.keys.push(key);
+
+                    // onKeyDown
                     gameController.readAction(key);
                 }
             } else {
                 var indexKey = this.keys.indexOf(key);
                 if(indexKey !== -1) {
                     this.keys.splice(indexKey,1);
+
+                    // onKeyUp
                 }
             } 
         }

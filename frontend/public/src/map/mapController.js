@@ -1,6 +1,6 @@
 // Globals used (on gameController):
 var mapController = {
-    createTiles: function(map) {
+    createTiles: function(map,uploaded) {
         console.log(map);
         theMap = map;
         mapXsize = map.xSize;
@@ -22,8 +22,10 @@ var mapController = {
             }
         }
 
-        gameState=10;
-        createPlayers(map);
+        if(uploaded === false) {
+            gameState=10;
+            createPlayers(map);
+        }
     },
     redrawTiles: function(dimention) {
         for(var i=0; i<dimention.mapMaxX; i++) {

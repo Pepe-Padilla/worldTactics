@@ -15,6 +15,7 @@
  * 90 - end of turn (all)
  * 100 - victory
  */
+var gameId=null;
 var gameState=0;
 var theMap=null;
 var players=[];
@@ -432,5 +433,27 @@ var gameController = {
             }
         }
         return bonus;
+    },
+    saveGame: function() {
+        if(gameState != 40) {
+            console.error("Cant save in this game state!!!");
+            console.error("Game not saved");
+            return;
+        }
+        var game2Save = {
+            units: allUnits,
+            map: theMap,
+            players: players,
+            currentPlayer: currentPlayer,
+            currentTurn: currentTurn,
+            gameState: gameState
+        };
+        if(gameId) {
+            game2Save._id = gameId;
+        }
+        ajax.postRequest("http://localhost/games",JSON.stringify(game2Save),function (resp) {
+            gameId = resp.game._id;
+            console.log(resp);
+        });
     }
 }
