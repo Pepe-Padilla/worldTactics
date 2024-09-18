@@ -36,7 +36,7 @@ var gameController = {
         switch(key) {
             case "t":
             case "gamePadY":
-                this.keepWorking();
+                this.specialAcction();
                 break;
             case "ArrowUp":
             case "w":
@@ -127,7 +127,7 @@ var gameController = {
             state6Controller.cancelS66();
         }
     },
-    keepWorking: function() {
+    specialAcction: function() {
         if(gameState == 40) {
             state4Controller.keepWorking();
         }

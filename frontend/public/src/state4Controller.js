@@ -69,7 +69,8 @@ var state4Controller = {
     },
     keepWorking: function() {
         var workWork= gameController.getUnit(cursor.x,cursor.y);
-        if(workWork && workWork.name == "commoner" && theMap.arrayTerrain[cursor.y].row[cursor.x].terrain.sprite == "mine") {
+        if(workWork && workWork.name == "commoner"  && workWork.playerIndex == currentPlayer && 
+            theMap.arrayTerrain[cursor.y].row[cursor.x].terrain.sprite == "mine") {
             workWork.moved = true;
             Tile.upsertCharacter(workWork);
         }
