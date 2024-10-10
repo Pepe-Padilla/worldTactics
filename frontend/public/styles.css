@@ -103,7 +103,7 @@
     --knight-blue:        url(img/characters/knight-blue.png);
     --ranger-blue:        url(img/characters/ranger-blue.png);
     --mage-blue:          url(img/characters/mage-blue.png);
-    --nun-blue:           url(img/characters/nun-blue.png);
+    --priestess-blue:           url(img/characters/priestess-blue.png);
 
     --advocate-red:       url(img/characters/advocate-red.png);
     --assasin-red:        url(img/characters/assasin-red.png);
@@ -113,7 +113,7 @@
     --knight-red:         url(img/characters/knight-red.png);
     --ranger-red:         url(img/characters/ranger-red.png);
     --mage-red:           url(img/characters/mage-red.png);
-    --nun-red:            url(img/characters/nun-red.png);
+    --priestess-red:            url(img/characters/priestess-red.png);
 
     --advocate-green:       url(img/characters/advocate-green.png);
     --assasin-green:        url(img/characters/assasin-green.png);
@@ -123,7 +123,7 @@
     --knight-green:         url(img/characters/knight-green.png);
     --ranger-green:         url(img/characters/ranger-green.png);
     --mage-green:           url(img/characters/mage-green.png);
-    --nun-green:            url(img/characters/nun-green.png);
+    --priestess-green:            url(img/characters/priestess-green.png);
 
     --advocate-purple:       url(img/characters/advocate-purple.png);
     --assasin-purple:        url(img/characters/assasin-purple.png);
@@ -133,7 +133,7 @@
     --knight-purple:         url(img/characters/knight-purple.png);
     --ranger-purple:         url(img/characters/ranger-purple.png);
     --mage-purple:           url(img/characters/mage-purple.png);
-    --nun-purple:            url(img/characters/nun-purple.png);
+    --priestess-purple:            url(img/characters/priestess-purple.png);
 
     --advocate-orange:       url(img/characters/advocate0.png);
     --assasin-orange:        url(img/characters/assasin0.png);
@@ -143,7 +143,7 @@
     --knight-orange:         url(img/characters/knight0.png);
     --ranger-orange:         url(img/characters/ranger0.png);
     --mage-orange:           url(img/characters/mage0.png);
-    --nun-orange:            url(img/characters/nun0.png);
+    --priestess-orange:            url(img/characters/priestess0.png);
 
     --advocate-lime:       url(img/characters/advocate0.png);
     --assasin-lime:        url(img/characters/assasin0.png);
@@ -153,7 +153,7 @@
     --knight-lime:         url(img/characters/knight0.png);
     --ranger-lime:         url(img/characters/ranger0.png);
     --mage-lime:           url(img/characters/mage0.png);
-    --nun-lime:            url(img/characters/nun0.png);
+    --priestess-lime:            url(img/characters/priestess0.png);
 
     /* Terrain */
     --castle: url(img/map/castle0.png);

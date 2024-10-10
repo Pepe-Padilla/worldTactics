@@ -116,7 +116,7 @@ const modelSchema = new Schema({
         "type": "Number"
       }
     },
-    "nun": {
+    "priestess": {
       "str": {
         "type": "Number"
       },

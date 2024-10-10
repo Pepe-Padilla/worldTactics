@@ -1,21 +1,3 @@
-/**
- * 0 - initial state - 10
- * 5 - map selection - 0
- * 10 - map charged - 8
- * 20 - players charged  - 10
- * 30 - begining of player turn - 7
- * 40 - turn active - selecting on map - 10
- * 50 - element selected (active allie) - move - 10
- * 51 - element selected (not active allie or enemy unit) - view range - 10
- * 52 - element selected (allie structure non occupied by unit) - buy unit menu - 3
- * 53 - element selected (map, no allie structure, non occupied by unit) - end turn menu - 0
- * 60 - unit move - selecting acction - 10
- * 65 - unit atack/dont move/skill - selecting acction - 4
- * 70 - acction result - 0
- * 80 - end of player turn - 0
- * 90 - end of turn (all) - 0
- * 100 - victory - 0
- */
 var state50Unit = null;
 var state5Controller = {
     unitPlayerSelected: function(unit,playerIndex) {

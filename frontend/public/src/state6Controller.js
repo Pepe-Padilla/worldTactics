@@ -83,12 +83,13 @@ var state6Controller = {
         var eUnitBonus = gameController.getTotalBonus(enemyUnit,state50Unit.name);
         var eTerrainBonus = gameController.getTerrainStats(cursor.x,cursor.y);
         var eUnitSpecialBonus = this.specialUnitBonus(enemyUnit,theMap.arrayTerrain[cursor.y].row[cursor.x].terrain);
-        var eUnitHP = state50Unit.hp;
+        var eUnitHP = enemyUnit.hp;
         var eUnitDef = eUnitBonus.def + enemyUnit.def + eTerrainBonus.def + eunitEfects.def + eUnitSpecialBonus.def;
         var eUnitStr = eUnitBonus.str + enemyUnit.str + eTerrainBonus.str + eunitEfects.str + eUnitSpecialBonus.str;
 
         // 4. Resolve the atackers final damage
-        var dmg = Math.floor(((unitHP/100) * unitStr)-((eUnitHP/100)*eUnitDef));
+        var dmg = Math.floor(((unitHP/100) * unitStr)-((eUnitHP/100) * eUnitDef));
+        console.log(`attack: dmg[${dmg}] unitHP[${unitHP}] unitStr[${unitStrdmg}] eUnitHP[${eUnitHP}] eUnitDef[${eUnitDef}]`);
         if(dmg < 0) dmg = 0;
 
         // 5. make the objective take the damage
@@ -103,7 +104,8 @@ var state6Controller = {
         if(distance <= 1) {
             // 6. with the new HP of the objective resolve the objective final damage
             eUnitHP = (enemyUnit.hp + eUnitHP)/2; // average HP used
-            dmg = Math.floor(((eUnitHP/100) * eUnitStr)-((unitHP/100)*unitDef));
+            dmg = Math.floor(((eUnitHP/100) * eUnitStr)-((unitHP/100) * unitDef));
+            console.log(`contraattack: distance[${distance}] dmg[${dmg}] unitHP[${unitHP}] unitStr[${unitStrdmg}] eUnitHP[${eUnitHP}] eUnitDef[${eUnitDef}]`);
 
             // 7. make the atacker take the damage
             if(dmg < 0) dmg = 0;
@@ -129,7 +131,7 @@ var state6Controller = {
                 break;
             case "ranger":
                 if(terrain.sprite == "castle" || terrain.sprite == "keep" || terrain.sprite == "mountain") {
-                    bonus.str += terrain.defBonus;
+                    bonus.str += terrain.defBonus/2;
                 }
                 break;
         }
