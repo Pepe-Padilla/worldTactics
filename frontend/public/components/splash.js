@@ -283,7 +283,7 @@ var splash = {
 
         var table = document.createElement("table");
         var caption = document.createElement("caption");
-        caption.innerHTML=players[currentPlayer].name +" gold: "+players[currentPlayer].gold;
+        caption.innerHTML=players[currentPlayer].playerName +" gold: "+players[currentPlayer].gold;
         table.appendChild(caption);
         
         var trTerrain = document.createElement("tr");

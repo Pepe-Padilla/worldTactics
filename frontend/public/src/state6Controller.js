@@ -89,7 +89,7 @@ var state6Controller = {
 
         // 4. Resolve the atackers final damage
         var dmg = Math.floor(((unitHP/100) * unitStr)-((eUnitHP/100) * eUnitDef));
-        console.log(`attack: dmg[${dmg}] unitHP[${unitHP}] unitStr[${unitStrdmg}] eUnitHP[${eUnitHP}] eUnitDef[${eUnitDef}]`);
+        console.log(`attack: dmg[${dmg}] unitHP[${unitHP}] unitStr[${unitStr}] eUnitHP[${eUnitHP}] eUnitDef[${eUnitDef}]`);
         if(dmg < 0) dmg = 0;
 
         // 5. make the objective take the damage
@@ -101,11 +101,11 @@ var state6Controller = {
         // only if adjacent
         var distance=Math.abs(cursor.x-state6Cursor.x)+Math.abs(cursor.y-state6Cursor.y);
         //console.log(distance);
-        if(distance <= 1) {
+        if(distance <= 1 && enemyUnit.hp > 0) {
             // 6. with the new HP of the objective resolve the objective final damage
             eUnitHP = (enemyUnit.hp + eUnitHP)/2; // average HP used
             dmg = Math.floor(((eUnitHP/100) * eUnitStr)-((unitHP/100) * unitDef));
-            console.log(`contraattack: distance[${distance}] dmg[${dmg}] unitHP[${unitHP}] unitStr[${unitStrdmg}] eUnitHP[${eUnitHP}] eUnitDef[${eUnitDef}]`);
+            console.log(`contraattack: distance[${distance}] dmg[${dmg}] unitHP[${unitHP}] unitDef[${unitDef}] eUnitHP[${eUnitHP}] eUnitStr[${eUnitStr}]`);
 
             // 7. make the atacker take the damage
             if(dmg < 0) dmg = 0;
