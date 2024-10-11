@@ -214,8 +214,6 @@ var splash = {
             tbody.appendChild(skrow);
         }
 
-        // TODO: Take
-
         // Move
         var morow= document.createElement("tr");
         morow.id="menu60_"+elementsOnMenu;
