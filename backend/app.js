@@ -43,6 +43,11 @@ app.get('/maps/3', async(req, res) => {
   console.log(kira);
   res.status(200).json(kira);
 }); 
+app.get('/maps/4', async(req, res) => {
+  const kira = require('./maps/customMap4.json');
+  console.log(kira);
+  res.status(200).json(kira);
+}); 
 
 app.get('/kira', async(req, res) => {
   const kira = require('./chars/kira.json');
