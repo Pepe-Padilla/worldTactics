@@ -87,6 +87,7 @@ var state3Controller = {
             var y = player.buildings[0].y;
             var unit1 = gameController.createUnit(x,y,0,indexPlayer);
             unit1.moved = false;
+            // TODO: more hurry up movements
             /*
             if(x < theMap.xSize) {
                 var unit2 = gameController.createUnit(x+1,y,0,indexPlayer);

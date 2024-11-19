@@ -88,13 +88,31 @@ var state6Controller = {
         var eUnitStr = eUnitBonus.str + enemyUnit.str + eTerrainBonus.str + eunitEfects.str + eUnitSpecialBonus.str;
 
         // 4. Resolve the atackers final damage
-        //  - The atack/defense value is proporcional to HP %, in orther to avoid loosing to much power in a lineal poportion: unitProportion = (unitHP/100)
-        //    it is used an inverse cuadratic proportion: 
+        //    The atack/defense value is proporcional to HP %, in orther to avoid loosing to much power in a lineal poportion: unitProportion = (unitHP/100)
+        //
+        //    - It can be used an inverse cuadratic proportion: 
         //      100% HP -> 100% STR/DEF    1 - (1 - 1)^2 = 1
         //      50%  HP ->  75% STR/DEF    1 - (1 - 0.5)^2 = 0.75
         //      25%  HP ->  44% STR/DEF    1 - (1 - 0.25)^2 = 0.4375
-        var unitProportion = 1 - Math.pow(1 - (unitHP/100),2);
-        var enemyProportion = 1 - Math.pow(1 - (eUnitHP/100),2);
+        //var unitProportion = 1 - Math.pow(1 - (unitHP/100),2);
+        //var enemyProportion = 1 - Math.pow(1 - (eUnitHP/100),2);
+        //
+        //    - It can be used a square algorithm:
+        //      100% HP -> 100% STR/DEF    sqr(1)     = 1
+        //      50%  HP ->  70% STR/DEF    sqr(0.5)   = 0.7071
+        //      25%  HP ->  50% STR/DEF    sqr(0.25)  = 0.5
+        //var unitProportion = 1 - Math.sqrt(unitHP/100);
+        //var enemyProportion = 1 - Math.sqrt(eUnitHP/100);
+        //
+        //    - It can be used a logarithm proportion using a k constant: ln (1 + k * (unitHP/100)) / ln (1 + k)
+        //      (when k = 3)
+        //      100% HP -> 100% STR/DEF    ln(1 + 3 * 1) / ln(1 + 3)  = 1
+        //      50%  HP ->  66% STR/DEF    ln(1 + 3 * 0.75) / ln(1 + 3)  = 0.66096
+        //      25%  HP ->  40% STR/DEF    ln(1 + 3 * 0.25) / ln(1 + 3)  = 0.40367
+        var k = 4; // <---- make tests whith this value
+        var unitProportion = Math.log(1+(k*(unitHP/100))) / Math.log(1+k);
+        var enemyProportion = Math.log(1+(k*(eUnitHP/100))) / Math.log(1+k);
+
         var dmg = Math.floor((unitProportion * unitStr)-(enemyProportion * eUnitDef));
         console.log(`attack: dmg[${dmg}] unitHP[${unitHP}] unitStr[${unitStr}] unitProportion[${unitProportion}] eUnitHP[${eUnitHP}] eUnitDef[${eUnitDef}] enemyProportion[${enemyProportion}]`);
         if(dmg < 0) dmg = 0;
@@ -110,7 +128,7 @@ var state6Controller = {
         if(distance <= 1 && enemyUnit.hp > 0) {
             // 7. with the new HP of the objective resolve the objective final damage
             eUnitHP = enemyUnit.hp;
-            enemyProportion = 1 - Math.pow(1 - (eUnitHP/100),2);
+            enemyProportion = Math.log(1+(k*(eUnitHP/100))) / Math.log(1+k);
 
             dmg = Math.floor((enemyProportion * eUnitStr)-(unitProportion * unitDef));
             console.log(`contraattack: distance[${distance}] dmg[${dmg}] unitHP[${unitHP}] unitDef[${unitDef}] unitProportion[${unitProportion}] eUnitHP[${eUnitHP}] eUnitStr[${eUnitStr}]enemyProportion[${enemyProportion}]`);
