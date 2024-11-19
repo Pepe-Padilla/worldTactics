@@ -88,8 +88,15 @@ var state6Controller = {
         var eUnitStr = eUnitBonus.str + enemyUnit.str + eTerrainBonus.str + eunitEfects.str + eUnitSpecialBonus.str;
 
         // 4. Resolve the atackers final damage
-        var dmg = Math.floor(((unitHP/100) * unitStr)-((eUnitHP/100) * eUnitDef));
-        console.log(`attack: dmg[${dmg}] unitHP[${unitHP}] unitStr[${unitStr}] eUnitHP[${eUnitHP}] eUnitDef[${eUnitDef}]`);
+        //  - The atack/defense value is proporcional to HP %, in orther to avoid loosing to much power in a lineal poportion: unitProportion = (unitHP/100)
+        //    it is used an inverse cuadratic proportion: 
+        //      100% HP -> 100% STR/DEF    1 - (1 - 1)^2 = 1
+        //      50%  HP ->  75% STR/DEF    1 - (1 - 0.5)^2 = 0.75
+        //      25%  HP ->  44% STR/DEF    1 - (1 - 0.25)^2 = 0.4375
+        var unitProportion = 1 - Math.pow(1 - (unitHP/100),2);
+        var enemyProportion = 1 - Math.pow(1 - (eUnitHP/100),2);
+        var dmg = Math.floor((unitProportion * unitStr)-(enemyProportion * eUnitDef));
+        console.log(`attack: dmg[${dmg}] unitHP[${unitHP}] unitStr[${unitStr}] unitProportion[${unitProportion}] eUnitHP[${eUnitHP}] eUnitDef[${eUnitDef}] enemyProportion[${enemyProportion}]`);
         if(dmg < 0) dmg = 0;
 
         // 5. make the objective take the damage
@@ -98,16 +105,17 @@ var state6Controller = {
             this.applySpecialEffectsOnDamage(enemyUnit);
         }
 
-        // only if adjacent
+        // 6. response with a counter atack only if adjacent and the enemy survied:
         var distance=Math.abs(cursor.x-state6Cursor.x)+Math.abs(cursor.y-state6Cursor.y);
-        //console.log(distance);
         if(distance <= 1 && enemyUnit.hp > 0) {
-            // 6. with the new HP of the objective resolve the objective final damage
-            eUnitHP = (enemyUnit.hp + eUnitHP)/2; // average HP used
-            dmg = Math.floor(((eUnitHP/100) * eUnitStr)-((unitHP/100) * unitDef));
-            console.log(`contraattack: distance[${distance}] dmg[${dmg}] unitHP[${unitHP}] unitDef[${unitDef}] eUnitHP[${eUnitHP}] eUnitStr[${eUnitStr}]`);
+            // 7. with the new HP of the objective resolve the objective final damage
+            eUnitHP = enemyUnit.hp;
+            enemyProportion = 1 - Math.pow(1 - (eUnitHP/100),2);
 
-            // 7. make the atacker take the damage
+            dmg = Math.floor((enemyProportion * eUnitStr)-(unitProportion * unitDef));
+            console.log(`contraattack: distance[${distance}] dmg[${dmg}] unitHP[${unitHP}] unitDef[${unitDef}] unitProportion[${unitProportion}] eUnitHP[${eUnitHP}] eUnitStr[${eUnitStr}]enemyProportion[${enemyProportion}]`);
+
+            // 8. make the atacker take the damage
             if(dmg < 0) dmg = 0;
             state50Unit.hp -= dmg;
             if(dmg > 0) {
@@ -115,11 +123,11 @@ var state6Controller = {
             }
         }
 
-        // 8. destroy de killed units
-        gameController.resolveHPUnits();
-
         // 9. finish the turn with this.moveSelected();
         this.moveSelected();
+
+        // 10. destroy de killed units
+        gameController.resolveHPUnits();
     },
     specialUnitBonus: function(unit,terrain) {
         var bonus = {str:0,def:0};
