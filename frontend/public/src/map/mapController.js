@@ -34,7 +34,7 @@ var mapController = {
             }
         }
         Tile.updateCursor(cursor);
-        if(gameState == 40) state4Controller.state4CursorMoved();
+        if(gameState === 40) state4Controller.state4CursorMoved();
     },
     showRangeOfUnit: function(unit,playerIndex) {
         var unitStats = gameController.getTotalStats(unit,true);
