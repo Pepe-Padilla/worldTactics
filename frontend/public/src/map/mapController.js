@@ -37,35 +37,35 @@ var mapController = {
         if(gameState === 40) state4Controller.state4CursorMoved();
     },
     showRangeOfUnit: function(unit,playerIndex) {
-        var unitStats = gameController.getTotalStats(unit,true);
-        var currentY = unit.y;
-        var currentX = unit.x;
+        const unitStats = gameController.getTotalStats(unit,true);
+        const currentY = unit.y;
+        const currentX = unit.x;
         //console.log(unitStats);
         this.showRange(currentX,currentY,unitStats.vel,unitStats.agi,true,playerIndex);
     },
     showRange: function(currentX,currentY,currentVel,currentAgi,self,playerIndex) {
         
         // see if there is a unit (not self thats always true and dont want the self unit)
-        var isThereUnit = false;
-        var isEnemy = false;
+        const isThereUnit = false;
+        const isEnemy = false;
         if(!self) {
             for(var p=0;p<players.length;p++) {
                 for(var u=0;u<players[p].units.length;u++) { 
-                    if(players[p].units[u].x == currentX && players[p].units[u].y == currentY) {
+                    if(players[p].units[u].x === currentX && players[p].units[u].y === currentY) {
                         isThereUnit = true;
-                        isEnemy = p != playerIndex;
+                        isEnemy = p !== playerIndex;
                     }
                 }
             }
         }
 
-        var currentTileId = "rangeX"+currentX+"Y"+currentY;
-        var currentTile = document.getElementById(currentTileId);
+        const currentTileId = "rangeX"+currentX+"Y"+currentY;
+        const currentTile = document.getElementById(currentTileId);
         if(!currentTile && !isThereUnit) {
             // theTile info
-            var idTile = "x"+currentX+"y"+currentY;
-            var theTile = document.getElementById(idTile);
-            var rect=theTile.getBoundingClientRect();
+            const idTile = "x"+currentX+"y"+currentY;
+            const theTile = document.getElementById(idTile);
+            const rect=theTile.getBoundingClientRect();
 
             currentTile = document.createElement("div");
             currentTile.id = currentTileId;
@@ -80,11 +80,11 @@ var mapController = {
 
         // North
         if(currentY > 0 && !isEnemy) {
-            var vel = currentVel;
-            var agi = currentAgi;
-            var terrain=theMap.arrayTerrain[currentY-1].row[currentX].terrain;
-            var totalSteep = (terrain.steep - ((agi/100)*terrain.steep)) < 0 ? 0 : (terrain.steep - ((agi/100)*terrain.steep));
-            var velRec = 10+Math.round(totalSteep/10);
+            let vel = currentVel;
+            const agi = currentAgi;
+            const terrain=theMap.arrayTerrain[currentY-1].row[currentX].terrain;
+            const totalSteep = (terrain.steep - ((agi/100)*terrain.steep)) < 0 ? 0 : (terrain.steep - ((agi/100)*terrain.steep));
+            const velRec = 10+Math.round(totalSteep/10);
             if(vel >= velRec) {
                 vel -= velRec;
                 if(terrain.minAgi>agi) vel=0;
