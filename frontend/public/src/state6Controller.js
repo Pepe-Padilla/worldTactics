@@ -109,7 +109,7 @@ var state6Controller = {
         //      100% HP -> 100% STR/DEF    ln(1 + 3 * 1) / ln(1 + 3)  = 1
         //      50%  HP ->  66% STR/DEF    ln(1 + 3 * 0.75) / ln(1 + 3)  = 0.66096
         //      25%  HP ->  40% STR/DEF    ln(1 + 3 * 0.25) / ln(1 + 3)  = 0.40367
-        var k = 4; // <---- make tests whith this value
+        var k = 3; // <---- make tests whith this value
         var unitProportion = Math.log(1+(k*(unitHP/100))) / Math.log(1+k);
         var enemyProportion = Math.log(1+(k*(eUnitHP/100))) / Math.log(1+k);
 
