@@ -284,6 +284,9 @@ var gameController = {
     getTotalBonus: function(unit,enemyUnitName) {
         return unit.bonus[enemyUnitName];
     },
+    getTerrain: function (posX,posY) {
+        return theMap.arrayTerrain[posY].row[posX].terrain;
+    },
     getTerrainStats: function(posX,posY) {
         var bonus={sprite:"",def:0,str:0,hp:0,mp:0,vel:0,agi:0,steed:0,specials:[]};
         var terrain = theMap.arrayTerrain[posY].row[posX].terrain;
