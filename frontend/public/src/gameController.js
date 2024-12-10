@@ -9,27 +9,27 @@
  * 51 - element selected (not active allie or enemy unit) - view range - 10
  * 52 - element selected (allie structure non occupied by unit) - buy unit menu - 3
  * 53 - element selected (map, no allie structure, non occupied by unit) - end turn menu - 0
- * 60 - unit move - selecting acction - 10
- * 65 - unit atack/dont move/skill - selecting acction - 4
+ * 60 - unit move - selecting Action - 10
+ * 65 - unit atack/dont move/skill - selecting Action - 4
  * 67 - unit target (atack/skill)
- * 70 - acction result - 0
+ * 70 - Action result - 0
  * 80 - end of player turn - 0
  * 90 - end of turn (all) - 0
  * 100 - victory - 0
  */
-var gameId=null;
-var gameState=0;
-var theMap=null;
-var players=[];
-var currentTurn=1;
-var currentPlayer=0;
-var cursor={x:0,y:0};
-var menuCursor=0;
-var goldPerMine=50;
-var allUnits=[];
-var GOLD_BOT=10;
+let gameId=null;
+let gameState=0;
+let theMap=null;
+let players=[];
+let currentTurn=1;
+let currentPlayer=0;
+let cursor={x:0,y:0};
+let menuCursor=0;
+let goldPerMine=50;
+let allUnits=[];
+let GOLD_BOT=10;
 
-var gameController = {
+let gameController = {
     initGame() {
         gameState=30;
         state3Controller.state3Bot();
@@ -38,7 +38,7 @@ var gameController = {
         switch(key) {
             case "t":
             case "gamePadY":
-                this.specialAcction();
+                this.specialAction();
                 break;
             case "ArrowUp":
             case "w":
@@ -66,12 +66,12 @@ var gameController = {
                 break;
             case "g":
             case "gamePadA":
-                this.acceptAcction();
+                this.acceptAction();
                 //console.log(key);
                 break;
             case "h":
             case "gamePadB":
-                this.cancelAcction();
+                this.cancelAction();
                 //console.log(key);
                 break;
             case "q":
@@ -86,69 +86,69 @@ var gameController = {
                 break;
         }
     },
-    acceptAcction: function() {
-        if(gameState == 40) {
+    acceptAction: function() {
+        if(gameState === 40) {
             state4Controller.acceptS4Cursor();
-        } else if(gameState == 31) {
+        } else if(gameState === 31) {
             state3Controller.state3close();
-        } else if(gameState == 51 ) {
+        } else if(gameState === 51 ) {
             state5Controller.cancelRange();
             state4Controller.state4CursorMoved();
-        } else if(gameState == 50) {
+        } else if(gameState === 50) {
             state5Controller.moveUnit();
-        } else if(gameState == 52) {
+        } else if(gameState === 52) {
             state5Controller.accept52Menu();
-        } else if(gameState == 60) {
+        } else if(gameState === 60) {
             state6Controller.actionSelected();
-        } else if(gameState == 67) {
+        } else if(gameState === 67) {
             //console.log ("FTW!!!")
             state6Controller.atackConfirmed();
-        } else if(gameState == 80) {
+        } else if(gameState === 80) {
             state5Controller.accept80Menu();
-        } else if(gameState == 65) {
+        } else if(gameState === 65) {
             state6Controller.accept65Menu();
-        } else if(gameState == 66) {
+        } else if(gameState === 66) {
             state6Controller.executeSkill();
         }
     },
-    cancelAcction: function() {
-        if(gameState == 31) {
+    cancelAction: function() {
+        if(gameState === 31) {
             state3Controller.state3close();
-        } else if(gameState == 50 || gameState == 51) {
+        } else if(gameState === 50 || gameState === 51) {
             state5Controller.cancelRange();
             state4Controller.state4CursorMoved();
-        } else if(gameState == 60|| gameState == 65) {
+        } else if(gameState === 60|| gameState === 65) {
             state5Controller.cancelMoveUnit();
-        } else if(gameState == 67) {
+        } else if(gameState === 67) {
             state6Controller.cancelS60();
-        } else if(gameState == 52) {
+        } else if(gameState === 52) {
             state5Controller.cancelS52();
-        } else if(gameState == 80) {
+        } else if(gameState === 80) {
             state5Controller.cancelS80();
-        } else if(gameState == 66) {
+        } else if(gameState === 66) {
             state6Controller.cancelS66();
         }
     },
-    specialAcction: function() {
-        if(gameState == 40) {
+    specialAction: function() {
+        if(gameState === 40) {
             state4Controller.keepWorking();
         }
     },
     goNorth: function(){
-        if(gameState == 40) {
+        if(gameState === 40) {
             if(cursor.y > 0) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
                 state4Controller.state4CursorMoved();
             }
-        } else if(gameState == 50 || gameState == 51 || gameState == 67) {
+        } else if(gameState === 50 || gameState === 51 || gameState === 67) {
             if(cursor.y > 0) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState == 60 || gameState == 52 || gameState == 80 || gameState == 65) {
+        } else if(gameState === 60 || gameState === 52 || gameState === 80 || gameState === 65) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
-        } else if(gameState == 66) {
+        } else if(gameState === 66) {
             if(cursor.y > 0) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
@@ -157,20 +157,20 @@ var gameController = {
         }
     },
     goSouth: function(){
-        if(gameState == 40) {
+        if(gameState === 40) {
             if(cursor.y < theMap.ySize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
                 state4Controller.state4CursorMoved();
             }
-        } else if(gameState == 50 || gameState == 51 || gameState == 67) {
+        } else if(gameState === 50 || gameState === 51 || gameState === 67) {
             if(cursor.y < theMap.ySize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState == 60 || gameState == 52  || gameState == 80 || gameState == 65) {
+        } else if(gameState === 60 || gameState === 52  || gameState === 80 || gameState === 65) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
-        } else if(gameState == 66) {
+        } else if(gameState === 66) {
             if(cursor.y < theMap.ySize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
@@ -179,18 +179,18 @@ var gameController = {
         }
     },
     goEast: function(){
-        if(gameState == 40) {
+        if(gameState === 40) {
             if(cursor.x < theMap.xSize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
                 state4Controller.state4CursorMoved();
             }
-        } else if(gameState == 50 || gameState == 51 || gameState == 67) {
+        } else if(gameState === 50 || gameState === 51 || gameState === 67) {
             if(cursor.x < theMap.xSize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState == 66) {
+        } else if(gameState === 66) {
             if(cursor.x < theMap.xSize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
@@ -199,18 +199,18 @@ var gameController = {
         }
     },
     goWest: function(){  // this is what we're gonna do
-        if(gameState == 40) {
+        if(gameState === 40) {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
                 state4Controller.state4CursorMoved();
             }
-        } else if(gameState == 50 || gameState == 51 || gameState == 67) {
+        } else if(gameState === 50 || gameState === 51 || gameState === 67) {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState == 66) {
+        } else if(gameState === 66) {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
@@ -219,29 +219,29 @@ var gameController = {
         }
     },
     rightTab: function() {
-        if(gameState == 40) {
+        if(gameState === 40) {
             this.cicleRight();
-        } else if(gameState == 60 || gameState == 52 || gameState == 80 || gameState == 65) {
+        } else if(gameState === 60 || gameState === 52 || gameState === 80 || gameState === 65) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
         }
     },
     leftTab: function() {
-        if(gameState == 40) {
+        if(gameState === 40) {
             this.cicleLeft();
-        } else if(gameState == 60 || gameState == 52 || gameState == 80 || gameState == 65) {
+        } else if(gameState === 60 || gameState === 52 || gameState === 80 || gameState === 65) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         }
     },
     resolveHPUnits: function () {
-        for(var p=0;p<players.length;p++){
-            for(var ch=0;ch<players[p].units.length;ch++) {
-                var unit = players[p].units[ch];
+        for(let p=0;p<players.length;p++){
+            for(let ch=0;ch<players[p].units.length;ch++) {
+                let unit = players[p].units[ch];
 
-                // If the unit is death because of the efects kill them!!!!
+                // If the unit is death because of the effects kill them!!!!
                 if(unit.hp <= 0) {
-                    var theUnit=unit._id;
-                    if(unit.name=="commoner") {
-                        var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+                    const theUnit=unit._id;
+                    if(unit.name==="commoner") {
+                        let terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
                         terrain.taken = 0;
                     }
                     Tile.killCharacter(theUnit);
@@ -253,10 +253,10 @@ var gameController = {
         state4Controller.redrawUnits();
     },
     getUnit: function(posX,posY) {
-        for(var p=0;p<players.length;p++){
-            for(var ch=0;ch<players[p].units.length;ch++) {
-                var unit = players[p].units[ch];
-                if(unit.x == posX && unit.y == posY) return unit;
+        for(let p=0;p<players.length;p++){
+            for(let ch=0;ch<players[p].units.length;ch++) {
+                let unit = players[p].units[ch];
+                if(unit.x === posX && unit.y === posY) return unit;
             }
         }
         return null;
@@ -284,35 +284,32 @@ var gameController = {
     getTotalBonus: function(unit,enemyUnitName) {
         return unit.bonus[enemyUnitName];
     },
-    getTerrain: function (posX,posY) {
-        return theMap.arrayTerrain[posY].row[posX].terrain;
-    },
     getTerrainStats: function(posX,posY) {
-        var bonus={sprite:"",def:0,str:0,hp:0,mp:0,vel:0,agi:0,steed:0,specials:[]};
-        var terrain = theMap.arrayTerrain[posY].row[posX].terrain;
+        let bonus={sprite:"",def:0,str:0,hp:0,mp:0,vel:0,agi:0,steed:0,specials:[]};
+        let terrain = theMap.arrayTerrain[posY].row[posX].terrain;
         bonus["def"] += terrain.defBonus;
         bonus["sprite"] = terrain.sprite;
-        for(var s=0;s<terrain.status.length;s++) {
-            for(var e=0;e<terrain.status[s].effects.length;e++) {
-                var effect = terrain.status[s].effects[e];
+        for(let s=0;s<terrain.status.length;s++) {
+            for(let e=0;e<terrain.status[s].effects.length;e++) {
+                const effect = terrain.status[s].effects[e];
                 bonus[effect.atribute]+= effect.bonus;
-                if(effect.special != "") bonus.specials.push(effect.special); 
+                if(effect.special !== "") bonus.specials.push(effect.special);
             }
         }
         return bonus;
     },
     takeBuilding: function(unit) {
-        var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
-        var color = players[unit.playerIndex].color;
-        var isNeutral = terrain.taker == -1;
+        let terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+        const color = players[unit.playerIndex].color;
+        const isNeutral = terrain.taker === -1;
 
-        if(terrain.taker != unit.playerIndex) {
+        if(terrain.taker !== unit.playerIndex) {
             terrain.taken += unit.hp;
             if(terrain.taken >= 200) {
                 if(!isNeutral) {
                     // delete it form the other player
-                    for(var b=0;b<players[terrain.taker].buildings.length;b++){
-                        if(players[terrain.taker].buildings[b].x == unit.x &&  players[terrain.taker].buildings[b].y == unit.y) {
+                    for(let b=0;b<players[terrain.taker].buildings.length;b++){
+                        if(players[terrain.taker].buildings[b].x === unit.x &&  players[terrain.taker].buildings[b].y === unit.y) {
                             players[terrain.taker].buildings.splice(b,1);
                         }
                     }
@@ -325,7 +322,7 @@ var gameController = {
                 console.log("take Building payer["+terrain.taker+"]");
                 Tile.takeBulding(unit.x,unit.y,color,isNeutral);
 
-                if(terrain.sprite == "castle") {
+                if(terrain.sprite === "castle") {
                     // TODO: kill player and castle
                     // TODO: if players.length < 2 players[0] wins!!!
                 } 
@@ -353,27 +350,27 @@ var gameController = {
     },
     cicleRight: function() {
         //console.log("cicleRight");
-        var initialX = cursor.x;
-        var initialY = cursor.y;
-        var lowestX = 100000;
-        var lowestY = 100000;
-        var highestX = 100000;
-        var highestY = 100000;
+        const initialX = cursor.x;
+        const initialY = cursor.y;
+        let lowestX = 100000;
+        let lowestY = 100000;
+        let highestX = 100000;
+        let highestY = 100000;
 
-        for(var u=0;u<players[currentPlayer].units.length;u++){
-            var unit = players[currentPlayer].units[u];
+        for(let u=0;u<players[currentPlayer].units.length;u++){
+            let unit = players[currentPlayer].units[u];
 
             if(!unit.moved) { //
-                var difx = unit.x - initialX;
-                var dify = unit.y - initialY;
+                const diffX = unit.x - initialX;
+                const diffY = unit.y - initialY;
 
-                if(dify > 0 || (dify == 0 && difx > 0)) { //highest
-                    if(highestY > unit.y || (highestY == unit.y && highestX > unit.x)) {
+                if(diffY > 0 || (diffY === 0 && diffX > 0)) { //highest
+                    if(highestY > unit.y || (highestY === unit.y && highestX > unit.x)) {
                         highestX = unit.x;
                         highestY = unit.y;
                     } 
                 } else {  //lowest
-                    if(lowestY > unit.y || (lowestY == unit.y && lowestX > unit.x)) {
+                    if(lowestY > unit.y || (lowestY === unit.y && lowestX > unit.x)) {
                         lowestX = unit.x;
                         lowestY = unit.y;
                     }
@@ -395,27 +392,27 @@ var gameController = {
     },
     cicleLeft: function() {
         //console.log("cicleLeft");
-        var initialX = cursor.x;
-        var initialY = cursor.y;
-        var lowestX = -1;
-        var lowestY = -1;
-        var highestX = -1;
-        var highestY = -1;
+        const initialX = cursor.x;
+        const initialY = cursor.y;
+        let lowestX = -1;
+        let lowestY = -1;
+        let highestX = -1;
+        let highestY = -1;
 
-        for(var u=0;u<players[currentPlayer].units.length;u++){
-            var unit = players[currentPlayer].units[u];
+        for(let u=0;u<players[currentPlayer].units.length;u++){
+            let unit = players[currentPlayer].units[u];
 
             if(!unit.moved) { 
-                var difx = unit.x - initialX;
-                var dify = unit.y - initialY;
+                const diffX = unit.x - initialX;
+                const diffY = unit.y - initialY;
 
-                if(dify < 0 || (dify == 0 && difx < 0)) { 
-                    if(lowestY < unit.y || (lowestY == unit.y && lowestX < unit.x)) {
+                if(diffY < 0 || (diffY === 0 && diffX < 0)) {
+                    if(lowestY < unit.y || (lowestY === unit.y && lowestX < unit.x)) {
                         lowestX = unit.x;
                         lowestY = unit.y;
                     } 
                 } else {  
-                    if(highestY < unit.y || (highestY == unit.y && highestX < unit.x)) {
+                    if(highestY < unit.y || (highestY === unit.y && highestX < unit.x)) {
                         highestX = unit.x;
                         highestY = unit.y;
                     }
@@ -449,12 +446,12 @@ var gameController = {
         return bonus;
     },
     saveGame: function() {
-        if(gameState != 40) {
+        if(gameState !== 40) {
             console.error("Cant save in this game state!!!");
             console.error("Game not saved");
             return;
         }
-        var game2Save = {
+        let game2Save = {
             units: allUnits,
             map: theMap,
             players: players,

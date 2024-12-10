@@ -1,5 +1,5 @@
-var state50Unit = null;
-var state5Controller = {
+let state50Unit = null;
+let state5Controller = {
     unitPlayerSelected: function(unit,playerIndex) {
         splash.cancelS4Splash();
         mapController.showRangeOfUnit(unit,playerIndex);
@@ -12,7 +12,7 @@ var state5Controller = {
         gameState = 51;
     },
     mapSelected: function(terrain) {
-        if(terrain.taker == currentPlayer) {
+        if(terrain.taker === currentPlayer) {
             splash.cancelS4Splash();
             splash.showBuildingMenu(terrain.sprite);
             menuCursor = 0;
