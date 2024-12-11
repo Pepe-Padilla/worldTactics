@@ -322,7 +322,7 @@ let createPlayers= function(map) {
                     units:[],
                     gold: 90
                 };
-                Tile.takeBulding(i,j,colors[index],true);
+                Tile.takeBuilding(i,j,colors[index],true);
             }
         }
     }

@@ -12,8 +12,8 @@ var ajax = {
              * 3 LOADING
              * 4 DONE
             **/
-            if(request.readyState==XMLHttpRequest.DONE) {
-                if(request.status == 200) {
+            if(request.readyState===XMLHttpRequest.DONE) {
+                if(request.status === 200) {
                     var result=JSON.parse(request.responseText)
                     if(okFunction)okFunction(result);
                 } else {

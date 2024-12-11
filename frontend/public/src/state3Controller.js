@@ -1,64 +1,64 @@
-var state3Controller = {
+let state3Controller = {
     state3Bot: function () {
-        var gold = 0;
-        var unitsLost = 0;
+        let gold = 0;
+        let unitsLost = 0;
 
-        for(var ch=0;ch<players[currentPlayer].units.length;ch++) {
-            var unit = players[currentPlayer].units[ch];
+        for(let ch=0;ch<players[currentPlayer].units.length;ch++) {
+            let unit = players[currentPlayer].units[ch];
 
             // Terrain effects
-            var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
-            for(var st=0;st<terrain.status.length;st++) {
-                var status = terrain.status[st];
-                for(var ef=0;ef<status.effects.length;ef++){
-                    var efect = status.effects[ef];
-                    if(efect.turn == 0 && (efect.atribute == "hp" || efect.atribute == "mp")) {
-                        var newAtr = unit[efect["atribute"]]+efect.bonus;
+            let terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+            for(let st=0;st<terrain.status.length;st++) {
+                let status = terrain.status[st];
+                for(let ef=0;ef<status.effects.length;ef++){
+                    let effect = status.effects[ef];
+                    if(effect.turn === 0 && (effect.atribute === "hp" || effect.atribute === "mp")) {
+                        let newAtr = unit[effect["atribute"]]+effect.bonus;
                         if(newAtr>100) newAtr=100;
-                        unit[efect["atribute"]]=newAtr;
+                        unit[effect["atribute"]]=newAtr;
                         
-                        // TODO: specials efect that applay to begining of the turn
+                        // TODO: specials effect that applay to begining of the turn
                     }
                 }
             }
 
             // Unit effects
-            for(var stu=0;stu<unit.status.length;stu++) {
-                var status = unit.status[stu];
-                for(var ef=0;ef<status.effects.length;ef++){
-                    var efect = status.effects[ef];
-                    if(efect.atribute == "hp" || efect.atribute == "mp") {
-                        var newAtr = unit[efect["atribute"]]+efect.bonus;
+            for(let stu=0;stu<unit.status.length;stu++) {
+                let status = unit.status[stu];
+                for(let ef=0;ef<status.effects.length;ef++){
+                    let effect = status.effects[ef];
+                    if(effect.atribute === "hp" || effect.atribute === "mp") {
+                        let newAtr = unit[efect["atribute"]]+effect.bonus;
                         if(newAtr>100) newAtr=100;
-                        unit[efect["atribute"]]=newAtr;
+                        unit[effect["atribute"]]=newAtr;
                     }
                     
-                    if(efect.atribute == "hp" && status.harmfull) {
+                    if(effect.atribute === "hp" && status.harmfull) {
                         console.log("harmfull");
                         state6Controller.applySpecialEffectsOnDamage(unit);
                     }
                     
-                    state6Controller.applySpecialEffects(unit,efect);
+                    state6Controller.applySpecialEffects(unit,effect);
 
-                    if(efect.turn == 0){
+                    if(effect.turn === 0){
                         // Remove obsolete effects
                         if(!status.pasive) {
                             status.effects.splice(ef,1);
                             ef--;
                         }
                     } else {
-                        efect.turn--;
+                        effect.turn--;
                     }
                 }
                 // Remove obsolet status
-                if(status.effects.length == 0) {
+                if(status.effects.length === 0) {
                     unit.status.splice(stu,1);
                     stu--;
                 }
             }
 
             // Terrain gold
-            if(terrain.sprite == "mine" && unit.name == "commoner" && unit.hp > 0) {
+            if(terrain.sprite === "mine" && unit.name === "commoner" && unit.hp > 0) {
                 gold+=Math.round(goldPerMine*(unit.hp/100));
             }
 
@@ -76,35 +76,68 @@ var state3Controller = {
         gameState=31;
     },
     state3close: function () {
-        var ts = document.getElementById("theSplash");
+        let ts = document.getElementById("theSplash");
         if(ts)ts.remove();
         state4Controller.state4turnActive();
     },
     createInitialUnits: function () {
         if(allUnits.length > 0)
         players.forEach((player,indexPlayer) => {
-            var x = player.buildings[0].x;
-            var y = player.buildings[0].y;
-            var unit1 = gameController.createUnit(x,y,0,indexPlayer);
+            const x = player.buildings[0].x;
+            const y = player.buildings[0].y;
+            let unit1 = gameController.createUnit(x,y,0,indexPlayer);
             unit1.moved = false;
-            // TODO: more hurry up movements
-            /*
-            if(x < theMap.xSize) {
-                var unit2 = gameController.createUnit(x+1,y,0,indexPlayer);
-                unit2.moved = false;
-            }
-            if(y < theMap.ySize) {
-                var unit3 = gameController.createUnit(x,y+1,0,indexPlayer);
-                unit3.moved = false;
-            }
-            if(y > 0) {
-                var unit4 = gameController.createUnit(x,y-1,0,indexPlayer);
-                unit4.moved = false;
-            }
-            if(x > 0) {
-                var unit5 = gameController.createUnit(x-1,y,0,indexPlayer);
-                unit5.moved = false;
-            }*/
+
+            // nearest keep and goldmine
+            const nearest = this.nearestKeepGold(x,y);
+
+            const keepX = nearest.keep.x;
+            const keepY = nearest.keep.y;
+            let terrain = theMap.arrayTerrain[keepX].row[keepX].terrain;
+            terrain.taker = indexPlayer;
+            terrain.taken = 0;
+            player.buildings.push(theMap.arrayTerrain[keepX].row[keepX]);
+            Tile.takeBuilding(keepX,keepY,player.color,true);
+
+            const goldX = nearest.gold.x;
+            const goldY = nearest.gold.y;
+            let unit2 = gameController.createUnit(goldX,goldY,0,indexPlayer);
+            unit2.moved = false;
         });
+    },
+    nearestKeepGold: function (castleX, castleY) {
+        let nearest = {
+            gold: {
+                x: -1,
+                y: -1,
+                distance: 100000
+            },
+            keep: {
+                x: -1,
+                y: -1,
+                distance: 100000
+            },
+        };
+        for(let x=0;x<theMap.xSize;x++){
+            for(let y=0;y<theMap.ySize;y++){
+                if(theMap.arrayTerrain[x].row[y].terrain === "keep") {
+                    const aDistance=Math.abs(x - castleX)+Math.abs(y - castleY);
+                    if(aDistance < nearest.keep.distance) {
+                        nearest.keep.distance = aDistance;
+                        nearest.keep.x=x;
+                        nearest.keep.y=y;
+                    }
+                }
+                if(theMap.arrayTerrain[x].row[y].terrain === "mine") {
+                    const aDistance=Math.abs(x - castleX)+Math.abs(y - castleY);
+                    if(aDistance < nearest.gold.distance) {
+                        nearest.gold.distance = aDistance;
+                        nearest.gold.x=x;
+                        nearest.gold.y=y;
+                    }
+                }
+            }
+        }
+        return nearest;
     }
 };

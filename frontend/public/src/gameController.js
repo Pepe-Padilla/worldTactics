@@ -320,7 +320,7 @@ let gameController = {
                 players[unit.playerIndex].buildings.push(theMap.arrayTerrain[unit.y].row[unit.x]);
 
                 console.log("take Building payer["+terrain.taker+"]");
-                Tile.takeBulding(unit.x,unit.y,color,isNeutral);
+                Tile.takeBuilding(unit.x,unit.y,color,isNeutral);
 
                 if(terrain.sprite === "castle") {
                     // TODO: kill player and castle

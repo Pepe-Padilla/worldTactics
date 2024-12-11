@@ -54,7 +54,7 @@ class Tile {
 
     }
 
-    static takeBulding(x,y,color,isNeutral) {
+    static takeBuilding(x,y,color,isNeutral) {
         const idTile = "x"+x+"y"+y;
         let theTile = document.getElementById(idTile);
         const rect=theTile.getBoundingClientRect();
@@ -152,6 +152,7 @@ class Tile {
         div.style.height = totalHeight + "px";
         div.style.border = "4px solid "+color;
     }
+
     static updateCursorMenu(cursorMenu,menuId) {
         const idTR="menu"+menuId+"_"+cursorMenu;
         const theTile = document.getElementById(idTR);

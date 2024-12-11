@@ -89,17 +89,17 @@ let state5Controller = {
         gameState = 40;
     },
     accept80Menu: function() {
-        var selected = document.getElementById("menu80_"+menuCursor);
-        var tds=selected.getElementsByTagName("td");
-        var action = tds[0].id; 
+        const selected = document.getElementById("menu80_"+menuCursor);
+        const tds=selected.getElementsByTagName("td");
+        const action = tds[0].id;
 
         switch(action) {
             case "menu80_eot":
                 players[currentPlayer].units.forEach(unit => {
                     unit.moved = false;
-                    if(unit.name == "commoner") {
-                        var terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
-                        if(terrain.sprite == "keep" || terrain.sprite == "castle") {
+                    if(unit.name === "commoner") {
+                        const terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+                        if(terrain.sprite === "keep" || terrain.sprite === "castle") {
                             //console.log("taking the "+terrain.sprite);
                             gameController.takeBuilding(unit);
                         }
@@ -108,11 +108,10 @@ let state5Controller = {
                 currentPlayer++;
                 //console.log("end of turn!!! "+currentPlayer+" "+players.length);
                 if(players.length <= currentPlayer) {
-                    //console.log("turno nuevo!!");
                     currentPlayer=0;
                     currentTurn++;
                 }
-                this.iSeeDeadPeope();
+                this.iSeeDeadPeople();
                 state4Controller.redrawUnits();
                 this.cancelS80();
                 gameController.initGame();
@@ -126,19 +125,19 @@ let state5Controller = {
                 break;
         }
     },
-    iSeeDeadPeope: function(){
-        var fantoms = document.getElementsByClassName("unitMetter");
-        for(var f=0;f<fantoms.length;f++) {
-            var fId = fantoms[f].id;
-            var isAlive = false; 
+    iSeeDeadPeople: function(){
+        let phantoms = document.getElementsByClassName("unitMetter");
+        for(let f=0;f<phantoms.length;f++) {
+            const fId = phantoms[f].id;
+            let isAlive = false;
             players.forEach(player => {
                 player.units.forEach(unit => {
-                    if(("unit"+unit._id) == fId) isAlive = true; // Its Alive!!!!
+                    if(("unit"+unit._id) === fId) isAlive = true; // Its Alive!!!!
                 });
             });
             if(!isAlive) {
                 console.log("I see dead people!!!["+fId+"]");
-                fantoms[f].remove();
+                phantoms[f].remove();
             }
         }
     }
