@@ -59,7 +59,7 @@ let state3Controller = {
 
             // Terrain gold
             if(terrain.sprite === "mine" && unit.name === "commoner" && unit.hp > 0) {
-                gold+=Math.round(goldPerMine*(unit.hp/100));
+                gold+=Math.round(GOLD_PER_MINE*(unit.hp/100));
             }
 
             // If the unit is death because of the efects kill them!!!!
@@ -73,7 +73,7 @@ let state3Controller = {
         players[currentPlayer].gold+=gold+GOLD_BOT;
         splash.createBotSplash(gold,unitsLost);
         state4Controller.redrawUnits();
-        gameState=31;
+        gameState=STATE_31_CLOSE_BEGINNING_OF_TURN;
     },
     state3close: function () {
         let ts = document.getElementById("theSplash");

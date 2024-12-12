@@ -4,12 +4,12 @@ let state5Controller = {
         splash.cancelS4Splash();
         mapController.showRangeOfUnit(unit,playerIndex);
         state50Unit = unit;
-        gameState = 50;
+        gameState = STATE_50_ACTIVE_ALLIE_SELECTED;
     },
     unitMovedOrEnemySelected: function(unit,playerIndex) {
         splash.cancelS4Splash();
         mapController.showRangeOfUnit(unit,playerIndex);
-        gameState = 51;
+        gameState = STATE_51_INACTIVE_SELECTED;
     },
     mapSelected: function(terrain) {
         if(terrain.taker === currentPlayer) {
@@ -17,29 +17,29 @@ let state5Controller = {
             splash.showBuildingMenu(terrain.sprite);
             menuCursor = 0;
             Tile.createCursorMenu(menuCursor,players[currentPlayer].color,52);
-            gameState = 52;
+            gameState = STATE_52_ALLIE_STRUCTURE_SELECTED;
         } else {
             splash.cancelS4Splash();
             splash.showEOTMenu();
             menuCursor = 0;
             Tile.createCursorMenu(menuCursor,players[currentPlayer].color,80);
-            gameState = 80;
+            gameState = STATE_80_END_OF_PLAYER_TURN;
         }
     },
     cancelRange: function() {
         mapController.cancelRange();
-        gameState = 40;
+        gameState = STATE_40_TURN_ACTIVE;
     },
     moveUnit: function() {
         // if(cursorIsInRange)
-        var rangeTileId = "rangeX"+cursor.x+"Y"+cursor.y;
-        var rangetTile = document.getElementById(rangeTileId);
+        const rangeTileId = "rangeX"+cursor.x+"Y"+cursor.y;
+        const rangeTile = document.getElementById(rangeTileId);
 
         //   moveUnitPreventive
-        if(rangetTile) {
-            var rect=rangetTile.getBoundingClientRect();
-            var idUnit = "unit"+state50Unit._id;
-            var theUnit = document.getElementById(idUnit);
+        if(rangeTile) {
+            const rect=rangeTile.getBoundingClientRect();
+            const idUnit = "unit"+state50Unit._id;
+            let theUnit = document.getElementById(idUnit);
             theUnit.style.position = "absolute";
             theUnit.style.left = (rect.x)+"px";
             theUnit.style.top = (rect.y)+"px";
@@ -48,7 +48,7 @@ let state5Controller = {
 
             splash.showS50Splash(state50Unit); 
         
-            gameState = 60
+            gameState = STATE_60_UNIT_MOVE;
         }
     },
     cancelMoveUnit: function () {
@@ -68,7 +68,7 @@ let state5Controller = {
         splash.cancelBuildingMenu();
         Tile.deleteCursorMenu();
         state4Controller.state4CursorMoved();
-        gameState = 40;
+        gameState = STATE_40_TURN_ACTIVE;
     },
     accept52Menu: function() {
         var selected = document.getElementById("menu52_"+menuCursor);
@@ -86,7 +86,7 @@ let state5Controller = {
         splash.cancelEOTMenu();
         Tile.deleteCursorMenu();
         state4Controller.state4CursorMoved();
-        gameState = 40;
+        gameState = STATE_40_TURN_ACTIVE;
     },
     accept80Menu: function() {
         const selected = document.getElementById("menu80_"+menuCursor);

@@ -1,37 +1,16 @@
-/**
- * 0 - initial state - 10
- * 5 - map selection - 0
- * 10 - map charged - 8
- * 20 - players charged  - 10
- * 30 - begining of player turn - 7
- * 40 - turn active - selecting on map - 10
- * 50 - element selected (active allie) - move - 10
- * 51 - element selected (not active allie or enemy unit) - view range - 10
- * 52 - element selected (allie structure non occupied by unit) - buy unit menu - 3
- * 53 - element selected (map, no allie structure, non occupied by unit) - end turn menu - 0
- * 60 - unit move - selecting Action - 10
- * 65 - unit atack/dont move/skill - selecting Action - 4
- * 67 - unit target (atack/skill)
- * 70 - Action result - 0
- * 80 - end of player turn - 0
- * 90 - end of turn (all) - 0
- * 100 - victory - 0
- */
 let gameId=null;
-let gameState=0;
+let gameState=STATE_0_INITIAL_STATE;
 let theMap=null;
 let players=[];
 let currentTurn=1;
 let currentPlayer=0;
 let cursor={x:0,y:0};
 let menuCursor=0;
-let goldPerMine=50;
 let allUnits=[];
-let GOLD_BOT=10;
 
 let gameController = {
     initGame() {
-        gameState=30;
+        gameState=STATE_30_BEGINNING_OF_TURN;
         state3Controller.state3Bot();
     },
     readAction: function(key){
@@ -87,68 +66,69 @@ let gameController = {
         }
     },
     acceptAction: function() {
-        if(gameState === 40) {
+        if(gameState === STATE_40_TURN_ACTIVE) {
             state4Controller.acceptS4Cursor();
-        } else if(gameState === 31) {
+        } else if(gameState === STATE_31_CLOSE_BEGINNING_OF_TURN) {
             state3Controller.state3close();
-        } else if(gameState === 51 ) {
+        } else if(gameState === STATE_51_INACTIVE_SELECTED ) {
             state5Controller.cancelRange();
             state4Controller.state4CursorMoved();
-        } else if(gameState === 50) {
+        } else if(gameState === STATE_50_ACTIVE_ALLIE_SELECTED) {
             state5Controller.moveUnit();
-        } else if(gameState === 52) {
+        } else if(gameState === STATE_52_ALLIE_STRUCTURE_SELECTED) {
             state5Controller.accept52Menu();
-        } else if(gameState === 60) {
+        } else if(gameState === STATE_60_UNIT_MOVE) {
             state6Controller.actionSelected();
-        } else if(gameState === 67) {
+        } else if(gameState === STATE_67_UNIT_TARGET) {
             //console.log ("FTW!!!")
-            state6Controller.atackConfirmed();
-        } else if(gameState === 80) {
+            state6Controller.attackConfirmed();
+        } else if(gameState === STATE_80_END_OF_PLAYER_TURN) {
             state5Controller.accept80Menu();
-        } else if(gameState === 65) {
+        } else if(gameState === STATE_65_MENU_UNIT) {
             state6Controller.accept65Menu();
-        } else if(gameState === 66) {
+        } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
             state6Controller.executeSkill();
         }
     },
     cancelAction: function() {
-        if(gameState === 31) {
+        if(gameState === STATE_31_CLOSE_BEGINNING_OF_TURN) {
             state3Controller.state3close();
-        } else if(gameState === 50 || gameState === 51) {
+        } else if(gameState === STATE_50_ACTIVE_ALLIE_SELECTED || gameState === STATE_51_INACTIVE_SELECTED) {
             state5Controller.cancelRange();
             state4Controller.state4CursorMoved();
-        } else if(gameState === 60|| gameState === 65) {
+        } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_65_MENU_UNIT) {
             state5Controller.cancelMoveUnit();
-        } else if(gameState === 67) {
+        } else if(gameState === STATE_67_UNIT_TARGET) {
             state6Controller.cancelS60();
-        } else if(gameState === 52) {
+        } else if(gameState === STATE_52_ALLIE_STRUCTURE_SELECTED) {
             state5Controller.cancelS52();
-        } else if(gameState === 80) {
+        } else if(gameState === STATE_80_END_OF_PLAYER_TURN) {
             state5Controller.cancelS80();
-        } else if(gameState === 66) {
+        } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
             state6Controller.cancelS66();
         }
     },
     specialAction: function() {
-        if(gameState === 40) {
+        if(gameState === STATE_40_TURN_ACTIVE) {
             state4Controller.keepWorking();
         }
     },
     goNorth: function(){
-        if(gameState === 40) {
+        if(gameState === STATE_40_TURN_ACTIVE) {
             if(cursor.y > 0) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
                 state4Controller.state4CursorMoved();
             }
-        } else if(gameState === 50 || gameState === 51 || gameState === 67) {
+        } else if(gameState === STATE_50_ACTIVE_ALLIE_SELECTED || gameState === STATE_51_INACTIVE_SELECTED || gameState === STATE_67_UNIT_TARGET) {
             if(cursor.y > 0) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState === 60 || gameState === 52 || gameState === 80 || gameState === 65) {
+        } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
+            gameState === STATE_80_END_OF_PLAYER_TURN || gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
-        } else if(gameState === 66) {
+        } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
             if(cursor.y > 0) {
                 cursor.y--;
                 Tile.updateCursor(cursor);
@@ -157,20 +137,21 @@ let gameController = {
         }
     },
     goSouth: function(){
-        if(gameState === 40) {
+        if(gameState === STATE_40_TURN_ACTIVE) {
             if(cursor.y < theMap.ySize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
                 state4Controller.state4CursorMoved();
             }
-        } else if(gameState === 50 || gameState === 51 || gameState === 67) {
+        } else if(gameState === STATE_50_ACTIVE_ALLIE_SELECTED || gameState === STATE_51_INACTIVE_SELECTED || gameState === STATE_67_UNIT_TARGET) {
             if(cursor.y < theMap.ySize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState === 60 || gameState === 52  || gameState === 80 || gameState === 65) {
+        } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED || gameState === STATE_80_END_OF_PLAYER_TURN ||
+            gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
-        } else if(gameState === 66) {
+        } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
             if(cursor.y < theMap.ySize-1) {
                 cursor.y++;
                 Tile.updateCursor(cursor);
@@ -179,18 +160,18 @@ let gameController = {
         }
     },
     goEast: function(){
-        if(gameState === 40) {
+        if(gameState === STATE_40_TURN_ACTIVE) {
             if(cursor.x < theMap.xSize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
                 state4Controller.state4CursorMoved();
             }
-        } else if(gameState === 50 || gameState === 51 || gameState === 67) {
+        } else if(gameState === STATE_50_ACTIVE_ALLIE_SELECTED || gameState === STATE_51_INACTIVE_SELECTED || gameState === STATE_67_UNIT_TARGET) {
             if(cursor.x < theMap.xSize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState === 66) {
+        } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
             if(cursor.x < theMap.xSize-1) {
                 cursor.x++;
                 Tile.updateCursor(cursor);
@@ -199,18 +180,18 @@ let gameController = {
         }
     },
     goWest: function(){  // this is what we're gonna do
-        if(gameState === 40) {
+        if(gameState === STATE_40_TURN_ACTIVE) {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
                 state4Controller.state4CursorMoved();
             }
-        } else if(gameState === 50 || gameState === 51 || gameState === 67) {
+        } else if(gameState === STATE_50_ACTIVE_ALLIE_SELECTED || gameState === STATE_51_INACTIVE_SELECTED || gameState === STATE_67_UNIT_TARGET) {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState === 66) {
+        } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
             if(cursor.x > 0) {
                 cursor.x--;
                 Tile.updateCursor(cursor);
@@ -219,16 +200,18 @@ let gameController = {
         }
     },
     rightTab: function() {
-        if(gameState === 40) {
+        if(gameState === STATE_40_TURN_ACTIVE) {
             this.cicleRight();
-        } else if(gameState === 60 || gameState === 52 || gameState === 80 || gameState === 65) {
+        } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
+            gameState === STATE_80_END_OF_PLAYER_TURN || gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
         }
     },
     leftTab: function() {
-        if(gameState === 40) {
+        if(gameState === STATE_40_TURN_ACTIVE) {
             this.cicleLeft();
-        } else if(gameState === 60 || gameState === 52 || gameState === 80 || gameState === 65) {
+        } else if(gameState === STATE_60_UNIT_MOVE60 || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
+            gameState === STATE_80_END_OF_PLAYER_TURN || gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         }
     },
@@ -240,7 +223,7 @@ let gameController = {
                 // If the unit is death because of the effects kill them!!!!
                 if(unit.hp <= 0) {
                     const theUnit=unit._id;
-                    if(unit.name==="commoner") {
+                    if(unit.name===UNIT_COMMONER) {
                         let terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
                         terrain.taken = 0;
                     }
@@ -330,18 +313,18 @@ let gameController = {
         }
     },
     createUnit: function(posX,posY,unitIndex,playerIndex) {
-        var unit = JSON.parse(JSON.stringify(allUnits[unitIndex]));
+        let unit = JSON.parse(JSON.stringify(allUnits[unitIndex]));
         unit._id = Math.floor(Math.random()*1000000);
         unit.x = posX;
         unit.y = posY;
         unit.moved = true;
-        var playerI = currentPlayer;
+        let playerI = currentPlayer;
         if(playerIndex) playerI = playerIndex;
         unit.playerIndex=playerI;
         players[playerI].units.push(unit);
         unit.skills.forEach(skill => {
             if(skill.pasive) {
-                var stat= JSON.parse(JSON.stringify(skill));
+                const stat= JSON.parse(JSON.stringify(skill));
                 unit.status.push(stat);
             }
         });
@@ -433,12 +416,12 @@ let gameController = {
         }
     },
     getEffectBonus: function(unit){
-        var bonus = {agi:0,vel:0,str:0,def:0};
+        let bonus = {agi:0,vel:0,str:0,def:0};
         // bonus from user effects
         if(unit) {
-            for(var u=0;u<unit.status.length;u++) {
-                for(var e=0;e<unit.status[u].effects.length;e++) {
-                    var anEffect = unit.status[u].effects[e];
+            for(let u=0;u<unit.status.length;u++) {
+                for(let e=0;e<unit.status[u].effects.length;e++) {
+                    const anEffect = unit.status[u].effects[e];
                     bonus[anEffect.atribute] += anEffect.bonus;
                 }
             }
@@ -446,7 +429,7 @@ let gameController = {
         return bonus;
     },
     saveGame: function() {
-        if(gameState !== 40) {
+        if(gameState !== STATE_40_TURN_ACTIVE) {
             console.error("Cant save in this game state!!!");
             console.error("Game not saved");
             return;

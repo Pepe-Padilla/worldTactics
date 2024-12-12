@@ -23,7 +23,7 @@ let mapController = {
         }
 
         if (!uploaded) {
-            gameState = 10;
+            gameState = STATE_10_MAP_CHARGED;
             createPlayers(map);
         }
     },
@@ -34,7 +34,7 @@ let mapController = {
             }
         }
         Tile.updateCursor(cursor);
-        if (gameState === 40) state4Controller.state4CursorMoved();
+        if (gameState === STATE_40_TURN_ACTIVE) state4Controller.state4CursorMoved();
     },
     showRangeOfUnit: function (unit, playerIndex) {
         const unitStats = gameController.getTotalStats(unit, true);
@@ -308,21 +308,20 @@ let mapController = {
 };
 
 let createPlayers= function(map) {
-    const colors=["blue","red","green","purple","orange","lime","yellow","silver","black","white"];
     for(let i=0;i<map.xSize;i++) {
         for(let j=0;j<map.ySize; j++) {
-            if(map.arrayTerrain[j].row[i].terrain.sprite==="castle") {
+            if(map.arrayTerrain[j].row[i].terrain.sprite === TERRAIN_CASTLE) {
                 let index = players.length;
                 if(index>9) throw new Error("Map recives too many players");
                 map.arrayTerrain[j].row[i].terrain.taker=index;
                 players[index] = {
                     playerName:"Player "+ (index+1),
-                    color: colors[index],
+                    color: COLORS_PLAYERS[index],
                     buildings: [{x:i,y:j,terrain:map.arrayTerrain[j].row[i].terrain}],
                     units:[],
-                    gold: 90
+                    gold: GOLD_INITIAL
                 };
-                Tile.takeBuilding(i,j,colors[index],true);
+                Tile.takeBuilding(i,j,COLORS_PLAYERS[index],true);
             }
         }
     }
@@ -332,7 +331,7 @@ let createPlayers= function(map) {
     cursor.x=players[0].buildings[0].x;
     cursor.y=players[0].buildings[0].y;
     Tile.createCursor(cursor,theColor);
-    gameState=20;
+    gameState=STATE_20_PLAYERS_CHARGED;
     state3Controller.createInitialUnits();
     gameController.initGame();
     
