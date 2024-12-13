@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     init.initGame();
 }, false);
 
-var init = {
+let init = {
     initGame: function() {
         console.log("Game INI");
 
@@ -16,7 +16,7 @@ var init = {
                 currentTurn=completeGame.currentTurn;
                 gameState=completeGame.gameState;
                 mapController.createTiles(completeGame.map,true);
-                var theColor= players[currentPlayer].color;
+                let theColor= players[currentPlayer].color;
                 cursor.x=players[currentPlayer].buildings[0].x;
                 cursor.y=players[currentPlayer].buildings[0].y;
                 Tile.createCursor(cursor,theColor);
@@ -32,14 +32,14 @@ var init = {
             });
 
             // Carga mapa y jugadores
-            var mapId=1;
+            let mapId=1;
             if(GET["mapId"]) {
                 mapId = GET["mapId"];
             }
             ajax.ajaxRequest("http://localhost/maps/"+mapId,mapController.createTiles);
         }
 
-        // Controladores keyboard y gamepad
+        // Controllers keyboard y gamepad
         keyboard.init();
         gamepad.init();
 
