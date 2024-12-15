@@ -221,9 +221,9 @@ let state6Controller = {
         gameState = STATE_60_UNIT_MOVE;
     },
     executeSkill: function() {
-        // state50Unit is the atacker
+        // state50Unit is the attacker
         // in cursor is the objective
-        // in state6Cursor is the atacker final position,  moveSelected()
+        // in state6Cursor is the attacker final position,  moveSelected()
         // action65 is the skill used
         //unitHarmfullRange
         //unitAllyRange
@@ -244,8 +244,8 @@ let state6Controller = {
             // 1 - x
             // 2 - y
             const rangePos = /skillAreaX(\d+)Y(\d+)/.exec(rangeId);
-            if(rangePos.length==3){
-                // 1. get ojectivess
+            if(rangePos.length===3){
+                // 1. get objectives
                 const xPos = parseInt(rangePos[1]);
                 const yPos = parseInt(rangePos[2]);
                 let targetUnit = gameController.getUnit(xPos,yPos);
@@ -258,20 +258,20 @@ let state6Controller = {
                         for(let e=0;e < stat.effects.length; e++) {
                             let effect = stat.effects[e];
                             console.log("effect in "+effect.atribute);
-                            let applaySpecials = false;
+                            let applySpecials = false;
                             if((effect.atribute === "hp" || effect.atribute === "mp") && effect.turn === 0) {
-                                var newAtr = targetUnit[effect.atribute]+effect.bonus;
+                                let newAtr = targetUnit[effect.atribute]+effect.bonus;
                                 if(newAtr>100) newAtr=100;
                                 console.log("newAtr["+newAtr+"]");
                                 targetUnit[effect.atribute]=newAtr;
                                 effect.turn--;
-                                applaySpecials = true;
+                                applySpecials = true;
                             }
 
-                            if(effect.atribute === "hp" && stat.harmfull && applaySpecials) {
+                            if(effect.atribute === "hp" && stat.harmfull && applySpecials) {
                                 this.applySpecialEffectsOnDamage(targetUnit);
                             }
-                            if(applaySpecials) this.applySpecialEffects(targetUnit,effect);
+                            if(applySpecials) this.applySpecialEffects(targetUnit,effect);
                             
                             if(effect.turn === -1){
                                 stat.effects.splice(e,1);
@@ -279,7 +279,7 @@ let state6Controller = {
                             }
                         }
                         if(stat.effects.length > 0) {
-                            console.log("juai de rito");
+                            console.log("Persistent effect on unit ");
                             targetUnit.status.push(stat);
                         }
                     }

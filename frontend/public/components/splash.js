@@ -22,7 +22,7 @@ var splash = {
         var IMAGE_CHA_PATH = "../img/characters/";
         var IMAGE_EXTENTION = ".png";
 
-        // 2 or 4 colums depending of the splash height and orentation
+        // 2 or 4 colums depending on the splash height and orentation
         var need4Colums = width > height;
 
         var newInnerHTML ="<h1 style='text-align: center; color:"+players[currentPlayer].color+"; justify-content: center; align-items : center; font-family : consolas;'>"+players[currentPlayer].playerName+"</h1>"+

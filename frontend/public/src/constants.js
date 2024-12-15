@@ -23,11 +23,11 @@ const STATE_52_ALLIE_STRUCTURE_SELECTED = 52;
 const STATE_53_NON_ALLIE_STRUCTURE_SELECTED = 53;
 // * 60 - unit move - selecting Action - 10
 const STATE_60_UNIT_MOVE = 60;
-// * 65 - unit atack/dont move/skill - selecting Action - 4
+// * 65 - unit attack/don't move/skill - selecting Action - 4
 const STATE_65_MENU_UNIT = 65;
-// * 66 - unit target (atack/skill)
+// * 66 - unit target (attack/skill)
 const STATE_66_UNIT_TARGET_SKILL = 66;
-// * 67 - unit target (atack/skill)
+// * 67 - unit target (attack/skill)
 const STATE_67_UNIT_TARGET = 67;
 // * 70 - Action result - 0
 const STATE_70_ACTION_RESULT = 70;

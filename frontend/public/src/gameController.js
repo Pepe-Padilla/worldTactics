@@ -201,7 +201,7 @@ let gameController = {
     },
     rightTab: function() {
         if(gameState === STATE_40_TURN_ACTIVE) {
-            this.cicleRight();
+            this.circleRight();
         } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
             gameState === STATE_80_END_OF_PLAYER_TURN || gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
@@ -209,8 +209,8 @@ let gameController = {
     },
     leftTab: function() {
         if(gameState === STATE_40_TURN_ACTIVE) {
-            this.cicleLeft();
-        } else if(gameState === STATE_60_UNIT_MOVE60 || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
+            this.circleLeft();
+        } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
             gameState === STATE_80_END_OF_PLAYER_TURN || gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         }
@@ -245,18 +245,9 @@ let gameController = {
         return null;
     },
     getTotalStats: function(unit) {
-        var terrain = {defBonus: 0};
-        terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
-        var bonus = {hp:0,mp:0,agi:0,vel:0,str:0,def:0};
+        let terrain = theMap.arrayTerrain[unit.y].row[unit.x].terrain;
+        let bonus = this.getEffectBonus(unit);
         // bonus from user effects
-        if(unit) {
-            for(var u=0;u<unit.status.length;u++) {
-                for(var e=0;e<unit.status[u].effects.length;e++) {
-                    var anEffect = unit.status[u].effects[e];
-                    bonus[anEffect.atribute] += anEffect.bonus;
-                }
-            }
-        }
         bonus.def+=terrain.defBonus;
         bonus.agi +=unit.agi;
         bonus.def +=unit.def;
@@ -331,8 +322,8 @@ let gameController = {
         Tile.upsertCharacter(unit);
         return unit;
     },
-    cicleRight: function() {
-        //console.log("cicleRight");
+    circleRight: function() {
+        //console.log("circleRight");
         const initialX = cursor.x;
         const initialY = cursor.y;
         let lowestX = 100000;
@@ -373,8 +364,8 @@ let gameController = {
             state4Controller.state4CursorMoved();
         }
     },
-    cicleLeft: function() {
-        //console.log("cicleLeft");
+    circleLeft: function() {
+        //console.log("circleLeft");
         const initialX = cursor.x;
         const initialY = cursor.y;
         let lowestX = -1;

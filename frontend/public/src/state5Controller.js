@@ -117,7 +117,7 @@ let state5Controller = {
                 gameController.initGame();
                 break;
             case "menu80_cicle":
-                gameController.cicleRight();
+                gameController.circleRight();
                 this.cancelS80();
                 break;
             case "menu80_cancel":

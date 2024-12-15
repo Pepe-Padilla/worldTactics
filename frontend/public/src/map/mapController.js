@@ -3,9 +3,9 @@ let mapController = {
     createTiles: function (map, uploaded) {
         console.log(map);
         theMap = map;
-        let mapXsize = map.xSize;
-        let mapYsize = map.ySize;
-        const dimension = new Dimention(mapXsize, mapYsize);
+        let mapXSize = map.xSize;
+        let mapYSize = map.ySize;
+        const dimension = new Dimention(mapXSize, mapYSize);
         dimension.init();
         document.getElementById("wtGame").innerHTML = "";
 

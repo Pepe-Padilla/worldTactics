@@ -1,4 +1,3 @@
-console.log("Inireaded");
 document.addEventListener('DOMContentLoaded', function() {
     init.initGame();
 }, false);

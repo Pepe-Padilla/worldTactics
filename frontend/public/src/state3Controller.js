@@ -58,14 +58,14 @@ let state3Controller = {
             }
 
             // Terrain gold
-            if(terrain.sprite === "mine" && unit.name === "commoner" && unit.hp > 0) {
+            if(terrain.sprite === TERRAIN_GOLD_MINE && unit.name === UNIT_COMMONER && unit.hp > 0) {
                 gold+=Math.round(GOLD_PER_MINE*(unit.hp/100));
             }
 
             // If the unit is death because of the efects kill them!!!!
             if(unit.hp <= 0) {
                 unitsLost++;
-                var theUnit=players[currentPlayer].units.splice(ch,1);
+                let theUnit=players[currentPlayer].units.splice(ch,1);
                 Tile.killCharacter(theUnit);
                 ch--;
             }

@@ -1,5 +1,5 @@
-var keyboard = {
-    keys: new Array(),
+let keyboard = {
+    keys: [],
     init: function() {
         document.onkeydown = keyboard.readKey;
     },
@@ -11,6 +11,6 @@ var keyboard = {
         return keyboard.keys.indexOf(key) !== -1;
     },
     reset: function() {
-        keyboard.keys = new Array();
+        keyboard.keys = [];
     }
 };

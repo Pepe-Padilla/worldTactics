@@ -1,4 +1,4 @@
-var gamepad = {
+let gamepad = {
     keys: [],
     keyRelation: [],
     control: null,
@@ -31,7 +31,7 @@ var gamepad = {
     },
     connect: function (e) {
         gamepad.control = e.gamepad;
-        gamepad.identifiy();
+        gamepad.identify();
     },
     disconnect: function (e) {
         console.log("Gamepath disconnect %d: %s", e.gamepad.index, e.gamepad.id);
@@ -44,7 +44,7 @@ var gamepad = {
                 gamepad.control = aControl[0];
                 if(!gamepad.isConnected && gamepad.control) {
                     gamepad.isConnected = true;
-                    gamepad.identifiy();
+                    gamepad.identify();
                 }
             } catch(error) {
                 console.log(error.message);
@@ -57,14 +57,14 @@ var gamepad = {
             if(gamepad.isButtonDown(gamepad.control.buttons[value])) {
                 // whileKeyDown
 
-                if(this.keys.indexOf(key) == -1) {
+                if(this.keys.indexOf(key) === -1) {
                     this.keys.push(key);
 
                     // onKeyDown
                     gameController.readAction(key);
                 }
             } else {
-                var indexKey = this.keys.indexOf(key);
+                const indexKey = this.keys.indexOf(key);
                 if(indexKey !== -1) {
                     this.keys.splice(indexKey,1);
 
@@ -73,7 +73,7 @@ var gamepad = {
             } 
         }
     },
-    identifiy: function() {
+    identify: function() {
         console.log("GamePad connected [%d]: %s. %d buttons, %d axes", 
             gamepad.control.index,gamepad.control.id,gamepad.control.buttons.length, gamepad.control.axes.length);
     },
@@ -81,6 +81,6 @@ var gamepad = {
         if(typeof(button) == "object") {
             return button.pressed;
         }
-        return button > 0.3 || button < -0.3; //sería mejor un > 0.3?
+        return button > 0.3 || button < -0.3; //have to adjust this value
     }
 }

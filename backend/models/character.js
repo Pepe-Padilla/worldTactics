@@ -84,7 +84,7 @@ const modelSchema = new Schema({
         "type": "Number"
       }
     },
-    "assasin": {
+    "assassin": {
       "str": {
         "type": "Number"
       },

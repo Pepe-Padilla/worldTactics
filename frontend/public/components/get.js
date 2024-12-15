@@ -1,7 +1,7 @@
-var GET = (function () {
-    var get = {
+let GET = (function () {
+    let get = {
         push:function (key,value){
-            var cur = this[key];
+            let cur = this[key];
             if (cur.isArray){
                 this[key].push(value);
             }else {
@@ -13,10 +13,10 @@ var GET = (function () {
     },
     search = document.location.search,
     decode = function (s,boo) {
-        var a = decodeURIComponent(s.split("+").join(" "));
+        let a = decodeURIComponent(s.split("+").join(" "));
         return boo? a.replace(/\s+/g,''):a;
     };
-    search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function (a,b,c) {
+    search.replace(/\??([^=]+)=([^&]*)&?/g, function (a,b,c) {
         if (get[decode(b,true)]){
             get.push(decode(b,true),decode(c));
         }else {
