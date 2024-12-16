@@ -1,8 +1,8 @@
-var splash = {
+let splash = {
     createBotSplash: function(gold,unitsLost) {
-        var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        var height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-        var theSplash = document.createElement("div");
+        const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        let theSplash = document.createElement("div");
         document.body.appendChild(theSplash);
         theSplash.id = "theSplash";
         theSplash.style.position = "absolute";
@@ -15,31 +15,31 @@ var splash = {
         theSplash.style.border = "5px solid "+players[currentPlayer].color;
         theSplash.style.borderRadius = "8px";
 
-        var idTile = "x0y0";
-        var theTile = document.getElementById(idTile);
-        var rect=theTile.getBoundingClientRect();
-        var IMAGE_MAP_PATH = "../img/map/";
-        var IMAGE_CHA_PATH = "../img/characters/";
-        var IMAGE_EXTENTION = ".png";
+        const idTile = "x0y0";
+        const theTile = document.getElementById(idTile);
+        const rect=theTile.getBoundingClientRect();
+        const IMAGE_MAP_PATH = "../img/map/";
+        const IMAGE_CHA_PATH = "../img/characters/";
+        const IMAGE_EXTENSION = ".png";
 
-        // 2 or 4 colums depending on the splash height and orentation
-        var need4Colums = width > height;
+        // 2 or 4 columns depending on the splash height and orientation
+        const need4Columns = width > height;
 
-        var newInnerHTML ="<h1 style='text-align: center; color:"+players[currentPlayer].color+"; justify-content: center; align-items : center; font-family : consolas;'>"+players[currentPlayer].playerName+"</h1>"+
+        let newInnerHTML ="<h1 style='text-align: center; color:"+players[currentPlayer].color+"; justify-content: center; align-items : center; font-family : consolas;'>"+players[currentPlayer].playerName+"</h1>"+
         "<h3 style='text-align: center; justify-content: center; align-items: center; font-family : consolas;'>Turn "+currentTurn+"</h3>"+
         "<div style='justify-items: center;'>"+
         "<table>"+
         "<thead><tr>"+
         "<th></th><th></th>";
-        if(need4Colums) newInnerHTML += "<th></th><th></th>"; 
+        if(need4Columns) newInnerHTML += "<th></th><th></th>";
         newInnerHTML += "</tr></thead>"+
         "<tbody>"+
-        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"castle0"+IMAGE_EXTENTION+"'></td><td>1</td>";
-        if(!need4Colums) newInnerHTML +=  "</tr><tr>"; 
-        newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"keep0"+IMAGE_EXTENTION+"'></td><td>"+(players[currentPlayer].buildings.length -1)+"</td></tr>"+
-        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"commoner-"+players[currentPlayer].color+IMAGE_EXTENTION+"'></td><td>"+players[currentPlayer].units.length+" </td>";
-        if(!need4Colums) newInnerHTML += "</tr><tr>"; 
-        newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"mine0"+IMAGE_EXTENTION+"'></td><td>"+gold+" Gold</td></tr>"+
+        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"castle0"+IMAGE_EXTENSION+"'></td><td>1</td>";
+        if(!need4Columns) newInnerHTML +=  "</tr><tr>";
+        newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"keep0"+IMAGE_EXTENSION+"'></td><td>"+(players[currentPlayer].buildings.length -1)+"</td></tr>"+
+        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"commoner-"+players[currentPlayer].color+IMAGE_EXTENSION+"'></td><td>"+players[currentPlayer].units.length+" </td>";
+        if(!need4Columns) newInnerHTML += "</tr><tr>";
+        newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"mine0"+IMAGE_EXTENSION+"'></td><td>"+gold+" Gold</td></tr>"+
         "</tbody>"+
         "<table></div>"+
         "<h2 style='text-align: center; justify-content: center; align-items: center; font-family : consolas;'>Magic effects applyed...</h2>"+
@@ -49,18 +49,18 @@ var splash = {
     },
     showS4Splash: function(terrain, unit, bonus, playerIndex) {
         // showS4Splash
-        var splashS4=document.getElementById("splashS4");
+        let splashS4=document.getElementById("splashS4");
 
-        // get mesures
-        var idTile = "x0y0";
-        var theTile = document.getElementById(idTile);
-        var rect=theTile.getBoundingClientRect();
-        var midx = Math.floor(theMap.xSize/2); //7 para 15
-        var midy = Math.floor(theMap.ySize/2); //7 para 15
-        var IMAGE_MAP_PATH = "../img/map/";
-        var IMAGE_CHA_PATH = "../img/characters/";
-        var IMAGE_EFE_PATH = "../img/effects/";
-        var IMAGE_EXTENTION = ".png";
+        // get measures
+        const idTile = "x0y0";
+        const theTile = document.getElementById(idTile);
+        const rect=theTile.getBoundingClientRect();
+        const midX = Math.floor(theMap.xSize/2); //7 para 15
+        //var midY = Math.floor(theMap.ySize/2); //7 para 15
+        const IMAGE_MAP_PATH = "../img/map/";
+        const IMAGE_CHA_PATH = "../img/characters/";
+        const IMAGE_EFE_PATH = "../img/effects/";
+        const IMAGE_EXTENSION = ".png";
 
         if(!splashS4) {
             splashS4 = document.createElement("div");
@@ -77,56 +77,55 @@ var splash = {
             // splashS4 en la izquierda
             splashS4.style.left = Math.floor(rect.left+rect.width)+"px";
             splashS4.style.top = Math.floor(rect.top+rect.height)+"px";
-            splashS4.style.width = Math.floor(rect.width*(midx-1))+"px";
-            //splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
+            splashS4.style.width = Math.floor(rect.width*(midX-1))+"px";
+            //splashS4.style.height = Math.floor(rect.width*(midY+2))+"px";
         } else {
             // splashS4 en la derecha
-            splashS4.style.left = Math.floor(rect.left+(rect.width*(midx+1)))+"px";
+            splashS4.style.left = Math.floor(rect.left+(rect.width*(midX+1)))+"px";
             splashS4.style.top = Math.floor(rect.top+rect.height)+"px";
-            splashS4.style.width = Math.floor(rect.width*(midx-1))+"px";
-            //splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
+            splashS4.style.width = Math.floor(rect.width*(midX-1))+"px";
+            //splashS4.style.height = Math.floor(rect.width*(midY+2))+"px";
         }
 
-        newInnerHTML = "<div style='justify-items: center;'><table class='S4table'>"+
+        let newInnerHTML = "<div style='justify-items: center;'><table class='S4table'>"+
         "<h1 style='text-align: center; color:"+players[playerIndex].color+"; justify-content: center; align-items : center; font-family : consolas;'>"+players[playerIndex].playerName+"</h1>"+
         "<div style='justify-items: center;'><table>"+
         "<tbody>";
 
         // Unit stats
         if(unit) {
-            var effectsUnitHTML = "";
+            let effectsUnitHTML = "";
             //var bonus = {agi:0,vel:0,str:0,def:0};
-            for(var u=0;u<unit.status.length;u++) {
-                var turnsLeft = 0;
+            for(let u=0;u<unit.status.length;u++) {
+                let turnsLeft = 0;
                 if(unit.status[u].pasive) {
-                    //console.log("pasive");
+                    //console.log("passive");
                     turnsLeft = "∞";
                 }
                 else {
-                    for(var e=0;e<unit.status[u].effects.length;e++) {
-                        var turn = unit.status[u].effects[e].turn;
+                    for(let e=0;e<unit.status[u].effects.length;e++) {
+                        const turn = unit.status[u].effects[e].turn;
                         if((turn+1)>turnsLeft) turnsLeft=turn+1;
                     }
                 }
                 effectsUnitHTML += "<div class='hpMetter' style='--imgVar: var(--"+unit.status[u].icon +"); width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;'>"+turnsLeft+"</div>&nbsp;";    
             }
-            newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"-"+players[playerIndex].color+IMAGE_EXTENTION+"'></td><td>"+unit.name+"</td><tr>"+
+            newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"-"+players[playerIndex].color+IMAGE_EXTENSION+"'></td><td>"+unit.name+"</td><tr>"+
             "<tr><td>HP</td><td>"+unit.hp+"</td></tr>"+
             "<tr><td>MP</td><td>"+unit.mp+"</td></tr>"+
-            "<tr><td>agi</td><td>"+unit.agi+" "+(bonus.agi != 0?"(+ "+bonus.agi+")":"")+"</td></tr>"+
-            "<tr><td>vel</td><td>"+unit.vel+" "+(bonus.vel != 0?"(+ "+bonus.vel+")":"")+"</td></tr>"+
-            "<tr><td>str</td><td>"+unit.str+" "+(bonus.str != 0?"(+ "+bonus.str+")":"")+"</td></tr>"+
-            "<tr><td>def</td><td>"+unit.def+" "+(bonus.def != 0?"(+ "+bonus.def+")":"")+"</td></tr>"+
+            "<tr><td>agi</td><td>"+unit.agi+" "+(bonus.agi !== 0?"(+ "+bonus.agi+")":"")+"</td></tr>"+
+            "<tr><td>vel</td><td>"+unit.vel+" "+(bonus.vel !== 0?"(+ "+bonus.vel+")":"")+"</td></tr>"+
+            "<tr><td>str</td><td>"+unit.str+" "+(bonus.str !== 0?"(+ "+bonus.str+")":"")+"</td></tr>"+
+            "<tr><td>def</td><td>"+unit.def+" "+(bonus.def !== 0?"(+ "+bonus.def+")":"")+"</td></tr>"+
             "<tr><td colspan='2'>"+effectsUnitHTML+"</td></tr>";
             "<tr><td colspan='2'><hr></td></tr>";
         }
         
         // Terrain stats
-        newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENTION+"'></td><td>def: "+terrain.defBonus+"</td><tr>";
-        var effectsTerrainHTML = "";
-        // TODO: pasar a dev como con units
-        for(var t=0;t<terrain.status.length;t++) {
-            effectsTerrainHTML += "<img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_EFE_PATH+terrain.status[t].icon+IMAGE_EXTENTION+"'>&nbsp;";    
+        newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENSION+"'></td><td>def: "+terrain.defBonus+"</td><tr>";
+        let effectsTerrainHTML = "";
+        for(let t=0;t<terrain.status.length;t++) {
+            effectsTerrainHTML += "<img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_EFE_PATH+terrain.status[t].icon+IMAGE_EXTENSION+"'>&nbsp;";
         }
         "<tr><td colspan='2'>"+effectsTerrainHTML+"</td></tr>";
         
@@ -134,19 +133,19 @@ var splash = {
         splashS4.innerHTML = newInnerHTML;
     },
     cancelS4Splash: function() {
-        var splashS4=document.getElementById("splashS4");
+        let splashS4=document.getElementById("splashS4");
         if(splashS4)splashS4.remove();
     },
     showS50Splash: function(unit) {
         // showS4Splash
-        var splashS50=document.getElementById("splashS50");
+        let splashS50=document.getElementById("splashS50");
 
         // get mesures
-        var idTile = "x0y0";
-        var theTile = document.getElementById(idTile);
-        var rect=theTile.getBoundingClientRect();
-        var midx = Math.floor(theMap.xSize/2); //7 para 15
-        var midy = Math.floor(theMap.ySize/2); //7 para 15
+        const idTile = "x0y0";
+        const theTile = document.getElementById(idTile);
+        const rect=theTile.getBoundingClientRect();
+        //const midX = Math.floor(theMap.xSize/2); //7 para 15
+        //const midY = Math.floor(theMap.ySize/2); //7 para 15
 
         if(!splashS50) {
             splashS50 = document.createElement("div");
@@ -161,7 +160,7 @@ var splash = {
             splashS50.style.left = Math.floor(rect.left+rect.width)+"px";
             splashS50.style.top = Math.floor(rect.top+rect.height)+"px";
             //splashS4.style.width = Math.floor(rect.width*(midx-1))+"px";
-            //splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
+            //splashS4.style.height = Math.floor(rect.width*(midY+2))+"px";
         } else {
             // splashS4 en la derecha
             splashS50.style.left = Math.floor(rect.left+(rect.width*(midx+1)))+"px";
@@ -170,87 +169,87 @@ var splash = {
             //splashS4.style.height = Math.floor(rect.width*(midy+2))+"px";
         }
 
-        var elementsOnMenu = 0;
-        var table= document.createElement("table");
-        var tbody= document.createElement("tbody");
+        let elementsOnMenu = 0;
+        let table= document.createElement("table");
+        let tbody= document.createElement("tbody");
 
-        // atack
-        var atrow= document.createElement("tr");
-        atrow.id="menu60_"+elementsOnMenu;
+        // attack
+        let atRow= document.createElement("tr");
+        atRow.id="menu60_"+elementsOnMenu;
         elementsOnMenu++;
-        var atdt1= document.createElement("td");
-        atdt1.id="menu60_attack";
-        var atico= document.createElement("div");
+        let atDt1= document.createElement("td");
+        atDt1.id="menu60_attack";
+        let atico= document.createElement("div");
         atico.className="splashS50Button";
         atico.style.setProperty("--imgVar","var(--atack)");
         atico.style.setProperty("--widthico",(rect.width*0.7)+"px");
         atico.style.setProperty("--heightico",(rect.height*0.7)+"px");
-        var atdt2= document.createElement("td");
-        atdt2.className="splashS50Text";
-        atdt2.innerHTML="Attack";
-        atdt1.appendChild(atico);
-        atrow.appendChild(atdt1);
-        atrow.appendChild(atdt2);
-        tbody.appendChild(atrow);
+        let atDt2= document.createElement("td");
+        atDt2.className="splashS50Text";
+        atDt2.innerHTML="Attack";
+        atDt1.appendChild(atico);
+        atRow.appendChild(atDt1);
+        atRow.appendChild(atDt2);
+        tbody.appendChild(atRow);
 
         // Skills
         if(unit.skills.length > 0) {
-            var skrow= document.createElement("tr");
-            skrow.id="menu60_"+elementsOnMenu;
+            let skRow= document.createElement("tr");
+            skRow.id="menu60_"+elementsOnMenu;
             elementsOnMenu++;
-            var skdt1= document.createElement("td");
-            skdt1.id="menu60_skills";
-            var skico= document.createElement("div");
+            let skDt1= document.createElement("td");
+            skDt1.id="menu60_skills";
+            let skico= document.createElement("div");
             skico.className="splashS50Button";
             skico.style.setProperty("--imgVar","var(--skills)");
             skico.style.setProperty("--widthico",(rect.width*0.7)+"px");
             skico.style.setProperty("--heightico",(rect.height*0.7)+"px");
-            var skdt2= document.createElement("td");
-            skdt2.className="splashS50Text";
-            skdt2.innerHTML="Skills";
-            skdt1.appendChild(skico);
-            skrow.appendChild(skdt1);
-            skrow.appendChild(skdt2);
-            tbody.appendChild(skrow);
+            let skDt2= document.createElement("td");
+            skDt2.className="splashS50Text";
+            skDt2.innerHTML="Skills";
+            skDt1.appendChild(skico);
+            skRow.appendChild(skDt1);
+            skRow.appendChild(skDt2);
+            tbody.appendChild(skRow);
         }
 
         // Move
-        var morow= document.createElement("tr");
-        morow.id="menu60_"+elementsOnMenu;
+        let moRow= document.createElement("tr");
+        moRow.id="menu60_"+elementsOnMenu;
         elementsOnMenu++;
-        var modt1= document.createElement("td");
-        modt1.id="menu60_move";
-        var moico= document.createElement("div");
+        let moDt1= document.createElement("td");
+        moDt1.id="menu60_move";
+        let moico= document.createElement("div");
         moico.className="splashS50Button";
         moico.style.setProperty("--imgVar","var(--move)");
         moico.style.setProperty("--widthico",(rect.width*0.7)+"px");
         moico.style.setProperty("--heightico",(rect.height*0.7)+"px");
-        var modt2= document.createElement("td");
-        modt2.className="splashS50Text";
-        modt2.innerHTML="Move";
-        modt1.appendChild(moico);
-        morow.appendChild(modt1);
-        morow.appendChild(modt2);
-        tbody.appendChild(morow);
+        let moDt2= document.createElement("td");
+        moDt2.className="splashS50Text";
+        moDt2.innerHTML="Move";
+        moDt1.appendChild(moico);
+        moRow.appendChild(moDt1);
+        moRow.appendChild(moDt2);
+        tbody.appendChild(moRow);
 
         // Cancel
-        var carow= document.createElement("tr");
-        carow.id="menu60_"+elementsOnMenu;
+        let caRow= document.createElement("tr");
+        caRow.id="menu60_"+elementsOnMenu;
         elementsOnMenu++;
-        var cadt1= document.createElement("td");
-        cadt1.id="menu60_cancel";
-        var caico= document.createElement("div");
+        let caDt1= document.createElement("td");
+        caDt1.id="menu60_cancel";
+        let caico= document.createElement("div");
         caico.className="splashS50Button";
         caico.style.setProperty("--imgVar","var(--cancel)");
         caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
         caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
-        var cadt2= document.createElement("td");
-        cadt2.className="splashS50Text";
-        cadt2.innerHTML="Cancel";
-        cadt1.appendChild(caico);
-        carow.appendChild(cadt1);
-        carow.appendChild(cadt2);
-        tbody.appendChild(carow);
+        let caDt2= document.createElement("td");
+        caDt2.className="splashS50Text";
+        caDt2.innerHTML="Cancel";
+        caDt1.appendChild(caico);
+        caRow.appendChild(caDt1);
+        caRow.appendChild(caDt2);
+        tbody.appendChild(caRow);
 
         table.appendChild(tbody);
         splashS50.appendChild(table);
@@ -260,17 +259,17 @@ var splash = {
         Tile.createCursorMenu(menuCursor,players[currentPlayer].color,60);
     },
     cancelS50Splash: function() {
-        var splashS50=document.getElementById("splashS50");
+        let splashS50=document.getElementById("splashS50");
         if(splashS50)splashS50.remove();
         Tile.deleteCursorMenu();
     },
     showBuildingMenu: function(sprite) {
-        var idTile = "x0y0";
-        var theTile = document.getElementById(idTile);
-        var rect=theTile.getBoundingClientRect();
+        const idTile = "x0y0";
+        const theTile = document.getElementById(idTile);
+        const rect=theTile.getBoundingClientRect();
 
-        var idMenu = "building";
-        var splashBM=document.getElementById(idMenu);
+        const idMenu = "building";
+        let splashBM=document.getElementById(idMenu);
         if(!splashBM) {
             splashBM=document.createElement("div");
             splashBM.id = idMenu;
@@ -279,15 +278,15 @@ var splash = {
         }
         splashBM.innerHTML = "";
 
-        var table = document.createElement("table");
-        var caption = document.createElement("caption");
+        let table = document.createElement("table");
+        let caption = document.createElement("caption");
         caption.innerHTML=players[currentPlayer].playerName +" gold: "+players[currentPlayer].gold;
         table.appendChild(caption);
         
-        var trTerrain = document.createElement("tr");
-        var td1Terrain = document.createElement("td");
-        var td2Terrain = document.createElement("td");
-        var divTerrain = document.createElement("div");
+        let trTerrain = document.createElement("tr");
+        let td1Terrain = document.createElement("td");
+        let td2Terrain = document.createElement("td");
+        let divTerrain = document.createElement("div");
         divTerrain.className = "hpMetter";
         divTerrain.style.setProperty("--imgVar","var(--"+sprite+")");
         divTerrain.style.width= rect.width+"px";
@@ -298,17 +297,17 @@ var splash = {
         trTerrain.appendChild(td2Terrain);
         table.appendChild(trTerrain);
 
-        var count = 0;
-        for(var i=0;i<allUnits.length;i++) {
-            if(allUnits[i].traingGround == sprite) {
-                var trUnit = document.createElement("tr");
+        let count = 0;
+        for(let i=0;i<allUnits.length;i++) {
+            if(allUnits[i].traingGround === sprite) {
+                let trUnit = document.createElement("tr");
                 trUnit.id = "menu52_"+count;
-                var trUnitDescription = document.createElement("tr");
-                var td1Unit = document.createElement("td");
+                let trUnitDescription = document.createElement("tr");
+                let td1Unit = document.createElement("td");
                 td1Unit.id = "unit_"+i;
-                var td2Unit = document.createElement("td");
-                var td3Unit = document.createElement("td");
-                var divUnit = document.createElement("div");
+                let td2Unit = document.createElement("td");
+                let td3Unit = document.createElement("td");
+                let divUnit = document.createElement("div");
 
                 divUnit.className = "hpMetter";
                 divUnit.style.setProperty("--imgVar","var(--"+allUnits[i].sprite+"-"+players[currentPlayer].color+")");
@@ -321,8 +320,7 @@ var splash = {
                 td2Unit.style.fontSize="larger";
                 td3Unit.style.fontSize="normal";
                 td3Unit.textContent = allUnits[i].description;
-                var idTR2="menu_2_52_"+count;
-                td3Unit.id = idTR2;
+                td3Unit.id = "menu_2_52_"+count;
                 
                 trUnit.appendChild(td1Unit);
                 trUnit.appendChild(td2Unit);
@@ -339,19 +337,19 @@ var splash = {
         document.body.appendChild(splashBM);
     },
     cancelBuildingMenu: function() {
-        var idMenu = "building";
-        var splashBM=document.getElementById(idMenu);
+        const idMenu = "building";
+        let splashBM=document.getElementById(idMenu);
         if(splashBM) {
             splashBM.remove();
         }
     },
     showEOTMenu: function(){
-        var idTile = "x0y0";
-        var theTile = document.getElementById(idTile);
-        var rect=theTile.getBoundingClientRect();
+        const idTile = "x0y0";
+        const theTile = document.getElementById(idTile);
+        const rect=theTile.getBoundingClientRect();
 
-        var idMenu = "endofturn";
-        var splashBM=document.getElementById(idMenu);
+        const idMenu = "endofturn";
+        let splashBM=document.getElementById(idMenu);
         if(!splashBM) {
             splashBM=document.createElement("div");
             splashBM.id = idMenu;
@@ -360,73 +358,73 @@ var splash = {
         }
         splashBM.innerHTML = "";
 
-        var table = document.createElement("table");
-        var tbody = document.createElement("tbody");
+        let table = document.createElement("table");
+        let tbody = document.createElement("tbody");
 
-        var elementsOnMenu = 0;
+        let elementsOnMenu = 0;
 
-        // Cicle
-        var areActiveUnits = false;
+        // Cycle
+        let areActiveUnits = false;
         players[currentPlayer].units.forEach(element => {
             if(!element.moved) areActiveUnits = true;
         });
         if(areActiveUnits) {
-            var rorow= document.createElement("tr");
-            rorow.id="menu80_"+elementsOnMenu;
+            let roRow= document.createElement("tr");
+            roRow.id="menu80_"+elementsOnMenu;
             elementsOnMenu++;
-            var rodt1= document.createElement("td");
-            rodt1.id="menu80_cicle";
-            var roico= document.createElement("div");
+            let roDt1= document.createElement("td");
+            roDt1.id="menu80_cycle";
+            let roico= document.createElement("div");
             roico.className="splashS50Button";
             roico.style.setProperty("--imgVar","var(--rotate)");
             roico.style.setProperty("--widthico",(rect.width*0.7)+"px");
             roico.style.setProperty("--heightico",(rect.height*0.7)+"px");
-            var rodt2= document.createElement("td");
-            rodt2.className="splashS50Text";
-            rodt2.innerHTML="Next active unit";
-            rodt1.appendChild(roico);
-            rorow.appendChild(rodt1);
-            rorow.appendChild(rodt2);
-            tbody.appendChild(rorow);
+            let roDt2= document.createElement("td");
+            roDt2.className="splashS50Text";
+            roDt2.innerHTML="Next active unit";
+            roDt1.appendChild(roico);
+            roRow.appendChild(roDt1);
+            roRow.appendChild(roDt2);
+            tbody.appendChild(roRow);
         }
 
         // EOT
-        var carow= document.createElement("tr");
-        carow.id="menu80_"+elementsOnMenu;
+        let eotRow= document.createElement("tr");
+        eotRow.id="menu80_"+elementsOnMenu;
         elementsOnMenu++;
-        var cadt1= document.createElement("td");
-        cadt1.id="menu80_eot";
-        var caico= document.createElement("div");
-        caico.className="splashS50Button";
-        caico.style.setProperty("--imgVar","var(--eot)");
-        caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
-        caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
-        var cadt2= document.createElement("td");
-        cadt2.className="splashS50Text";
-        cadt2.innerHTML="End of turn?";
-        cadt1.appendChild(caico);
-        carow.appendChild(cadt1);
-        carow.appendChild(cadt2);
-        tbody.appendChild(carow);
+        let eotDt1= document.createElement("td");
+        eotDt1.id="menu80_eot";
+        let eotIco= document.createElement("div");
+        eotIco.className="splashS50Button";
+        eotIco.style.setProperty("--imgVar","var(--eot)");
+        eotIco.style.setProperty("--widthico",(rect.width*0.7)+"px");
+        eotIco.style.setProperty("--heightico",(rect.height*0.7)+"px");
+        let oitDt2= document.createElement("td");
+        oitDt2.className="splashS50Text";
+        oitDt2.innerHTML="End of turn?";
+        eotDt1.appendChild(eotIco);
+        eotRow.appendChild(eotDt1);
+        eotRow.appendChild(oitDt2);
+        tbody.appendChild(eotRow);
 
         // Cancel
-        var carow= document.createElement("tr");
-        carow.id="menu80_"+elementsOnMenu;
+        let caRow= document.createElement("tr");
+        caRow.id="menu80_"+elementsOnMenu;
         elementsOnMenu++;
-        var cadt1= document.createElement("td");
-        cadt1.id="menu80_cancel";
-        var caico= document.createElement("div");
+        let caDt1= document.createElement("td");
+        caDt1.id="menu80_cancel";
+        let caico= document.createElement("div");
         caico.className="splashS50Button";
         caico.style.setProperty("--imgVar","var(--cancel)");
         caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
         caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
-        var cadt2= document.createElement("td");
-        cadt2.className="splashS50Text";
-        cadt2.innerHTML="Cancel";
-        cadt1.appendChild(caico);
-        carow.appendChild(cadt1);
-        carow.appendChild(cadt2);
-        tbody.appendChild(carow);
+        let caDt2= document.createElement("td");
+        caDt2.className="splashS50Text";
+        caDt2.innerHTML="Cancel";
+        caDt1.appendChild(caico);
+        caRow.appendChild(caDt1);
+        caRow.appendChild(caDt2);
+        tbody.appendChild(caRow);
 
         table.appendChild(tbody);
 
@@ -434,20 +432,20 @@ var splash = {
         document.body.appendChild(splashBM);
     },
     cancelEOTMenu: function() {
-        var idMenu = "endofturn";
-        var splashBM=document.getElementById(idMenu);
+        const idMenu = "endofturn";
+        let splashBM=document.getElementById(idMenu);
         if(splashBM) {
             splashBM.remove();
         }
     },
     skillS50Splash: function(unit) { 
         // showS4Splash
-        var splashS50=document.getElementById("splashS50");
+        let splashS50=document.getElementById("splashS50");
 
         // get mesures
-        var idTile = "x0y0";
-        var theTile = document.getElementById(idTile);
-        var rect=theTile.getBoundingClientRect();
+        const idTile = "x0y0";
+        const theTile = document.getElementById(idTile);
+        const rect=theTile.getBoundingClientRect();
 
         if(!splashS50) {
             splashS50 = document.createElement("div");
@@ -462,73 +460,73 @@ var splash = {
         splashS50.style.left = Math.floor(rect.left+(rect.width/2))+"px";
         splashS50.style.top = Math.floor(rect.top+(rect.height/2))+"px";
 
-        var elementsOnMenu = 0;
-        var table= document.createElement("table");
+        let elementsOnMenu = 0;
+        let table= document.createElement("table");
         table.style.borderCollapse = "colapse";
-        var caption = document.createElement("caption");
+        let caption = document.createElement("caption");
         caption.innerHTML = unit.mp + " mp";
         table.appendChild(caption);
-        var tbody= document.createElement("tbody");
+        let tbody= document.createElement("tbody");
 
-        var pasiveSkills = [];
-        var lasttr = null;
-        for(var s = 0;s < unit.skills.length; s++) {
-            var skill = unit.skills[s];
-            var atrow= document.createElement("tr");
+        let passiveSkills = [];
+        let lasttr = null;
+        for(let s = 0;s < unit.skills.length; s++) {
+            const skill = unit.skills[s];
+            let atRow= document.createElement("tr");
             if(!skill.pasive && skill.mp <= unit.mp) {
-                atrow.id="menu65_"+elementsOnMenu;
+                atRow.id="menu65_"+elementsOnMenu;
                 elementsOnMenu++;
             }
-            var atdt1= document.createElement("td");
-            atdt1.id="menu65_"+skill.name;
-            var atico= document.createElement("div");
+            let atDt1= document.createElement("td");
+            atDt1.id="menu65_"+skill.name;
+            let atico= document.createElement("div");
             atico.className="splashS50Button";
             atico.style.setProperty("--imgVar","var(--"+skill.icon+")");
             atico.style.setProperty("--widthico",(rect.width*0.7)+"px");
             atico.style.setProperty("--heightico",(rect.height*0.7)+"px");
             if(skill.mp > unit.mp)  atico.style.opacity=0.4;
-            var atdt2= document.createElement("td");
-            atdt2.className="splashS50Text";
-            atdt2.innerHTML=skill.name + " ["+skill.mp+" mp] - "+ skill.description;
-            atdt1.appendChild(atico);
-            atrow.appendChild(atdt1);
-            atrow.appendChild(atdt2);
+            let atDt2= document.createElement("td");
+            atDt2.className="splashS50Text";
+            atDt2.innerHTML=skill.name + " ["+skill.mp+" mp] - "+ skill.description;
+            atDt1.appendChild(atico);
+            atRow.appendChild(atDt1);
+            atRow.appendChild(atDt2);
             if(!skill.pasive) { 
-                tbody.appendChild(atrow);
-                lasttr = atrow;
+                tbody.appendChild(atRow);
+                lasttr = atRow;
             }
             else {
-                pasiveSkills.push(atrow);
+                passiveSkills.push(atRow);
             }
         }
 
-        if(lasttr && pasiveSkills.length>0) lasttr.style.borderBottom = "1px solid black";
+        if(lasttr && passiveSkills.length>0) lasttr.style.borderBottom = "1px solid black";
 
-        for(var ps= 0;ps<pasiveSkills.length; ps++) {
-            tbody.appendChild(pasiveSkills[ps]);
-            lasttr = pasiveSkills[ps];
+        for(let ps= 0;ps<passiveSkills.length; ps++) {
+            tbody.appendChild(passiveSkills[ps]);
+            lasttr = passiveSkills[ps];
         }
 
         lasttr.style.borderBottom = "1px solid black";
 
         // Cancel
-        var carow= document.createElement("tr");
-        carow.id="menu65_"+elementsOnMenu;
+        let caRow= document.createElement("tr");
+        caRow.id="menu65_"+elementsOnMenu;
         elementsOnMenu++;
-        var cadt1= document.createElement("td");
-        cadt1.id="menu65_cancel";
-        var caico= document.createElement("div");
+        let caDt1= document.createElement("td");
+        caDt1.id="menu65_cancel";
+        let caico= document.createElement("div");
         caico.className="splashS50Button";
         caico.style.setProperty("--imgVar","var(--cancel)");
         caico.style.setProperty("--widthico",(rect.width*0.7)+"px");
         caico.style.setProperty("--heightico",(rect.height*0.7)+"px");
-        var cadt2= document.createElement("td");
-        cadt2.className="splashS50Text";
-        cadt2.innerHTML="Cancel";
-        cadt1.appendChild(caico);
-        carow.appendChild(cadt1);
-        carow.appendChild(cadt2);
-        tbody.appendChild(carow);
+        let caDt2= document.createElement("td");
+        caDt2.className="splashS50Text";
+        caDt2.innerHTML="Cancel";
+        caDt1.appendChild(caico);
+        caRow.appendChild(caDt1);
+        caRow.appendChild(caDt2);
+        tbody.appendChild(caRow);
 
         table.appendChild(tbody);
         splashS50.appendChild(table);
