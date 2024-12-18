@@ -1,11 +1,10 @@
 // main loop
 // ups - updates per second
 // fps - frames per second
-
-var mainLoop = {
+let mainLoop = {
     idExecution: null,
     
-    // aux variables for UPS and FPS reading, not necesary
+    // aux variables for UPS and FPS reading, not necessary
     lastMS: 0,
     //ups: 0,
     //fps: 0,
@@ -13,7 +12,7 @@ var mainLoop = {
     iteration: function(currentMS) {
         // temporalReg time in ms
 
-        // window.requestAnimationFrame mete a la función que tiene por parametro el currentMS
+        // window.requestAnimationFrame recalls the function currentMS auto completed
         mainLoop.idExecution = window.requestAnimationFrame(mainLoop.iteration);
         mainLoop.update(currentMS);
         mainLoop.draw(currentMS);
