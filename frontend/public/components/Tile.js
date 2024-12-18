@@ -1,5 +1,5 @@
 class Tile {
-    static insertDOM(x, y, dimention,sprite) {
+    static insertDOM(x, y, dimension,sprite) {
         // create DOM
         const idTile = "x"+x+"y"+y;
         const div = '<div id="'+idTile+'"></div>'
@@ -9,17 +9,17 @@ class Tile {
         theTile.style.zIndex = 1;
 
         // update DOM
-        Tile.updateDom(x, y, dimention,sprite);
+        Tile.updateDom(x, y, dimension,sprite);
     }
 
-    static updateDom(x, y, dimention,sprite) {
+    static updateDom(x, y, dimension,sprite) {
         const idTile = "x"+x+"y"+y;
         let theTile = document.getElementById(idTile);
         theTile.style.position = "absolute";
-        theTile.style.left = ((x*dimention.tiles)+dimention.widthMargin) + "px";
-        theTile.style.top =  ((y*dimention.tiles)+dimention.heightMargin) + "px";
-        theTile.style.width = dimention.tiles + "px";
-        theTile.style.height = dimention.tiles + "px";
+        theTile.style.left = ((x*dimension.tiles)+dimension.widthMargin) + "px";
+        theTile.style.top =  ((y*dimension.tiles)+dimension.heightMargin) + "px";
+        theTile.style.width = dimension.tiles + "px";
+        theTile.style.height = dimension.tiles + "px";
         theTile.style.border = "0px"
         
         if(sprite) Tile.updateSprite(x,y,sprite);
