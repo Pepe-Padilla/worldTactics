@@ -5,7 +5,7 @@ let mapController = {
         theMap = map;
         let mapXSize = map.xSize;
         let mapYSize = map.ySize;
-        const dimension = new Dimension(mapXSize, mapYSize);
+        const dimension = new ScrDimension(mapXSize, mapYSize);
         dimension.init();
         document.getElementById("wtGame").innerHTML = "";
 
