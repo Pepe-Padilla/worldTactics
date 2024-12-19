@@ -1,4 +1,4 @@
-class Dimention {
+class Dimension {
 
     mapMaxX;
     mapMaxY;
