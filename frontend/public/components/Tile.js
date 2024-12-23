@@ -38,20 +38,7 @@ class Tile {
         const wtGame = document.getElementById("wtGame").innerHTML;
         document.getElementById("wtGame").innerHTML = wtGame + div;
         
-        // tile info
-        const idTile = "x"+cursor.x+"y"+cursor.y;
-        const theTile = document.getElementById(idTile);
-        const rect=theTile.getBoundingClientRect();
-
-        let theCursor = document.getElementById(idCursor);
-        theCursor.style.zIndex = 3;
-        theCursor.style.position = "absolute";
-        theCursor.style.border = "4px solid "+color;
-        theCursor.style.left = (rect.x-4) + "px";
-        theCursor.style.top = (rect.y-4) + "px";
-        theCursor.style.width = rect.width + "px";
-        theCursor.style.height = rect.height + "px";
-
+        this.updateCursor(cursor,color);
     }
 
     static takeBuilding(x,y,color,isNeutral) {
