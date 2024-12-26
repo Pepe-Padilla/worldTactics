@@ -278,8 +278,22 @@ let state6Controller = {
                                 e--;
                             }
                         }
+
+                        // store the new stat
                         if(stat.effects.length > 0) {
                             console.log("Persistent effect on unit ");
+
+                            // but first lets delete previous not stackable stats
+                            const statName = stat.name;
+                            for (let i=0; i < targetUnit.status.length; i ++) {
+                                if(targetUnit.status[i].name === statName) {
+                                    console.log("Persistent effect not stackable");
+                                    targetUnit.status.splice(i,1);
+                                    i--;
+                                }
+                            }
+
+                            // new stat on unit
                             targetUnit.status.push(stat);
                         }
                     }
