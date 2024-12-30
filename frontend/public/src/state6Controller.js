@@ -38,7 +38,7 @@ let state6Controller = {
     attackSelected: function() {
         state6Cursor = {...cursor};
         splash.cancelS50Splash();
-        mapController.showXRange(state6Cursor.x,state6Cursor.y,state50Unit.atkrange,true,currentPlayer);
+        mapController.showXRange(state6Cursor.x,state6Cursor.y,state50Unit.atkRange,true,currentPlayer);
         gameState = STATE_67_UNIT_TARGET;
     },
     skillSelected: function() {

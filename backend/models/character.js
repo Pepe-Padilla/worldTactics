@@ -9,7 +9,7 @@ const modelSchema = new Schema({
   "description": {
     "type": "String"
   },
-  "traingGround": {
+  "trainingGround": {
     "type": "String"
   },
   "gold": {
@@ -39,7 +39,7 @@ const modelSchema = new Schema({
   "def": {
     "type": "Number"
   },
-  "atkrange": {
+  "atkRange": {
     "type": "Number"
   },
   "sprite": {

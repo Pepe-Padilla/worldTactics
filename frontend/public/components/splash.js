@@ -299,7 +299,7 @@ let splash = {
 
         let count = 0;
         for(let i=0;i<allUnits.length;i++) {
-            if(allUnits[i].traingGround === sprite) {
+            if(allUnits[i].trainingGround === sprite) {
                 let trUnit = document.createElement("tr");
                 trUnit.id = "menu52_"+count;
                 let trUnitDescription = document.createElement("tr");
