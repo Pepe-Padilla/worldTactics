@@ -17,8 +17,29 @@ interface Unit {
     moved: boolean;
     playerIndex: number;
     bonus: Bonus;
-    skills: string; //TODO: Skills
-    status: string; //TODO: Status
+    skills: Skill[];
+    status: Skill[];
+}
+
+interface Skill {
+    name: string;
+    description: string;
+    icon: string;
+    range: number;
+    area: number;
+    mp: number;
+    lineEffect: boolean;
+    pasive: boolean;
+    harmfull: boolean;
+    effects: Effect[];
+}
+
+interface Effect {
+    turn: number;
+    atribute: string;
+    bonus: number;
+    sprites: string;
+    special: string;
 }
 
 interface Bonus {
