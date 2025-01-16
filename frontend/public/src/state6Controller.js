@@ -59,9 +59,9 @@ let state6Controller = {
         // state50Unit is the attacker
         // in cursor is the objective
         // in state6Cursor is the attacker final position,  moveSelected()
-        // All stats includes: natural stats, units effects, pasive, terrain natural stats, terrain effects, unit bonus
+        // All stats includes: natural stats, units effects, passive, terrain natural stats, terrain effects, unit bonus
 
-        // 0. Validate target is on harmfull range
+        // 0. Validate target is on harmful range
         const currentTileId = "rangeXX"+cursor.x+"Y"+cursor.y;
         const currentTile = document.getElementById(currentTileId);
         if(!currentTile) return;
@@ -202,13 +202,13 @@ let state6Controller = {
         const currentRage = action65.range;
 
         mapController.showSkillRange(state6Cursor.x,state6Cursor.y,currentRage);
-        mapController.showSkillArea(cursor.x,cursor.y,action65.area,action65.harmfull,cursor.x,cursor.y);
+        mapController.showSkillArea(cursor.x,cursor.y,action65.area,action65.harmful,cursor.x,cursor.y);
         // and show area of effect
         gameState = STATE_66_UNIT_TARGET_SKILL;
     },
     cursorMoved66: function() { 
         mapController.cancelXArea();
-        mapController.showSkillArea(cursor.x,cursor.y,action65.area,action65.harmfull,cursor.x,cursor.y);
+        mapController.showSkillArea(cursor.x,cursor.y,action65.area,action65.harmful,cursor.x,cursor.y);
     },
     cancelS66: function(){
         cursor = {...state6Cursor};
@@ -225,11 +225,11 @@ let state6Controller = {
         // in cursor is the objective
         // in state6Cursor is the attacker final position,  moveSelected()
         // action65 is the skill used
-        //unitHarmfullRange
+        //unitharmfulRange
         //unitAllyRange
 
-        // 0. Validate target is on harmfull or ally range
-        const typeOfTargets = action65.harmfull?"unitHarmfullRange":"unitAllyRange";
+        // 0. Validate target is on harmful or ally range
+        const typeOfTargets = action65.harmful?"unitharmfulRange":"unitAllyRange";
         const ranges=document.getElementsByClassName(typeOfTargets);
 
         state50Unit.mp -= action65.mp;
@@ -251,24 +251,24 @@ let state6Controller = {
                 let targetUnit = gameController.getUnit(xPos,yPos);
                 if(targetUnit) { 
                     const isAllie = targetUnit.playerIndex === state50Unit.playerIndex;
-                    if(isAllie && !action65.harmfull || !isAllie && action65.harmfull) {
+                    if(isAllie && !action65.harmful || !isAllie && action65.harmful) {
                         console.log("is a target!!");
                         // 2. pass the status to the targuet
                         let stat= JSON.parse(JSON.stringify(action65)); //cloned
                         for(let e=0;e < stat.effects.length; e++) {
                             let effect = stat.effects[e];
-                            console.log("effect in "+effect.atribute);
+                            console.log("effect in "+effect.attribute);
                             let applySpecials = false;
-                            if((effect.atribute === "hp" || effect.atribute === "mp") && effect.turn === 0) {
-                                let newAtr = targetUnit[effect.atribute]+effect.bonus;
+                            if((effect.attribute === "hp" || effect.attribute === "mp") && effect.turn === 0) {
+                                let newAtr = targetUnit[effect.attribute]+effect.bonus;
                                 if(newAtr>100) newAtr=100;
                                 console.log("newAtr["+newAtr+"]");
-                                targetUnit[effect.atribute]=newAtr;
+                                targetUnit[effect.attribute]=newAtr;
                                 effect.turn--;
                                 applySpecials = true;
                             }
 
-                            if(effect.atribute === "hp" && stat.harmfull && applySpecials) {
+                            if(effect.attribute === "hp" && stat.harmful && applySpecials) {
                                 this.applySpecialEffectsOnDamage(targetUnit);
                             }
                             if(applySpecials) this.applySpecialEffects(targetUnit,effect);
@@ -320,9 +320,9 @@ let state6Controller = {
                 unit.mp += pahtiaCount * 2;
                 if(unit.mp>100) unit.mp = 100;
                 break;
-            case "removeHarmfull":
+            case "removeharmful":
                 for(var s=0;s<unit.status.length;s++) {
-                    if(unit.status[s].harmfull) {
+                    if(unit.status[s].harmful) {
                         unit.status.splice(s,1);
                         s--;
                     }
@@ -337,13 +337,13 @@ let state6Controller = {
                     this.applySpecialEffectsOnDamage(unit);
                 }
                 break;
-            case "onePerHarmfull":
+            case "onePerharmful":
                 let hCount=0;
                 players.forEach((player,index) => {
                     if(index !== unit.playerIndex){
                         player.units.forEach(un => {
                             un.status.forEach(stt => {
-                                if(stt.harmfull) hCount++;
+                                if(stt.harmful) hCount++;
                             });
                         });
                     }

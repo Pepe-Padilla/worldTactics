@@ -282,7 +282,7 @@ let gameController = {
         for(let s=0;s<terrain.status.length;s++) {
             for(let e=0;e<terrain.status[s].effects.length;e++) {
                 const effect = terrain.status[s].effects[e];
-                bonus[effect.atribute]+= effect.bonus;
+                bonus[effect.attribute]+= effect.bonus;
                 if(effect.special !== "") bonus.specials.push(effect.special);
             }
         }
@@ -330,7 +330,7 @@ let gameController = {
         unit.playerIndex=playerI;
         players[playerI].units.push(unit);
         unit.skills.forEach(skill => {
-            if(skill.pasive) {
+            if(skill.passive) {
                 const stat= JSON.parse(JSON.stringify(skill));
                 unit.status.push(stat);
             }
@@ -429,7 +429,7 @@ let gameController = {
             for(let u=0;u<unit.status.length;u++) {
                 for(let e=0;e<unit.status[u].effects.length;e++) {
                     const anEffect = unit.status[u].effects[e];
-                    bonus[anEffect.atribute] += anEffect.bonus;
+                    bonus[anEffect.attribute] += anEffect.bonus;
                 }
             }
         }

@@ -12,10 +12,10 @@ let state3Controller = {
                 let status = terrain.status[st];
                 for(let ef=0;ef<status.effects.length;ef++){
                     let effect = status.effects[ef];
-                    if(effect.turn === 0 && (effect.atribute === "hp" || effect.atribute === "mp")) {
-                        let newAtr = unit[effect["atribute"]]+effect.bonus;
+                    if(effect.turn === 0 && (effect.attribute === "hp" || effect.attribute === "mp")) {
+                        let newAtr = unit[effect["attribute"]]+effect.bonus;
                         if(newAtr>100) newAtr=100;
-                        unit[effect["atribute"]]=newAtr;
+                        unit[effect["attribute"]]=newAtr;
                         
                         // TODO: specials effect that applay to begining of the turn
                     }
@@ -27,14 +27,14 @@ let state3Controller = {
                 let status = unit.status[stu];
                 for(let ef=0;ef<status.effects.length;ef++){
                     let effect = status.effects[ef];
-                    if(effect.atribute === "hp" || effect.atribute === "mp") {
-                        let newAtr = unit[efect["atribute"]]+effect.bonus;
+                    if(effect.attribute === "hp" || effect.attribute === "mp") {
+                        let newAtr = unit[efect["attribute"]]+effect.bonus;
                         if(newAtr>100) newAtr=100;
-                        unit[effect["atribute"]]=newAtr;
+                        unit[effect["attribute"]]=newAtr;
                     }
                     
-                    if(effect.atribute === "hp" && status.harmfull) {
-                        console.log("harmfull");
+                    if(effect.attribute === "hp" && status.harmful) {
+                        console.log("harmful");
                         state6Controller.applySpecialEffectsOnDamage(unit);
                     }
                     
@@ -42,7 +42,7 @@ let state3Controller = {
 
                     if(effect.turn === 0){
                         // Remove obsolete effects
-                        if(!status.pasive) {
+                        if(!status.passive) {
                             status.effects.splice(ef,1);
                             ef--;
                         }

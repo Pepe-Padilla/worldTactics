@@ -43,7 +43,7 @@ let splash = {
         "</tbody>"+
         "<table></div>"+
         "<h2 style='text-align: center; justify-content: center; align-items: center; font-family : consolas;'>Magic effects applyed...</h2>"+
-        "<h2 style='text-align: center; justify-content: center; align-items: center; font-family : consolas;'>("+unitsLost+" units lost by harmfull effects) </h2>";
+        "<h2 style='text-align: center; justify-content: center; align-items: center; font-family : consolas;'>("+unitsLost+" units lost by harmful effects) </h2>";
 
         theSplash.innerHTML= newInnerHTML;
     },
@@ -98,7 +98,7 @@ let splash = {
             //var bonus = {agi:0,vel:0,str:0,def:0};
             for(let u=0;u<unit.status.length;u++) {
                 let turnsLeft = 0;
-                if(unit.status[u].pasive) {
+                if(unit.status[u].passive) {
                     //console.log("passive");
                     turnsLeft = "∞";
                 }
@@ -473,7 +473,7 @@ let splash = {
         for(let s = 0;s < unit.skills.length; s++) {
             const skill = unit.skills[s];
             let atRow= document.createElement("tr");
-            if(!skill.pasive && skill.mp <= unit.mp) {
+            if(!skill.passive && skill.mp <= unit.mp) {
                 atRow.id="menu65_"+elementsOnMenu;
                 elementsOnMenu++;
             }
@@ -491,7 +491,7 @@ let splash = {
             atDt1.appendChild(atico);
             atRow.appendChild(atDt1);
             atRow.appendChild(atDt2);
-            if(!skill.pasive) { 
+            if(!skill.passive) { 
                 tbody.appendChild(atRow);
                 lasttr = atRow;
             }

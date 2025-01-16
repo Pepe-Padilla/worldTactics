@@ -144,12 +144,12 @@ let mapController = {
         this.cancelRangeByClassName("unitRange");
     },
     cancelXRange: function () {
-        this.cancelRangeByClassName("unitHarmfullRange");
+        this.cancelRangeByClassName("unitharmfulRange");
         this.cancelRangeByClassName("unitAllyRange");
         this.cancelRangeByClassName("skillRange");
     },
     cancelXArea: function () {
-        this.cancelRangeByClassName("unitHarmfullRange");
+        this.cancelRangeByClassName("unitharmfulRange");
         this.cancelRangeByClassName("unitAllyRange");
     },
     getRectById:function(rangeX,rangeY) {
@@ -190,17 +190,17 @@ let mapController = {
     redrawRanges: function () {
         let rects = {};
         this.redrawRangesByClassName(rects,"unitRange");
-        this.redrawRangesByClassName(rects,"unitHarmfullRange");
+        this.redrawRangesByClassName(rects,"unitharmfulRange");
         this.redrawRangesByClassName(rects,"unitAllyRange");
     },
-    showXRange: function (currentX, currentY, currentXrange, harmfull, playerIndex) {
+    showXRange: function (currentX, currentY, currentXrange, harmful, playerIndex) {
 
         // see if there is a unit
         let isTarget = false;
         for (let p = 0; p < players.length; p++) {
             for (let u = 0; u < players[p].units.length; u++) {
                 if (players[p].units[u].x === currentX && players[p].units[u].y === currentY) {
-                    isTarget = !((p === playerIndex) === harmfull); // XOR
+                    isTarget = !((p === playerIndex) === harmful); // XOR
                 }
             }
         }
@@ -210,7 +210,7 @@ let mapController = {
         if (!currentTile && isTarget) {
             // theTile info
             currentTile = this.createCurrentTile(currentX,currentY,currentTileId);
-            if (harmfull) currentTile.className = "unitHarmfullRange";
+            if (harmful) currentTile.className = "unitharmfulRange";
             else currentTile.className = "unitAllyRange";
             document.body.appendChild(currentTile);
         }
@@ -222,22 +222,22 @@ let mapController = {
 
         // North
         if (currentY > 0) {
-            this.showXRange(currentX, currentY - 1, aRange, harmfull, playerIndex);
+            this.showXRange(currentX, currentY - 1, aRange, harmful, playerIndex);
         }
         // South
         if (currentY < theMap.ySize - 1) {
-            this.showXRange(currentX, currentY + 1, aRange, harmfull, playerIndex);
+            this.showXRange(currentX, currentY + 1, aRange, harmful, playerIndex);
         }
         // East
         if (currentX < theMap.xSize - 1) {
-            this.showXRange(currentX + 1, currentY, aRange, harmfull, playerIndex);
+            this.showXRange(currentX + 1, currentY, aRange, harmful, playerIndex);
         }
         // West
         if (currentX > 0) {
-            this.showXRange(currentX - 1, currentY, aRange, harmfull, playerIndex);
+            this.showXRange(currentX - 1, currentY, aRange, harmful, playerIndex);
         }
     },
-    showSkillArea: function (currentX, currentY, currentArea, harmfull, initialX, initialY) {
+    showSkillArea: function (currentX, currentY, currentArea, harmful, initialX, initialY) {
         const idIniTile = "skillRangeX" + initialX + "Y" + initialY;
         const theIniTile = document.getElementById(idIniTile);
         if (!theIniTile) return; // only inside  the skill Range
@@ -246,7 +246,7 @@ let mapController = {
         let currentTile = document.getElementById(currentTileId);
         if (!currentTile) {
             currentTile = this.createCurrentTile(currentX,currentY,currentTileId);
-            if (harmfull) currentTile.className = "unitHarmfullRange";
+            if (harmful) currentTile.className = "unitharmfulRange";
             else currentTile.className = "unitAllyRange";
             document.body.appendChild(currentTile);
         }
@@ -257,19 +257,19 @@ let mapController = {
 
         // North
         if (currentY > 0) {
-            this.showSkillArea(currentX, currentY - 1, aRange, harmfull, initialX, initialY);
+            this.showSkillArea(currentX, currentY - 1, aRange, harmful, initialX, initialY);
         }
         // South
         if (currentY < theMap.ySize - 1) {
-            this.showSkillArea(currentX, currentY + 1, aRange, harmfull, initialX, initialY);
+            this.showSkillArea(currentX, currentY + 1, aRange, harmful, initialX, initialY);
         }
         // East
         if (currentX < theMap.xSize - 1) {
-            this.showSkillArea(currentX + 1, currentY, aRange, harmfull, initialX, initialY);
+            this.showSkillArea(currentX + 1, currentY, aRange, harmful, initialX, initialY);
         }
         // West
         if (currentX > 0) {
-            this.showSkillArea(currentX - 1, currentY, aRange, harmfull, initialX, initialY);
+            this.showSkillArea(currentX - 1, currentY, aRange, harmful, initialX, initialY);
         }
     },
     showSkillRange: function (currentX, currentY, currentArea) {

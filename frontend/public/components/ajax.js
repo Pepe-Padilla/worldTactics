@@ -1,4 +1,4 @@
-var ajax = {
+let ajax = {
     ajaxRequest: function(path,okFunction,koFunction) {
         let request = new XMLHttpRequest();
         request.open("GET", path, true);
