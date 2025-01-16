@@ -1,3 +1,19 @@
+/// <reference path="../constants.ts"/>
+/// <reference path="../../components/ajax.js"/>
+/// <reference path="../../components/gamepad.js"/>
+/// <reference path="../../components/get.js"/>
+/// <reference path="../../components/init.js"/>
+/// <reference path="../../components/Keyboard.js"/>
+/// <reference path="../../components/main.js"/>
+/// <reference path="../../components/scrDimension.js"/>
+/// <reference path="../../components/splash.js"/>
+/// <reference path="../../components/Tile.js"/>
+/// <reference path="../map/mapController.js"/>
+/// <reference path="../state3Controller.js"/>
+/// <reference path="../state4Controller.js"/>
+/// <reference path="../state5Controller.js"/>
+/// <reference path="../state6Controller.js"/>
+
 interface Unit {
     _id: number|string;
     name: string;
@@ -16,7 +32,7 @@ interface Unit {
     sprite: string;
     moved: boolean;
     playerIndex: number;
-    bonus: Bonus;
+    bonus: BonusState[];
     skills: Skill[];
     status: Skill[];
 }
@@ -29,32 +45,34 @@ interface Skill {
     area: number;
     mp: number;
     lineEffect: boolean;
-    pasive: boolean;
-    harmfull: boolean;
+    passive: boolean;
+    harmful: boolean;
     effects: Effect[];
 }
 
 interface Effect {
     turn: number;
-    atribute: string;
+    attribute: string;
     bonus: number;
     sprites: string;
-    special: string;
+    special: Specials[];
 }
 
-interface Bonus {
-    commoner: BonusState;
-    advocate: BonusState;
-    halberdier: BonusState;
-    knight: BonusState;
-    assassin: BonusState;
-    ranger: BonusState;
-    pavwill: BonusState;
-    mage: BonusState;
-    priestess: BonusState;
-    warlock: BonusState;
-    druid: BonusState;
-    kira: BonusState;
+interface Specials {
+    attribute: string,
+    bonus: number | "def" | "def/2" | "special",
+    applyOn: APPLY_ON_TYPES[],
+    terrainType: TERRAIN_TYPES[],
+    removeStatus: boolean;
+    specialCount: {
+        range: number,
+        multiplier: number,
+        allies: boolean,
+        enemies: boolean,
+        alliesTypes: string[],  // "any", (constants.ts) UNIT_TYPES, "<SPECIFIC_UNIT_NAMES>"
+        enemiesTypes: string[], // "any", (constants.ts) UNIT_TYPES, "<SPECIFIC_UNIT_NAMES>"
+        effectsTypes: string[]  // "harmful" "non harmful"
+    }
 }
 
 interface BonusState {

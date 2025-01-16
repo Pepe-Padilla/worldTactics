@@ -56,3 +56,27 @@ const TERRAIN_THICKET = "thicket";
 const TERRAIN_FOREST= "forest";
 const TERRAIN_MOUNTAIN = "mountain";
 const TERRAIN_GOLD_MINE = "mine"
+
+// Terrains Types
+enum TERRAIN_TYPES  {
+    TERRAIN_TYPE_HQ = 0,
+    TERRAIN_TYPE_FORT = 1,
+    TERRAIN_TYPE_HIGH = 2,
+    TERRAIN_TYPE_NATURAL = 3,
+    TERRAIN_TYPE_WATER = 4,
+    TERRAIN_TYPE_PLANE = 5,
+    TERRAIN_TYPE_HIDE = 6
+}
+
+// Apply types
+enum APPLY_ON_TYPES {
+    APPLY_ON_ATTACK = 0,
+    APPLY_ON_DEFENSE = 1,
+    APPLY_ON_DAMAGE_GET = 2,
+    APPLY_ON_DAMAGE_DONE = 3,
+    APPLY_ON_BOT = 4,
+    APPLY_ON_EOT = 5,
+    APPLY_ON_CAST = 6,
+    APPLY_ON_MAGIC_NON_HARMFUL = 7,
+    APPLY_ON_MAGIC_HARMFUL = 8
+}

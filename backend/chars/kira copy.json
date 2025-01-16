@@ -22,12 +22,12 @@
         "area": 1,
         "mp": 35,
         "lineEfect": false,
-        "pasive": false,
+        "passive": false,
         "afects": "allies",
-        "harmfull": false,
+        "harmful": false,
         "effects": [{
           "turn": 0,
-          "atribute": "hp",
+          "attribute": "hp",
           "bonus": 50,
           "sprites": "Schema.Types.ObjectId",
           "special": ""
@@ -39,31 +39,31 @@
         "area": 1,
         "mp": 25,
         "lineEfect": false,
-        "pasive": false,
+        "passive": false,
         "afects": "allies",
-        "harmfull": false,
+        "harmful": false,
         "icon": "pahtia",
         "effects": [{
           "turn": 0,
-          "atribute": "hp",
+          "attribute": "hp",
           "bonus": 20,
           "sprite": "Schema.Types.ObjectId",
           "special": "lostOnDamage"
         }, {
           "turn": 1,
-          "atribute": "hp",
+          "attribute": "hp",
           "bonus": 20,
           "sprite": "Schema.Types.ObjectId",
           "special": "lostOnDamage"
         }, {
           "turn": 2,
-          "atribute": "hp",
+          "attribute": "hp",
           "bonus": 20,
           "sprite": "Schema.Types.ObjectId",
           "special": "lostOnDamage"
         }, {
           "turn": 3,
-          "atribute": "hp",
+          "attribute": "hp",
           "bonus": 20,
           "sprite": "Schema.Types.ObjectId",
           "special": "lostOnDamage"
@@ -75,19 +75,19 @@
           "area": 2,
           "mp": 20,
           "lineEfect": false,
-          "pasive": false,
+          "passive": false,
           "afects": "allies",
-          "harmfull": false,
+          "harmful": false,
           "icon": "protect-eerie-1",
           "effects": [{
             "turn": 0,
-            "atribute": "def",
+            "attribute": "def",
             "bonus": 20,
             "sprites": "Schema.Types.ObjectId",
             "special": ""
           }, {
             "turn": 1,
-            "atribute": "def",
+            "attribute": "def",
             "bonus": 20,
             "sprites": "Schema.Types.ObjectId",
             "special": ""
@@ -99,50 +99,50 @@
           "area": 1,
           "mp": 20,
           "lineEfect": false,
-          "pasive": false,
+          "passive": false,
           "afects": "allies",
-          "harmfull": false,
+          "harmful": false,
           "icon": "evil-eye-eerie-1",
           "effects": [{
             "turn": 0,
-            "atribute": "vel",
+            "attribute": "vel",
             "bonus": 20,
             "sprites": "Schema.Types.ObjectId",
             "special": ""
           }, {
             "turn": 1,
-            "atribute": "vel",
+            "attribute": "vel",
             "bonus": 20,
             "sprites": "Schema.Types.ObjectId",
             "special": ""
           }]
       }, {
           "name": "Chípil",
-          "description": "Restore harmfull status and a small cure for a group of allies",
+          "description": "Restore harmful status and a small cure for a group of allies",
           "range": 4,
           "area": 2,
           "mp": 30,
           "lineEfect": false,
-          "pasive": false,
+          "passive": false,
           "afects": "allies",
-          "harmfull": false,
+          "harmful": false,
           "effects": [{
             "turn": 0,
-            "atribute": "hp",
+            "attribute": "hp",
             "bonus": 10,
             "sprites": "Schema.Types.ObjectId",
-            "special": "removeHarmfull"
+            "special": "removeharmful"
           }]
       }],
-    "pasiveSkills": [
+    "passiveSkills": [
       {
         "name": "Tetonalli",
-        "description": "Pasive effect that restore 10% MP at the beggining of each turn",
+        "description": "passive effect that restore 10% MP at the beggining of each turn",
         "area": 1,
         "icon": "",
         "effects": [{
           "turn": 0,
-          "atribute": "mp",
+          "attribute": "mp",
           "bonus": 10, 
           "sprites": "Schema.Types.ObjectId",
           "special": ""
