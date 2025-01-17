@@ -60,18 +60,17 @@ interface Effect {
 
 interface Specials {
     attribute: string,
-    bonus: number | "def" | "def/2" | "special",
-    applyOn: APPLY_ON_TYPES[],
-    terrainType: TERRAIN_TYPES[],
+    bonus: number | "terrain_def" | "special",
+    applyOn: TYPE_APPLY_ON[],
+    terrainMultiplier: number,
+    terrainType: TYPE_TERRAIN[],
     removeStatus: boolean;
     specialCount: {
         range: number,
         multiplier: number,
-        allies: boolean,
-        enemies: boolean,
-        alliesTypes: string[],  // "any", (constants.ts) UNIT_TYPES, "<SPECIFIC_UNIT_NAMES>"
-        enemiesTypes: string[], // "any", (constants.ts) UNIT_TYPES, "<SPECIFIC_UNIT_NAMES>"
-        effectsTypes: string[]  // "harmful" "non harmful"
+        alliesTypes: "non" | "any" | TYPE_UNIT[],  // "any", UNIT_TYPES
+        enemiesTypes: "non" | "any" | TYPE_UNIT[], // "any", UNIT_TYPES
+        effectsTypes: string | "anyHarmful" | "anyNoHarmful"[]  // "anyHarmful" "anyNoHarmful" "<SPECIFIC_EFFECT_NAME>"
     }
 }
 

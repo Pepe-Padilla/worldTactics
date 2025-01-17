@@ -58,25 +58,43 @@ const TERRAIN_MOUNTAIN = "mountain";
 const TERRAIN_GOLD_MINE = "mine"
 
 // Terrains Types
-enum TERRAIN_TYPES  {
-    TERRAIN_TYPE_HQ = 0,
-    TERRAIN_TYPE_FORT = 1,
-    TERRAIN_TYPE_HIGH = 2,
-    TERRAIN_TYPE_NATURAL = 3,
-    TERRAIN_TYPE_WATER = 4,
-    TERRAIN_TYPE_PLANE = 5,
-    TERRAIN_TYPE_HIDE = 6
+enum TYPE_TERRAIN  {
+    HQ = 0,
+    FORT = 1,
+    HIGH = 2,
+    NATURAL = 3,
+    BUILD = 4,
+    WATER = 5,
+    PLANE = 6,
+    HIDE = 7,
+    RESOURCE = 8
 }
 
 // Apply types
-enum APPLY_ON_TYPES {
-    APPLY_ON_ATTACK = 0,
-    APPLY_ON_DEFENSE = 1,
-    APPLY_ON_DAMAGE_GET = 2,
-    APPLY_ON_DAMAGE_DONE = 3,
-    APPLY_ON_BOT = 4,
-    APPLY_ON_EOT = 5,
-    APPLY_ON_CAST = 6,
-    APPLY_ON_MAGIC_NON_HARMFUL = 7,
-    APPLY_ON_MAGIC_HARMFUL = 8
+enum TYPE_APPLY_ON {
+    ATTACK = 0,
+    DEFENSE = 1,
+    DAMAGE_GET = 2,
+    DAMAGE_DONE = 3,
+    BOT = 4,
+    EOT = 5,
+    CAST = 6,
+    MAGIC_NON_HARMFUL = 7,
+    MAGIC_HARMFUL = 8
+}
+
+// Unit Types
+enum TYPE_UNIT {
+    WORKER="worker",
+    SOLDIER="soldier",
+    MERCENARY="mercenary",
+    BEAST="beast",
+    FOOT="foot",
+    MOUNTED="mounted",
+    LONG="long",
+    STEALTH="stealth",
+    RANGED="ranged",
+    CASTER="caster",
+    LIGHT="light",
+    HEAVY="heavy"
 }
