@@ -98,7 +98,7 @@ let gameController = {
         } else if(gameState === STATE_67_UNIT_TARGET) {
             //console.log ("FTW!!!")
             state6Controller.attackConfirmed();
-        } else if(gameState === STATE_80_END_OF_PLAYER_TURN) {
+        } else if(gameState === STATE_53_NON_ALLIE_STRUCTURE_SELECTED) {
             state5Controller.accept80Menu();
         } else if(gameState === STATE_65_MENU_UNIT) {
             state6Controller.accept65Menu();
@@ -118,7 +118,7 @@ let gameController = {
             state6Controller.cancelS60();
         } else if(gameState === STATE_52_ALLIE_STRUCTURE_SELECTED) {
             state5Controller.cancelS52();
-        } else if(gameState === STATE_80_END_OF_PLAYER_TURN) {
+        } else if(gameState === STATE_53_NON_ALLIE_STRUCTURE_SELECTED) {
             state5Controller.cancelS80();
         } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
             state6Controller.cancelS66();
@@ -142,7 +142,7 @@ let gameController = {
                 Tile.updateCursor(cursor);
             }
         } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
-            gameState === STATE_80_END_OF_PLAYER_TURN || gameState === STATE_65_MENU_UNIT) {
+            gameState === STATE_53_NON_ALLIE_STRUCTURE_SELECTED || gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
             if(cursor.y > 0) {
@@ -164,7 +164,7 @@ let gameController = {
                 cursor.y++;
                 Tile.updateCursor(cursor);
             }
-        } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED || gameState === STATE_80_END_OF_PLAYER_TURN ||
+        } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED || gameState === STATE_53_NON_ALLIE_STRUCTURE_SELECTED ||
             gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
         } else if(gameState === STATE_66_UNIT_TARGET_SKILL) {
@@ -219,7 +219,7 @@ let gameController = {
         if(gameState === STATE_40_TURN_ACTIVE) {
             this.circleRight();
         } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
-            gameState === STATE_80_END_OF_PLAYER_TURN || gameState === STATE_65_MENU_UNIT) {
+            gameState === STATE_53_NON_ALLIE_STRUCTURE_SELECTED || gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor+1,gameState)) menuCursor++;
         }
     },
@@ -227,7 +227,7 @@ let gameController = {
         if(gameState === STATE_40_TURN_ACTIVE) {
             this.circleLeft();
         } else if(gameState === STATE_60_UNIT_MOVE || gameState === STATE_52_ALLIE_STRUCTURE_SELECTED ||
-            gameState === STATE_80_END_OF_PLAYER_TURN || gameState === STATE_65_MENU_UNIT) {
+            gameState === STATE_53_NON_ALLIE_STRUCTURE_SELECTED || gameState === STATE_65_MENU_UNIT) {
             if(Tile.updateCursorMenu(menuCursor-1,gameState)) menuCursor--;
         }
     },

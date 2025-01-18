@@ -16,14 +16,14 @@ let state5Controller = {
             splash.cancelS4Splash();
             splash.showBuildingMenu(terrain.sprite);
             menuCursor = 0;
-            Tile.createCursorMenu(menuCursor,players[currentPlayer].color,52);
+            Tile.createCursorMenu(menuCursor,players[currentPlayer].color,STATE_52_ALLIE_STRUCTURE_SELECTED);
             gameState = STATE_52_ALLIE_STRUCTURE_SELECTED;
         } else {
             splash.cancelS4Splash();
             splash.showEOTMenu();
             menuCursor = 0;
-            Tile.createCursorMenu(menuCursor,players[currentPlayer].color,80);
-            gameState = STATE_80_END_OF_PLAYER_TURN;
+            Tile.createCursorMenu(menuCursor,players[currentPlayer].color,STATE_53_NON_ALLIE_STRUCTURE_SELECTED);
+            gameState = STATE_53_NON_ALLIE_STRUCTURE_SELECTED;
         }
     },
     cancelRange: function() {

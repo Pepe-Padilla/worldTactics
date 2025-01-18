@@ -120,7 +120,7 @@ class Tile {
         const rect=theTile.getBoundingClientRect();
 
         let totalHeight = rect.height;
-        if(menuId === 52) { // only por menu 52 take the second TR too.
+        if(menuId === STATE_52_ALLIE_STRUCTURE_SELECTED) { // only por menu 52 take the second TR too.
             const idTR2="menu_2_"+menuId+"_"+cursorMenu;
             const theTile2 = document.getElementById(idTR2);
             const rect2=theTile2.getBoundingClientRect();
@@ -131,8 +131,8 @@ class Tile {
         let div = document.createElement("div");
         div.id=idCursor;
         document.getElementById("wtGame").appendChild(div);
-        div.style.zIndex = 103;
-        div.style.position = "absolute";
+        div.style.zIndex = "103";
+        div.style.position = "absolute";  // TODO: move to css
         div.style.left = (rect.x-4) + "px";
         div.style.top = (rect.y-4) + "px";
         div.style.width = rect.width + "px";
