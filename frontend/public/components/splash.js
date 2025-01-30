@@ -34,12 +34,12 @@ let splash = {
         if(need4Columns) newInnerHTML += "<th></th><th></th>";
         newInnerHTML += "</tr></thead>"+
         "<tbody>"+
-        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"castle0"+IMAGE_EXTENSION+"'></td><td>1</td>";
+        "<tr><td><img alt='Castle' style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"castle0"+IMAGE_EXTENSION+"'></td><td>1</td>";
         if(!need4Columns) newInnerHTML +=  "</tr><tr>";
-        newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"keep0"+IMAGE_EXTENSION+"'></td><td>"+(players[currentPlayer].buildings.length -1)+"</td></tr>"+
-        "<tr><td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"commoner-"+players[currentPlayer].color+IMAGE_EXTENSION+"'></td><td>"+players[currentPlayer].units.length+" </td>";
+        newInnerHTML += "<td><img alt='Keep' style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"keep0"+IMAGE_EXTENSION+"'></td><td>"+(players[currentPlayer].buildings.length -1)+"</td></tr>"+
+        "<tr><td><img alt='Commoner' style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_CHA_PATH+"commoner-"+players[currentPlayer].color+IMAGE_EXTENSION+"'></td><td>"+players[currentPlayer].units.length+" </td>";
         if(!need4Columns) newInnerHTML += "</tr><tr>";
-        newInnerHTML += "<td><img style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"mine0"+IMAGE_EXTENSION+"'></td><td>"+gold+" Gold</td></tr>"+
+        newInnerHTML += "<td><img alt='Gold Mine' style='width:"+(rect.width*1.2)+"px;height:"+(rect.width*1.2)+"px;' src='"+IMAGE_MAP_PATH+"mine0"+IMAGE_EXTENSION+"'></td><td>"+gold+" Gold</td></tr>"+
         "</tbody>"+
         "<table></div>"+
         "<h2 style='text-align: center; justify-content: center; align-items: center; font-family : consolas;'>Magic effects applyed...</h2>"+
@@ -110,7 +110,7 @@ let splash = {
                 }
                 effectsUnitHTML += "<div class='hpMetter' style='--imgVar: var(--"+unit.status[u].icon +"); width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;'>"+turnsLeft+"</div>&nbsp;";    
             }
-            newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"-"+players[playerIndex].color+IMAGE_EXTENSION+"'></td><td>"+unit.name+"</td><tr>"+
+            newInnerHTML += "<tr><td><img alt='unit' style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_CHA_PATH+unit.sprite+"-"+players[playerIndex].color+IMAGE_EXTENSION+"'></td><td>"+unit.name+"</td><tr>"+
             "<tr><td>HP</td><td>"+unit.hp+"</td></tr>"+
             "<tr><td>MP</td><td>"+unit.mp+"</td></tr>"+
             "<tr><td>agi</td><td>"+unit.agi+" "+(bonus.agi !== 0?"(+ "+bonus.agi+")":"")+"</td></tr>"+
@@ -122,10 +122,10 @@ let splash = {
         }
         
         // Terrain stats
-        newInnerHTML += "<tr><td><img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENSION+"'></td><td>def: "+terrain.defBonus+"</td><tr>";
+        newInnerHTML += "<tr><td><img alt='terrain' style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_MAP_PATH+terrain.sprite+"0"+IMAGE_EXTENSION+"'></td><td>def: "+terrain.defBonus+"</td><tr>";
         let effectsTerrainHTML = "";
         for(let t=0;t<terrain.status.length;t++) {
-            effectsTerrainHTML += "<img style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_EFE_PATH+terrain.status[t].icon+IMAGE_EXTENSION+"'>&nbsp;";
+            effectsTerrainHTML += "<img alt='status' style='width:"+(rect.width*0.7)+"px;height:"+(rect.width*0.7)+"px;' src='"+IMAGE_EFE_PATH+terrain.status[t].icon+IMAGE_EXTENSION+"'>&nbsp;";
         }
         "<tr><td colspan='2'>"+effectsTerrainHTML+"</td></tr>";
         
@@ -140,7 +140,7 @@ let splash = {
         // showS4Splash
         let splashS50=document.getElementById("splashS50");
 
-        // get mesures
+        // get measures
         const idTile = "x0y0";
         const theTile = document.getElementById(idTile);
         const rect=theTile.getBoundingClientRect();

@@ -27,7 +27,7 @@ let mainLoop = {
         }
 
     },
-    stop: function() {},
+    //stop: function() {},
     update: function(currentMS) {
         //mainLoop.ups++; // UPS reading
 
